@@ -34,13 +34,5 @@ int main() {
 	// TODO(student): compute and display solution
 	count_valid_mv_numbers(a, b);
 
-	/**
-	cout << "enter in a nunber: ";
-	int number;
-
-	cin >> number;
-
-	cout << classify_mv_range_type(number) << endl;*/
-
 	return 0;
 }
