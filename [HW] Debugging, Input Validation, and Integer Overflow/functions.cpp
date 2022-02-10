@@ -60,9 +60,6 @@ int SumBetween(int low, int high)
      if (low > high)
           throw invalid_argument("Lower bound must be less than the higher bound");
 
-     if (low == INT32_MIN && high == INT32_MAX)
-          return INT32_MIN;
-
      if (low == high)
           return low;
 
