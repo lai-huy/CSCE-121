@@ -7,7 +7,9 @@ You may modify this file, e.g. to use unit tests.
 #include <iostream>
 #include "functions.h"
 
-using std::cout, std::cin, std::endl;
+using std::cout;
+using std::cin;
+using std::endl;
 
 enum Function : int
 {
