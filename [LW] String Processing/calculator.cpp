@@ -73,7 +73,7 @@ int main()
           }
      }
 
-     // Preperation for calculations
+     // Preparation for calculations
      int result = numbers.at(0) - '0';
      numbers.erase(0, 1);
      opers.erase(opers.size() - 1);
