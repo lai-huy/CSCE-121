@@ -1,4 +1,5 @@
 *.out
+*.debug
 .vscode/
-[LW] Hello World/hello_world
 Notes/
+[LW] Hello World/hello_world
