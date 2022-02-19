@@ -47,7 +47,6 @@ string to_decimal(string number, int base)
           power *= base;
      }
 
-
      return result;
 }
 
@@ -61,6 +60,11 @@ string to_base(string number, int base)
           return number;
 
      string result = "0";
+
+     /**
+     for (int i = (int)number.size(); i > 0; --i) {
+          result = add(result, to_string(0));
+     }*/
 
      return result;
 }
@@ -99,11 +103,11 @@ int main()
           // cout << "RHS: " << RHS << endl;
 
           // Handle base 2-36 :)
-          
+          /*
           // Split string by '_'
           char del = '_';
 
-          for (long unsigned int i = 0; i < input.size(); i++)
+          for (long unsigned int i = 0; i < LHS.size(); ++i)
           {
                char c = LHS.at(i);
                if (c == del)
@@ -116,12 +120,9 @@ int main()
           string base;
           ss >> LHS >> base;
 
-          cout << LHS << endl;
-          cout << base << endl;
-
           LHS = to_decimal(LHS, stoi(base));
 
-          for (long unsigned int i = 0; i < input.size(); i++)
+          for (long unsigned int i = 0; i < RHS.size(); i++)
           {
                char c = RHS.at(i);
                if (c == del)
@@ -130,10 +131,10 @@ int main()
                     RHS[i] = del;
           }
 
-          ss(RHS);
-          ss >> RHS >> base;
+          stringstream ss1(RHS);
+          ss1 >> RHS >> base;
 
-          RHS = to_decimal(RHS, stoi(base));
+          RHS = to_decimal(RHS, stoi(base));*/
 
           const char op = OP.at(0);
           string ans = "\0";
@@ -152,6 +153,12 @@ int main()
           default:
                throw "Invalid Operator";
           }
+
+          /*
+          ans = to_base(ans, stoi(base));
+          if (base != "10")
+               ans += "_" + base;
+               */
 
           cout << "ans =" << endl;
           cout << "\n    " << ans << endl;
