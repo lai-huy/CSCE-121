@@ -9,10 +9,9 @@ using std::cout, std::endl, std::string, std::ostringstream;
 
 int main(int argc, char *argv[])
 {
-
      if (argc != 4)
      { // check if there are enough arguments
-          cout << "Usage: " << argv[0] << " <filename> <target-width> <target-height>" << endl;
+          cout << "Usage: " << argv[0] << " <name> <target-width> <target-height>" << endl;
           return 1;
      }
 
@@ -98,7 +97,51 @@ int main(int argc, char *argv[])
 
      if (!hasError)
      {
+          /**
+          //print image
+          cout << "\nimage:\n";
+
+          for (int j = 0; j < width; ++j) {
+               for (int i = 0; i < height; ++i)
+                    cout << image[j][i] << "\t";
+               cout << "\n";
+          }
+
+          cout << "\n";
+          */
+          
+          /**
+          // Testing energy method
+          for (int row = 0; row < height; ++row)
+               for (int col = 0; col < width; ++col)
+               {
+                    cout << "(" << row << ", " << col << "):\n"
+                         << energy(image, col, row, width, height) << "\n\n";
+               }
+
           cout << "Start carving..." << endl;
+          */
+
+          /**
+          // Testing getVerticalSeam
+          for (int col = 0; col < width; ++col) {
+               int *seam = new int[height]();
+               cout << "Column:\t" << col << "\n";
+               cout << "Vertical Seam:\n" << getVerticalSeam(image, col, width, height, seam) << "\n";
+
+               cout << "Seam:\n";
+               for (int row = 0; row < height; ++row) {
+                    cout << seam[row] << "\n";
+               }
+               cout << "\n";
+
+               delete[] seam;
+          }*/
+
+          int *seam = new int[height]();
+          cout << "Horizontal Seam:\n";
+          cout << getHorizontalSeam(image, 0, width, height, seam) << "\n";
+          delete[] seam;
 
           // find and remove seams
           while ((width - targetWidth > 0) || (height - targetHeight > 0))

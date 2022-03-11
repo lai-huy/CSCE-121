@@ -2,11 +2,17 @@
 #define FUNCTIONS_H
 
 #include <string>
+#include <iostream>
 
 struct Pixel {
-  int r; // red
-  int g; // green
-  int b; // blue
+     int r; // red
+     int g; // green
+     int b; // blue
+     
+     friend std::ostream& operator<<(std::ostream& os, const Pixel& p) {
+          os << "(" << p.r << ", " << p.g << ", " << p.b << ")";
+          return os;
+     }
 };
 
 // TODO Implement

@@ -6,37 +6,270 @@
 #include "functions.h"
 
 using namespace std;
+using std::cout;
 
 // TODO Write this function
 int energy(const Pixel *const *image, int col, int row, int width, int height)
 {
+     /**
+     // Epic Debug Lines
      cout << "col:\t" << col << "\n";
      cout << "row:\t" << row << "\n";
      cout << "width:\t" << width << "\n";
      cout << "height:\t" << height << "\n";
-     return 0;
+     cout << "\n";
+     */
+
+     // Declare Pixels that directly surround center Pixel
+     Pixel left, right, up, down;
+
+     // Initialize with sick math
+     left = image[col == width - 1 ? col + 1 - width : col + 1][row];
+     right = image[col == 0 ? col - 1 + width : col - 1][row];
+     up = image[col][row == 0 ? row - 1 + height : row - 1];
+     down = image[col][row == height - 1 ? row + 1 - height : row + 1];
+
+     /*
+     // More Debug Lines
+     cout << "Left:\t" << left << "\n";
+     cout << "Right:\t" << right << "\n";
+     cout << "Up:\t" << up << "\n";
+     cout << "Down:\t" << down << "\n";
+     cout << "\n";
+     */
+
+     // calculate horizontal differences of each color variable
+     int Rx = right.r - left.r;
+     int Gx = right.g - left.g;
+     int Bx = right.b - left.b;
+
+     // calculate horizontal gradient
+     int delx = Rx * Rx + Gx * Gx + Bx * Bx;
+
+     // calculate vertical difference of each color variable
+     int Ry = up.r - down.r;
+     int Gy = up.g - down.g;
+     int By = up.b - down.b;
+
+     // calculate vertical gradient
+     int dely = Ry * Ry + Gy * Gy + By * By;
+
+     // return energy
+     return delx + dely;
 }
 
 // TODO Write this function
 int getVerticalSeam(const Pixel *const *image, int start_col, int width, int height, int *seam)
 {
-     return 0;
+     /*
+     // Epic debug lines :)
+     cout << "Col:\t" << start_col << "\n";
+     cout << "Width:\t" << width << "\n";
+     cout << "Height:\t" << height << "\n";
+     cout << "\n";
+
+     cout << "\nimage:\n";
+
+     for (int row = 0; row < height; ++row) {
+          for (int col = 0; col < width; ++col) {
+               cout << image[col][row] << "\t";
+          }
+          cout << "\n";
+     }
+
+     cout << "\n";
+     */
+
+     // Initialize total to be energy of starting pixel
+     int total = energy(image, start_col, 0, width, height);
+
+     // initialize starting column for loop
+     int col = start_col;
+
+     // initialize first element of seam
+     seam[0] = start_col;
+
+     // Declare left, forward, and right
+     unsigned int left, forward, right;
+
+     // loop through image
+     for (int row = 1; row < height; ++row)
+     {
+          // initilize forward, left, and right energy levels.
+          forward = energy(image, col, row, width, height);
+          left = UINT32_MAX;
+          right = UINT32_MAX;
+
+          if (col <= 0)
+          { // in first column
+               left = energy(image, col + 1, row, width, height);
+          }
+          else if (col >= width - 1)
+          { // in last column
+               right = energy(image, col - 1, row, width, height);
+          }
+          else
+          { // somewhere in the middle
+               left = energy(image, col + 1, row, width, height);
+               right = energy(image, col - 1, row, width, height);
+          }
+
+          /**
+          cout << "Left:\t" << left << "\n";
+          cout << "Frwd:\t" << forward << "\n";
+          cout << "Right:\t" << right << "\n";
+          cout << "\n";
+          */
+
+          // Tie breaker -------------------------------------------------------
+          if (forward <= left && forward <= right)
+          {
+               // cout << "Going frwd.\n";
+               seam[row] = col;
+               total += forward;
+          }
+          else if (left <= right)
+          {
+               // cout << "Going left.\n";
+               seam[row] = ++col;
+               total += left;
+          }
+          else
+          {
+               // cout << "Going right.\n";
+               seam[row] = --col;
+               total += right;
+          }
+
+          // cout << "\nCol:\t" << col << "\n";
+     }
+
+     return total;
 }
 
 // TODO Write this function
 void removeVerticalSeam(Pixel **image, int &width, int height, int *verticalSeam)
 {
+     //cout << "Width:\t" << width << "\n";
+     //cout << "Height:\t" << height << "\n";
+
+     for (int row = 0; row < height; ++row)
+     {
+          //cout << "seam[" << row << "]:\t" << verticalSeam[row] << "\n";
+          for (int col = 0; col < width - 1; ++col)
+          {
+               if (col >= verticalSeam[row])
+                    image[col][row] = image[col + 1][row];
+          }
+     }
+     --width;
 }
 
 // TODO Write this function for extra credit
 int getHorizontalSeam(const Pixel *const *image, int start_row, int width, int height, int *seam)
 {
-     return 0;
+     // Epic debug lines :)
+     cout << "Row:\t" << start_row << "\n";
+     cout << "Width:\t" << width << "\n";
+     cout << "Height:\t" << height << "\n";
+     cout << "\n";
+
+     cout << "\nimage:\n";
+
+     for (int row = 0; row < height; ++row) {
+          for (int col = 0; col < width; ++col) {
+               cout << image[col][row] << "\t";
+          }
+          cout << "\n";
+     }
+
+     cout << "\n";
+
+     // Initialize total to be energy of starting pixel
+     int total = energy(image, 0, start_row, width, height);
+
+     // initialize starting column for loop
+     int row = start_row;
+
+     // initialize first element of seam
+     seam[0] = start_row;
+
+     unsigned int forward, left, right;
+
+     // loop through image
+     for (int col = 1; col < width; ++col)
+     {
+          // initilize forward, left, and right energy levels.
+          forward = energy(image, col, row, width, height);
+          left = UINT32_MAX;
+          right = UINT32_MAX;
+          
+          if (row == 0)
+          { // in first row
+               right = energy(image, col, row + 1, width, height);
+          }
+          else if (row == height - 1)
+          { // in last row
+               left = energy(image, col, row - 1, width, height);
+          }
+          else
+          { // somewhere in the middle
+               right = energy(image, col, row + 1, width, height);
+               left = energy(image, col, row - 1, width, height);
+          }
+
+          cout << "Left:\t" << left << "\n";
+          cout << "Frwd:\t" << forward << "\n";
+          cout << "Right:\t" << right << "\n";
+          cout << "\n";
+
+          // Tie breaker -------------------------------------------------------
+          if (forward <= left && forward <= right)
+          {
+               cout << "Going frwd.\n";
+               seam[col] = row;
+               total += forward;
+          }
+          else if (left <= right)
+          {
+               cout << "Going left.\n";
+               seam[col] = --row;
+               total += left;
+          }
+          else
+          {
+               cout << "Going right.\n";
+               seam[col] = ++row;
+               total += right;
+          }
+          cout << "\n";
+     }
+
+     for (int col = 0; col < width; ++col) {
+          cout << "seam[" << col << "]:\t" << seam[col] << "\n";
+     }
+     cout << "\n";
+
+     return total;
 }
 
 // TODO Write this function for extra credit
 void removeHorizontalSeam(Pixel **image, int width, int &height, int *horizontalSeam)
 {
+
+     cout << "Width:\t" << width << "\n";
+     cout << "Height:\t" << height << "\n";
+
+     for (int col = 0; col < width; ++col)
+     {
+          cout << "seam[" << col << "]:\t" << horizontalSeam[col] << "\n";
+          for (int row = 0; row < height; ++row)
+          {
+               if (row >= horizontalSeam[col])
+                    image[col][row] = image[col][row + 1];
+          }
+     }
+     --height;
 }
 
 int *findMinVerticalSeam(const Pixel *const *image, int width, int height)
