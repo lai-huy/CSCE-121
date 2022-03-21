@@ -20,16 +20,19 @@ void deallocMap(char **map, int maxRow)
 {
      if (map)
      {
+          cout << "Deleting map at " << map << "\n";
           for (int i = 0; i < maxRow; ++i)
-               delete[] map[i];
+          {
+               map[i] = nullptr;
+          }
           delete[] map;
      }
 }
 
-template<int r, int c>
+template <int r, int c>
 char **createMap(char _map[r][c])
 {
-     char** map = new char*[r];
+     char **map = new char *[r];
      for (int i = 0; i < r; ++i)
      {
           map[i] = new char[c];
@@ -48,7 +51,7 @@ void test_loadLevel()
      int maxRow;
      int maxCol;
      Player player;
-     char ** level;
+     char **level;
 
      cout << "Test loading valid map\n";
      level = loadLevel("example_valid.txt", maxRow, maxCol, player);
@@ -65,7 +68,7 @@ void test_loadLevel()
      cout << "\nTest loading map with letter dimensions\n";
      level = loadLevel("example_rc_alph.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
-     
+
      cout << "\nTest loading map with player out of pounds negatively\n";
      level = loadLevel("example_player_oob_neg.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
@@ -85,35 +88,36 @@ void test_loadLevel()
      cout << "\nTest loading the player on top of Treasure\n";
      level = loadLevel("example_player_treasure.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
-     
-     cout << "\nTest loading map with invalid tiles\n";;
+
+     cout << "\nTest loading map with invalid tiles\n";
+     ;
      level = loadLevel("example_invalid_map.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
-     
+
      cout << "\nTest loading an empty file\n";
      level = loadLevel("example_empty_file.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
-     
+
      cout << "\nTest loading a 0 x 0 map\n";
      level = loadLevel("example_map_zero.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
-     
+
      cout << "\nTest loading an empty map with non-zero dimensions\n";
      level = loadLevel("example_map_empty.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
-     
+
      cout << "\nTest loading a map with more data than dimensions indicate\n";
      level = loadLevel("example_map_big.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
-     
+
      cout << "\nTest loading a map with no exit\n";
      level = loadLevel("example_map_no_exit.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
-     
+
      cout << "\nTest loading a map with no treasure\n";
      level = loadLevel("example_map_no_treasure.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
-     
+
      cout << "\nTest loading a map with multiple exits\n";
      level = loadLevel("example_map_multiple_exits.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
@@ -166,56 +170,18 @@ void test_resizeMap()
 
      cout << "Test resize when row and col are both positive\n";
      int maxRow = 5, maxCol = 3;
-     char **map = createMap<5,3>(_map0);
+     char **map = createMap<5, 3>(_map0);
 
      cout << "Before\n";
+     INFO(map);
      INFO(maxRow);
      INFO(maxCol);
-     
-     char **resized = resizeMap(map, maxRow, maxCol);
-     INFO(resized);
-     
+
+     map = resizeMap(map, maxRow, maxCol);
+
      cout << "After\n";
      INFO(maxRow);
      INFO(maxCol);
-
-     deallocMap(resized, 10);
-
-     /*
-     cout << "\nTest resize when row and col are both negative\n";
-     map = createMap<5, 3>(_map0);
-     maxRow = -4;
-     maxCol = -4;
-     
-     cout << "Before\n";
-     INFO(maxRow);
-     INFO(maxCol);
-     resized = resizeMap(map, maxRow, maxCol);
-     
-     cout << "After\n";
-     INFO(maxRow);
-     INFO(maxCol);
-
-     dealloc_map(map, 5);
-     dealloc_map(resized, 10);
-
-     cout << "\nTest resize when row is positive and col is negative\n";
-     map = createMap<5, 3>(_map0);
-     maxRow = 5;
-     maxCol = -3;
-
-     cout << "Before\n";
-     INFO(maxRow);
-     INFO(maxCol);
-     resized = resizeMap(map, maxRow, maxCol);
-     
-     cout << "After\n";
-     INFO(maxRow);
-     INFO(maxCol);
-
-     deallocMap(map, 5);
-     deallocMap(resized, 10);
-     */
 
      deallocMap(map, 5);
 
@@ -409,12 +375,12 @@ int main()
      ////////////////////
      */
 
-     test_loadLevel();
-     test_getDirection();
+     // test_loadLevel();
+     // test_getDirection();
      test_resizeMap();
-     //test_doPlayerMove();
-     //test_doMonsterAttack();
-     //test_deleteMap();
+     // test_doPlayerMove();
+     // test_doMonsterAttack();
+     // test_deleteMap();
 
      return 0;
 }
