@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <string>
 #include "logic.h"
@@ -16,31 +15,55 @@ char _map0[5][3] = {
     {'o', '-', '-'},
     {'@', '-', '$'}};
 
-void deallocMap(char **map, int maxRow)
+char _map1[4][4] =
+    {{'-', '!', '+', '+'},
+     {'$', 'o', 'M', '+'},
+     {'+', '@', '-', '-'},
+     {'+', '?', '-', '+'}};
+
+char _map3[5][5] =
+    {{'-', '-', 'M', '-', '-'},
+     {'-', '-', '+', '-', '-'},
+     {'M', '+', 'o', '+', 'M'},
+     {'-', '-', '+', '-', '-'},
+     {'-', '-', 'M', '-', '-'}};
+
+// Deallocates the Map
+void deallocMap(char **&map, int maxRow)
 {
      if (map)
      {
-          cout << "Deleting map at " << map << "\n";
           for (int i = 0; i < maxRow; ++i)
           {
-               map[i] = nullptr;
+               delete[] map[i];
           }
           delete[] map;
+          map = nullptr;
      }
 }
 
+// Converts a static array into a dynamic array
 template <int r, int c>
-char **createMap(char _map[r][c])
+char **static_to_dynamic(char arr[r][c])
 {
-     char **map = new char *[r];
+     char **t = new char *[r];
      for (int i = 0; i < r; ++i)
      {
-          map[i] = new char[c];
+          t[i] = new char[c];
           for (int j = 0; j < c; ++j)
-               map[i][j] = _map[i][j];
+          {
+               t[i][j] = arr[i][j];
+          }
      }
+     return t;
+}
 
-     return map;
+// Print the map to console
+void printMap(char **map, const int maxRow) {
+     cout << "-------------------------\n";
+     for (int i = 0; i < maxRow; ++i)
+          cout << map[i] << "\n";
+     cout << "-------------------------\n";
 }
 
 void test_loadLevel()
@@ -54,72 +77,72 @@ void test_loadLevel()
      char **level;
 
      cout << "Test loading valid map\n";
-     level = loadLevel("example_valid.txt", maxRow, maxCol, player);
+     level = loadLevel("valid.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading from a file that does not exist\n";
-     level = loadLevel("example_file_dne.txt", maxRow, maxCol, player);
+     level = loadLevel("file_dne.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading map with negative rows and columns\n";
-     level = loadLevel("example_rc_neg.txt", maxRow, maxCol, player);
+     level = loadLevel("rc_neg.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading map with letter dimensions\n";
-     level = loadLevel("example_rc_alph.txt", maxRow, maxCol, player);
+     level = loadLevel("rc_alph.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading map with player out of pounds negatively\n";
-     level = loadLevel("example_player_oob_neg.txt", maxRow, maxCol, player);
+     level = loadLevel("player_oob_neg.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading map with player out of pounds positively\n";
-     level = loadLevel("example_player_oob_pos.txt", maxRow, maxCol, player);
+     level = loadLevel("player_oob_pos.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading map with player at floating point coords\n";
-     level = loadLevel("example_invalid_player_pos.txt", maxRow, maxCol, player);
+     level = loadLevel("invalid_player_pos.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading the player on top of a Monster\n";
-     level = loadLevel("example_player_monster.txt", maxRow, maxCol, player);
+     level = loadLevel("player_monster.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading the player on top of Treasure\n";
-     level = loadLevel("example_player_treasure.txt", maxRow, maxCol, player);
+     level = loadLevel("player_treasure.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading map with invalid tiles\n";
      ;
-     level = loadLevel("example_invalid_map.txt", maxRow, maxCol, player);
+     level = loadLevel("invalid_map.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading an empty file\n";
-     level = loadLevel("example_empty_file.txt", maxRow, maxCol, player);
+     level = loadLevel("empty_file.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading a 0 x 0 map\n";
-     level = loadLevel("example_map_zero.txt", maxRow, maxCol, player);
+     level = loadLevel("map_zero.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading an empty map with non-zero dimensions\n";
-     level = loadLevel("example_map_empty.txt", maxRow, maxCol, player);
+     level = loadLevel("map_empty.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading a map with more data than dimensions indicate\n";
-     level = loadLevel("example_map_big.txt", maxRow, maxCol, player);
+     level = loadLevel("map_big.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading a map with no exit\n";
-     level = loadLevel("example_map_no_exit.txt", maxRow, maxCol, player);
+     level = loadLevel("map_no_exit.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading a map with no treasure\n";
-     level = loadLevel("example_map_no_treasure.txt", maxRow, maxCol, player);
+     level = loadLevel("map_no_treasure.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading a map with multiple exits\n";
-     level = loadLevel("example_map_multiple_exits.txt", maxRow, maxCol, player);
+     level = loadLevel("map_multiple_exits.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "DONE \u0028\u256f\u00b0\u25a1\u00b0\uff09\u256f\ufe35 \u253b\u2501\u253b\n";
@@ -150,7 +173,7 @@ void test_deleteMap()
      cout << "Test deleteMap\n";
      cout << "Delete non-nullptr\n";
      int maxRow = 5;
-     char **map = createMap<5, 3>(_map0);
+     char **map = static_to_dynamic<5, 3>(_map0);
 
      deleteMap(map, maxRow);
      deallocMap(map, maxRow);
@@ -169,21 +192,50 @@ void test_resizeMap()
      cout << "Test resizeMap\n";
 
      cout << "Test resize when row and col are both positive\n";
-     int maxRow = 5, maxCol = 3;
-     char **map = createMap<5, 3>(_map0);
+     int maxRow = 4, maxCol = 4;
+     char **map1_ptr = static_to_dynamic<4, 4>(_map1);
 
      cout << "Before\n";
-     INFO(map);
+     INFO(map1_ptr);
      INFO(maxRow);
      INFO(maxCol);
 
-     map = resizeMap(map, maxRow, maxCol);
+     /**
+      * why does gradescope not like me doing this?
+      * It I keep it resized, gradescope tells me
+      * "The autograder failed to execute correctly.
+      * Contact your course staff for help in debugging this issue.
+      * Make sure to include a link to this page so that they can help you most effectively."
+      */
+     map1_ptr = resizeMap(map1_ptr, maxRow, maxCol);
+
+     deallocMap(map1_ptr, maxRow);
 
      cout << "After\n";
+     INFO(map1_ptr);
      INFO(maxRow);
      INFO(maxCol);
 
-     deallocMap(map, 5);
+     // Test if maxRow and maxCol are negative.
+     cout << "\nTest resize when row and col are both negative\n";
+     maxRow = -4, maxCol = -4;
+     map1_ptr = static_to_dynamic<4, 4>(_map1);
+     cout << "Before\n";
+     INFO(map1_ptr);
+     INFO(maxRow);
+     INFO(maxCol);
+
+     char** resized = resizeMap(map1_ptr, maxRow, maxCol);
+
+     cout << "After\n";
+     INFO(map1_ptr);
+     INFO(maxRow);
+     INFO(maxCol);
+
+     deallocMap(map1_ptr, 4);
+
+     // Test if maxRow is positive and maxCol is negative.
+     cout << "\nTest resize when row is positve and col is negative\n";
 
      cout << "DONE \u0028\u256f\u00b0\u25a1\u00b0\uff09\u256f\ufe35 \u253b\u2501\u253b\n";
      cout << "---------------------------------------------\n\n";
@@ -200,7 +252,7 @@ void test_doPlayerMove()
      player.treasure = 0;
 
      int maxRow = 5, maxCol = 3;
-     char **map = createMap<5, 3>(_map0);
+     char **map = static_to_dynamic<5, 3>(_map0);
 
      cout << "Test momvement with no treasure\n";
      for (int i = -1; i <= maxRow; ++i)
@@ -239,8 +291,9 @@ void test_doMonsterAttack()
      player.col = 0;
      player.treasure = 1;
 
-     int maxRow = 5, maxCol = 3;
-     char **map = createMap<5, 3>(_map0);
+     int maxRow = 5, maxCol = 5;
+     char **monster_map = static_to_dynamic<5, 5>(_map3);
+     printMap(monster_map, maxRow);
 
      INFO(maxCol);
      INFO_STRUCT(player);
@@ -248,7 +301,8 @@ void test_doMonsterAttack()
      // bool result = doMonsterAttack(map, maxRow, maxCol, player);
      // INFO(result);
 
-     deallocMap(map, maxRow);
+     deallocMap(monster_map, maxRow);
+     INFO(monster_map);
 
      cout << "DONE \u0028\u256f\u00b0\u25a1\u00b0\uff09\u256f\ufe35 \u253b\u2501\u253b\n";
      cout << "---------------------------------------------\n\n";
@@ -256,131 +310,19 @@ void test_doMonsterAttack()
 
 int main()
 {
-     /*
-     ////////////////////
-     // this is optional but STRONGLY recommended for preparing for part 2 (development)
-     //   coverage -/-> correctness
-     // note: there are _many_ ways to do this part, including ways that are more elegant and efficient than this way demonstrated here
-     if (level == nullptr)
-          cout << "FAIL: level is nullptr"
-               << "\n";
-     else
+     try
      {
-          cout << " OK : level is not nullptr"
-               << "\n";
-          if (maxRow == 5)
-               cout << " OK : maxRow is 5"
-                    << "\n";
-          else
-               cout << "FAIL: expected maxRow to be 5, got " << maxRow << "\n";
-
-          if (maxCol == 3)
-               cout << " OK : maxCol is 3"
-                    << "\n";
-          else
-               cout << "FAIL: expected maxCol to be 3, got " << maxCol << "\n";
-
-          if (player.row == 3)
-               cout << " OK : player.row is 3"
-                    << "\n";
-          else
-               cout << "FAIL: expected player.row to be 3, got " << player.row << "\n";
-
-          if (player.col == 0)
-               cout << " OK : player.col is 0"
-                    << "\n";
-          else
-               cout << "FAIL: expected player.col to be 0, got " << player.col << "\n";
-
-          if (level[0][0] == 'M')
-               cout << " OK : level[0][0] is M"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[0][0] to be M, got " << level[0][0] << "\n";
-
-          if (level[0][1] == '+')
-               cout << " OK : level[0][1] is +"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[0][1] to be +, got " << level[0][1] << "\n";
-
-          if (level[0][2] == '-')
-               cout << " OK : level[0][2] is -"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[0][2] to be -, got " << level[0][2] << "\n";
-
-          if (level[1][0] == '-')
-               cout << " OK : level[1][0] is -"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[1][0] to be -, got " << level[1][0] << "\n";
-
-          if (level[1][1] == '+')
-               cout << " OK : level[1][1] is +"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[1][1] to be +, got " << level[1][1] << "\n";
-          if (level[1][2] == '-')
-               cout << " OK : level[1][2] is -"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[1][2] to be -, got " << level[1][2] << "\n";
-          if (level[2][0] == '-')
-               cout << " OK : level[2][0] is -"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[2][0] to be -, got " << level[2][0] << "\n";
-          if (level[2][1] == '+')
-               cout << " OK : level[2][1] is +"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[2][1] to be +, got " << level[2][1] << "\n";
-          if (level[2][2] == '!')
-               cout << " OK : level[2][2] is !"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[2][2] to be !, got " << level[2][2] << "\n";
-          if (level[3][0] == 'o')
-               cout << " OK : level[3][0] is o"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[3][0] to be o, got " << level[3][0] << "\n";
-          if (level[3][1] == '-')
-               cout << " OK : level[3][1] is -"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[3][1] to be -, got " << level[3][1] << "\n";
-          if (level[3][2] == '-')
-               cout << " OK : level[3][2] is -"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[3][2] to be -, got " << level[3][2] << "\n";
-          if (level[4][0] == '@')
-               cout << " OK : level[4][0] is @"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[4][0] to be @, got " << level[4][0] << "\n";
-          if (level[4][1] == '-')
-               cout << " OK : level[4][1] is -"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[4][1] to be -, got " << level[4][1] << "\n";
-          if (level[4][2] == '$')
-               cout << " OK : level[4][2] is $"
-                    << "\n";
-          else
-               cout << "FAIL: expected level[4][2] to be $, got " << level[4][2] << "\n";
+          test_loadLevel();
      }
-     ////////////////////
-     */
-
-     // test_loadLevel();
-     // test_getDirection();
+     catch (...)
+     {
+          cout << "error\n";
+     }
+     test_getDirection();
      test_resizeMap();
-     // test_doPlayerMove();
+     test_doPlayerMove();
      // test_doMonsterAttack();
-     // test_deleteMap();
+     test_deleteMap();
 
      return 0;
 }
