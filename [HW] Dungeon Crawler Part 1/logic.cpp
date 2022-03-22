@@ -12,18 +12,22 @@ using std::invalid_argument;
 char** loadLevel(const string& fileName, int& maxRow, int& maxCol, Player& player) {
      ifstream fin(fileName);
      if (!fin.is_open())
-          throw invalid_argument("Cannot open file");
+          return nullptr;
+          // throw invalid_argument("Cannot open file");
      
      fin >> maxRow >> maxCol;
 
      if (fin.fail())
-          throw invalid_argument("Encountered non-integer for row and col");
+          return nullptr;
+          // throw invalid_argument("Encountered non-integer for row and col");
 
      if (maxRow < 0)
-          throw invalid_argument("maxRow must be positive");
+          return nullptr;
+          // throw invalid_argument("maxRow must be positive");
      
      if (maxCol < 0)
-          throw invalid_argument("maxCol must be positive");
+          return nullptr;
+          // throw invalid_argument("maxCol must be positive");
 
      fin >> player.row >> player.col;
      player.treasure = 0;
@@ -87,12 +91,15 @@ void deleteMap(char **&map, int &maxRow) {
 
 char** resizeMap(char** map, int& maxRow, int& maxCol) {
      if (map == nullptr)
-          throw std::invalid_argument("map is nullptr");
+          //throw std::invalid_argument("map is nullptr");
+          return nullptr;
 
      if (maxRow < 1)
-          throw std::domain_error("maxRow is non-positive");
+          //throw std::domain_error("maxRow is non-positive");
+          return nullptr;
      if (maxCol < 1)
-          throw std::domain_error("maxCol is non-positive");
+          //throw std::domain_error("maxCol is non-positive");
+          return nullptr;
 
      const int og_row = maxRow, og_col = maxCol;
 

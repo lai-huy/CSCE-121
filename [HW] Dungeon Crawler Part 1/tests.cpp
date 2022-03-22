@@ -77,72 +77,79 @@ void test_loadLevel()
      char **level;
 
      cout << "Test loading valid map\n";
-     level = loadLevel("valid.txt", maxRow, maxCol, player);
+     level = loadLevel("map_valid.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading from a file that does not exist\n";
      level = loadLevel("file_dne.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
-     cout << "\nTest loading map with negative rows and columns\n";
-     level = loadLevel("rc_neg.txt", maxRow, maxCol, player);
+     cout << "\nTest loading map with letter rows\n";
+     level = loadLevel("rc_r_alph.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
-     cout << "\nTest loading map with letter dimensions\n";
-     level = loadLevel("rc_alph.txt", maxRow, maxCol, player);
+     cout << "\nTest loading map with letter columns\n";
+     level = loadLevel("rc_c_alph.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
-     cout << "\nTest loading map with player out of pounds negatively\n";
-     level = loadLevel("player_oob_neg.txt", maxRow, maxCol, player);
+     cout << "\nTest loading map with negative rows\n";
+     level = loadLevel("rc_r_neg.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
-     cout << "\nTest loading map with player out of pounds positively\n";
-     level = loadLevel("player_oob_pos.txt", maxRow, maxCol, player);
+     cout << "\nTest loading map with negative columns\n";
+     level = loadLevel("rc_c_neg.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
-     cout << "\nTest loading map with player at floating point coords\n";
-     level = loadLevel("invalid_player_pos.txt", maxRow, maxCol, player);
+     cout << "\nTest loading map with too many tiles\n";
+     level = loadLevel("rc_large.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
-     cout << "\nTest loading the player on top of a Monster\n";
-     level = loadLevel("player_monster.txt", maxRow, maxCol, player);
+     cout << "\nTest loading map with player letter rows\n";
+     level = loadLevel("player_pos_alph_r.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
-     cout << "\nTest loading the player on top of Treasure\n";
-     level = loadLevel("player_treasure.txt", maxRow, maxCol, player);
+     cout << "\nTest loading map with player letter columns\n";
+     level = loadLevel("player_pos_alph_c.txt", maxRow, maxCol, player);
+     deallocMap(level, maxRow);
+
+     cout << "\nTest loading map with player out of pounds vertically negative\n";
+     level = loadLevel("player_oob_neg_r.txt", maxRow, maxCol, player);
+     deallocMap(level, maxRow);
+
+     cout << "\nTest loading map with player out of pounds horizontally negative\n";
+     level = loadLevel("player_oob_neg_c.txt", maxRow, maxCol, player);
+     deallocMap(level, maxRow);
+
+     cout << "\nTest loading map with player out of pounds vertically positive\n";
+     level = loadLevel("player_oob_pos_r.txt", maxRow, maxCol, player);
+     deallocMap(level, maxRow);
+
+     cout << "\nTest loading map with player out of pounds horizontally positive\n";
+     level = loadLevel("player_oob_pos_c.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading map with invalid tiles\n";
-     ;
-     level = loadLevel("invalid_map.txt", maxRow, maxCol, player);
+     level = loadLevel("map_invalid.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading an empty file\n";
      level = loadLevel("empty_file.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
-     cout << "\nTest loading a 0 x 0 map\n";
-     level = loadLevel("map_zero.txt", maxRow, maxCol, player);
-     deallocMap(level, maxRow);
-
      cout << "\nTest loading an empty map with non-zero dimensions\n";
      level = loadLevel("map_empty.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
-     cout << "\nTest loading a map with more data than dimensions indicate\n";
-     level = loadLevel("map_big.txt", maxRow, maxCol, player);
+     cout << "\nTest loading a map with more tiles than indicated by dimensions\n";
+     level = loadLevel("map_too_many_tiles.txt", maxRow, maxCol, player);
+     deallocMap(level, maxRow);
+
+     cout << "\nTest loading map with not enough tiles\n";
+     level = loadLevel("map_too_few_tiles.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "\nTest loading a map with no exit\n";
      level = loadLevel("map_no_exit.txt", maxRow, maxCol, player);
-     deallocMap(level, maxRow);
-
-     cout << "\nTest loading a map with no treasure\n";
-     level = loadLevel("map_no_treasure.txt", maxRow, maxCol, player);
-     deallocMap(level, maxRow);
-
-     cout << "\nTest loading a map with multiple exits\n";
-     level = loadLevel("map_multiple_exits.txt", maxRow, maxCol, player);
      deallocMap(level, maxRow);
 
      cout << "DONE \u0028\u256f\u00b0\u25a1\u00b0\uff09\u256f\ufe35 \u253b\u2501\u253b\n";
@@ -156,12 +163,16 @@ void test_getDirection()
 
      int nextRow = 0, nextCol = 0;
 
-     for (int i = 0; i < 128; ++i)
-     {
-          cout << "Testing input: " << (char)i << "\n";
-          getDirection((char)i, nextRow, nextCol);
-          cout << "\n";
-     }
+     getDirection(MOVE_UP, nextRow, nextCol);
+     getDirection(MOVE_DOWN, nextRow, nextCol);
+     getDirection(MOVE_LEFT, nextRow, nextCol);
+     getDirection(MOVE_RIGHT, nextRow, nextCol);
+     getDirection('W', nextRow, nextCol);
+     getDirection('S', nextRow, nextCol);
+     getDirection('A', nextRow, nextCol);
+     getDirection('D', nextRow, nextCol);
+     getDirection('\u0020', nextRow, nextCol);
+     getDirection('L', nextRow, nextCol);
 
      cout << "DONE \u0028\u256f\u00b0\u25a1\u00b0\uff09\u256f\ufe35 \u253b\u2501\u253b\n";
      cout << "---------------------------------------------\n\n";
@@ -229,6 +240,7 @@ void test_resizeMap()
 
      cout << "After\n";
      INFO(map1_ptr);
+     INFO(resized);
      INFO(maxRow);
      INFO(maxCol);
 
@@ -310,14 +322,7 @@ void test_doMonsterAttack()
 
 int main()
 {
-     try
-     {
-          test_loadLevel();
-     }
-     catch (...)
-     {
-          cout << "error\n";
-     }
+     test_loadLevel();
      test_getDirection();
      test_resizeMap();
      test_doPlayerMove();
