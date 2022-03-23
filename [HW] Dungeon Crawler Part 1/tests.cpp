@@ -21,6 +21,13 @@ char _map1[4][4] = {
     {'+', '@', '-', '-'},
     {'+', '?', '-', '+'}};
 
+char _map2[5][6] = {
+    {'-', '-', 'M', '-', '-', '\0'},
+    {'-', '-', '-', '-', '-', '\0'},
+    {'M', '-', 'o', '-', 'M', '\0'},
+    {'-', '-', '-', '-', '-', '\0'},
+    {'-', '-', 'M', '-', '-', '\0'}};
+
 char _map3[5][5] = {
     {'-', '-', 'M', '-', '-'},
     {'-', '-', '+', '-', '-'},
@@ -31,6 +38,7 @@ char _map3[5][5] = {
 // Deallocates the Map
 void deallocMap(char **&map, int maxRow)
 {
+     cout << "Deleting map " << map << "\n";
      if (map)
      {
           for (int i = 0; i < maxRow; ++i)
@@ -58,15 +66,14 @@ char **static_to_dynamic(char arr[r][c])
      return t;
 }
 
-// Print the map to console
-void printMap(char **map, const int maxRow)
-{
-     cout << "-------------------------\n";
+void printMap(char **&map, int maxRow) {
+     if (map == nullptr) {
+          cout << "map is nullptr\n";
+          return;
+     }
+
      for (int i = 0; i < maxRow; ++i)
           cout << map[i] << "\n";
-     cout << "-------------------------\n";
-
-     deallocMap(map, maxRow);
 }
 
 void test_loadLevel()
@@ -166,16 +173,12 @@ void test_getDirection()
 
      int nextRow = 0, nextCol = 0;
 
-     getDirection(MOVE_UP, nextRow, nextCol);
-     getDirection(MOVE_DOWN, nextRow, nextCol);
-     getDirection(MOVE_LEFT, nextRow, nextCol);
-     getDirection(MOVE_RIGHT, nextRow, nextCol);
-     getDirection('W', nextRow, nextCol);
-     getDirection('S', nextRow, nextCol);
-     getDirection('A', nextRow, nextCol);
-     getDirection('D', nextRow, nextCol);
-     getDirection('\u0020', nextRow, nextCol);
-     getDirection('L', nextRow, nextCol);
+     char inputs[] {MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, 'W', 'S', 'A', 'D', '\u0020', 'L'};
+
+     for (int i = 0; i < 10; ++i) {
+          cout << "Testing input " << inputs[i] << "\n";
+          getDirection(inputs[i], nextRow, nextCol);
+     }
 
      cout << "DONE \u0028\u256f\u00b0\u25a1\u00b0\uff09\u256f\ufe35 \u253b\u2501\u253b\n";
      cout << "---------------------------------------------\n\n";
@@ -215,7 +218,6 @@ void test_resizeMap()
      INFO(maxCol);
 
      map1_ptr = resizeMap(map1_ptr, maxRow, maxCol);
-
      deallocMap(map1_ptr, maxRow);
 
      cout << "After\n";
@@ -375,22 +377,32 @@ void test_doMonsterAttack()
      cout << "\n\n---------------------------------------------\n";
      cout << "Test doMonsterAttack\n";
 
+     cout << "Test moving the monster right next to player\n";
+     char ** map_ptr = static_to_dynamic<4, 4>(_map1);
+     int maxRow = 4, maxCol = 4;
      Player player;
-     player.row = 3;
-     player.col = 0;
-     player.treasure = 1;
+     player.treasure = 0;
+     player.row = 1;
+     player.col = 1;
+     doMonsterAttack(map_ptr, maxRow, maxCol, player);
 
-     int maxRow = 5, maxCol = 5;
-     char **monster_map = static_to_dynamic<5, 5>(_map3);
+     deallocMap(map_ptr, maxRow);
 
-     INFO(maxCol);
-     INFO_STRUCT(player);
+     cout << "\nTest moving the monster further away from player\n";
+     char **monster_map = static_to_dynamic<5, 6>(_map2);
+     player.row = 2;
+     player.col = 2;
+     maxRow = 5;
+     maxCol = 5;
 
-     // bool result = doMonsterAttack(map, maxRow, maxCol, player);
-     // INFO(result);
+     doMonsterAttack(monster_map, maxRow, maxCol, player);
+     doMonsterAttack(monster_map, maxRow, maxCol, player);
+     deallocMap(monster_map, 5);
 
-     deallocMap(monster_map, maxRow);
-     INFO(monster_map);
+     cout << "Test moving the blind monster\n";
+     monster_map = static_to_dynamic<5, 5>(_map3);
+     // doMonsterAttack(monster_map, maxRow, maxCol, player);
+     deallocMap(monster_map, 5);
 
      cout << "DONE \u0028\u256f\u00b0\u25a1\u00b0\uff09\u256f\ufe35 \u253b\u2501\u253b\n";
      cout << "---------------------------------------------\n\n";
@@ -402,7 +414,7 @@ int main()
      test_getDirection();
      test_resizeMap();
      test_doPlayerMove();
-     // test_doMonsterAttack();
+     test_doMonsterAttack();
      test_deleteMap();
 
      return 0;

@@ -129,6 +129,6 @@ int doPlayerMove(char** map, int maxRow, int maxCol, Player& player, int nextRow
  * @return  Boolean value indicating player status: true if monster reaches the player, false if not.
  * @update map contents
  */
-bool doMonsterAttack(char** map, int maxRow, int maxCol, Player player);
+bool doMonsterAttack(char** map, int maxRow, int maxCol, const Player& player);
 
 #endif
