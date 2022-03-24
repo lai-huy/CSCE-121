@@ -15,6 +15,13 @@ char _map0[5][3] = {
     {'o', '-', '-'},
     {'@', '-', '$'}};
 
+char _map[5][3] = {
+    {'M', '+', '-'},
+    {'-', '+', '-'},
+    {'-', '+', '?'},
+    {'o', '-', '-'},
+    {'@', '-', '$'}};
+
 char _map1[4][4] = {
     {'-', '!', '+', '+'},
     {'$', 'o', 'M', '+'},
@@ -365,6 +372,17 @@ void test_doPlayerMove()
      cout << "Test move to (5, 0)\n";
      doPlayerMove(map, maxRow, maxCol, player, 5, 0);
      cout << "\n";
+
+     deallocMap(map, maxRow);
+
+     map = static_to_dynamic<5, 3>(_map);
+     player.treasure = 0;
+     cout << "Test move to (2, 2)\n";
+     doPlayerMove(map, maxRow, maxCol, player, 2, 2);
+
+     player.treasure = 1;
+     cout << "Test move to (2, 2)\n";
+     doPlayerMove(map, maxRow, maxCol, player, 2, 2);
 
      deallocMap(map, maxRow);
 
