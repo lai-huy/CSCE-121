@@ -42,7 +42,12 @@ char _map3[5][5] = {
     {'-', '-', '+', '-', '-'},
     {'-', '-', 'M', '-', '-'}};
 
-// Deallocates the Map
+/**
+ *   Deallocates an inputed map
+ * 
+ *   @param map     dynamic 2d array to deallocate
+ *   @param maxRow  the number of rows in the array.
+ */
 void deallocMap(char **&map, int maxRow)
 {
      cout << "Deleting map " << map << "\n";
@@ -57,7 +62,15 @@ void deallocMap(char **&map, int maxRow)
      }
 }
 
-// Converts a static array into a dynamic array
+/**
+ * Converts a static array into a dynamic array
+ * 
+ * @tparam r    the number of rows of the 2d array
+ * @tparam c    the number of columns of the 2d array
+ * @param  arr  the static array to convert
+ * 
+ * @return pointer to the dynamically allocated array
+ */
 template <int r, int c>
 char **static_to_dynamic(char arr[r][c])
 {
@@ -73,6 +86,14 @@ char **static_to_dynamic(char arr[r][c])
      return t;
 }
 
+/**
+ * Print the map to console
+ * This method has been deprecated
+ * 
+ * @param map       a reference to the map being printed
+ * @param maxRow    the number of rows in the map
+ */
+[[deprecated("Do not use this function, it breaks gradescope")]]
 void printMap(char **&map, int maxRow) {
      if (map == nullptr) {
           cout << "map is nullptr\n";
@@ -232,7 +253,6 @@ void test_resizeMap()
      INFO(maxRow);
      INFO(maxCol);
 
-     // Test if maxRow and maxCol are negative.
      cout << "\nTest resize when row and col are both negative\n";
      maxRow = -4;
      maxCol = 4;
@@ -252,7 +272,6 @@ void test_resizeMap()
 
      deallocMap(map1_ptr, 4);
 
-     // Test if maxRow is positive and maxCol is negative.
      cout << "\nTest resize when row is positve and col is negative\n";
      maxRow = 4;
      maxCol = -4;
@@ -271,6 +290,25 @@ void test_resizeMap()
      INFO(maxCol);
 
      deallocMap(map1_ptr, 4);
+
+     cout << "\nTest resizing nullptr\n";
+     maxRow = 1;
+     maxCol = 1;
+     
+     map1_ptr = nullptr;
+     
+     cout << "Before\n";
+     INFO(map1_ptr);
+     INFO(maxRow);
+     INFO(maxCol);
+
+     resized = resizeMap(map1_ptr, maxRow, maxCol);
+     cout << "After\n";
+     INFO(map1_ptr);
+     INFO(resized);
+     INFO(maxRow);
+     INFO(maxCol);
+
 
      cout << "DONE \u0028\u256f\u00b0\u25a1\u00b0\uff09\u256f\ufe35 \u253b\u2501\u253b\n";
      cout << "---------------------------------------------\n\n";
@@ -419,7 +457,7 @@ void test_doMonsterAttack()
 
      cout << "Test moving the blind monster\n";
      monster_map = static_to_dynamic<5, 5>(_map3);
-     // doMonsterAttack(monster_map, maxRow, maxCol, player);
+     doMonsterAttack(monster_map, maxRow, maxCol, player);
      deallocMap(monster_map, 5);
 
      cout << "DONE \u0028\u256f\u00b0\u25a1\u00b0\uff09\u256f\ufe35 \u253b\u2501\u253b\n";
