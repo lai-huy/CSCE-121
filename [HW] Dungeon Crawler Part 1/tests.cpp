@@ -201,9 +201,9 @@ void test_getDirection()
 
      int nextRow = 0, nextCol = 0;
 
-     char inputs[] {MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, 'W', 'S', 'A', 'D', '\u0020', 'L'};
+     char inputs[] {MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, 'W','\u0020', 'L'};
 
-     for (int i = 0; i < 10; ++i) {
+     for (int i = 0; i < 7; ++i) {
           cout << "Testing input " << inputs[i] << "\n";
           getDirection(inputs[i], nextRow, nextCol);
      }
@@ -433,16 +433,8 @@ void test_doMonsterAttack()
      cout << "\n\n---------------------------------------------\n";
      cout << "Test doMonsterAttack\n";
 
-     cout << "Test moving the monster right next to player\n";
-     char ** map_ptr = static_to_dynamic<4, 4>(_map1);
-     int maxRow = 4, maxCol = 4;
      Player player;
-     player.treasure = 0;
-     player.row = 1;
-     player.col = 1;
-     doMonsterAttack(map_ptr, maxRow, maxCol, player);
-
-     deallocMap(map_ptr, maxRow);
+     int maxRow = 0, maxCol = 0;
 
      cout << "\nTest moving the monster further away from player\n";
      char **monster_map = static_to_dynamic<5, 6>(_map2);
