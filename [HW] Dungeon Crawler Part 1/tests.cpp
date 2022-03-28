@@ -44,13 +44,13 @@ char _map3[5][5] = {
 
 /**
  *   Deallocates an inputed map
- * 
+ *
  *   @param map     dynamic 2d array to deallocate
  *   @param maxRow  the number of rows in the array.
  */
 void deallocMap(char **&map, int maxRow)
 {
-     cout << "Deleting map " << map << "\n";
+     cout << "Deallocating map " << map << "\n";
      if (map)
      {
           for (int i = 0; i < maxRow; ++i)
@@ -64,11 +64,11 @@ void deallocMap(char **&map, int maxRow)
 
 /**
  * Converts a static array into a dynamic array
- * 
+ *
  * @tparam r    the number of rows of the 2d array
  * @tparam c    the number of columns of the 2d array
  * @param  arr  the static array to convert
- * 
+ *
  * @return pointer to the dynamically allocated array
  */
 template <int r, int c>
@@ -89,13 +89,14 @@ char **static_to_dynamic(char arr[r][c])
 /**
  * Print the map to console
  * This method has been deprecated
- * 
+ *
  * @param map       a reference to the map being printed
  * @param maxRow    the number of rows in the map
  */
-[[deprecated("Do not use this function, it breaks gradescope")]]
-void printMap(char **&map, int maxRow) {
-     if (map == nullptr) {
+[[deprecated("Do not use this function, it breaks gradescope")]] void printMap(char **&map, int maxRow)
+{
+     if (map == nullptr)
+     {
           cout << "map is nullptr\n";
           return;
      }
@@ -201,9 +202,10 @@ void test_getDirection()
 
      int nextRow = 0, nextCol = 0;
 
-     char inputs[] {MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, 'W','\u0020', 'L'};
+     char inputs[]{MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, 'W', '\u0020', 'L'};
 
-     for (int i = 0; i < 7; ++i) {
+     for (int i = 0; i < 7; ++i)
+     {
           cout << "Testing input " << inputs[i] << "\n";
           getDirection(inputs[i], nextRow, nextCol);
      }
@@ -294,9 +296,9 @@ void test_resizeMap()
      cout << "\nTest resizing nullptr\n";
      maxRow = 1;
      maxCol = 1;
-     
+
      map1_ptr = nullptr;
-     
+
      cout << "Before\n";
      INFO(map1_ptr);
      INFO(maxRow);
@@ -308,7 +310,6 @@ void test_resizeMap()
      INFO(resized);
      INFO(maxRow);
      INFO(maxCol);
-
 
      cout << "DONE \u0028\u256f\u00b0\u25a1\u00b0\uff09\u256f\ufe35 \u253b\u2501\u253b\n";
      cout << "---------------------------------------------\n\n";
@@ -328,98 +329,82 @@ void test_doPlayerMove()
      char **map = static_to_dynamic<5, 3>(_map0);
 
      cout << "Test momvement with no treasure\n";
-     cout << "Test move to (-1, 0)\n";
+     cout << "Test Move to (-1, 0)\n";
      doPlayerMove(map, maxRow, maxCol, player, -1, 0);
-     cout << "\n";
 
-     cout << "Test move to (0, -1)\n";
+     cout << "\nTest Move to (0, -1)\n";
      doPlayerMove(map, maxRow, maxCol, player, 0, -1);
-     cout << "\n";
 
-     cout << "Test move to (0, 0)\n";
+     cout << "\nTest Move to (0, 0)\n";
      doPlayerMove(map, maxRow, maxCol, player, 0, 0);
-     cout << "\n";
 
-     cout << "Test move to (0, 1)\n";
+     cout << "\nTest Move to (0, 1)\n";
      doPlayerMove(map, maxRow, maxCol, player, 0, 1);
-     cout << "\n";
 
-     cout << "Test move to (0, 2)\n";
+     cout << "\nTest Move to (0, 2)\n";
      doPlayerMove(map, maxRow, maxCol, player, 0, 2);
-     cout << "\n";
 
-     cout << "Test move to (0, 3)\n";
+     cout << "\nTest Move to (0, 3)\n";
      doPlayerMove(map, maxRow, maxCol, player, 0, 3);
-     cout << "\n";
 
-     cout << "Test move to (2, 2)\n";
+     cout << "\nTest Move to (2, 2)\n";
      doPlayerMove(map, maxRow, maxCol, player, 2, 2);
-     cout << "\n";
 
-     cout << "Test move to (4, 0)\n";
+     cout << "\nTest Move to (4, 0)\n";
      doPlayerMove(map, maxRow, maxCol, player, 4, 0);
-     cout << "\n";
 
-     cout << "Test move to (4, 2)\n";
+     cout << "\nTest Move to (4, 2)\n";
      doPlayerMove(map, maxRow, maxCol, player, 4, 2);
-     cout << "\n";
 
-     cout << "Test move to (5, 0)\n";
+     cout << "\nTest Move to (5, 0)\n";
      doPlayerMove(map, maxRow, maxCol, player, 5, 0);
-     cout << "\n";
 
-     cout << "Test momvement with treasure\n";
+     deallocMap(map, maxRow);
+
+     map = static_to_dynamic<5, 3>(_map0);
+
+     cout << "\nTest momvement with treasure\n";
      player.treasure = 1;
 
-     cout << "Test move to (-1, 0)\n";
+     cout << "\nTest Move to (-1, 0)\n";
      doPlayerMove(map, maxRow, maxCol, player, -1, 0);
-     cout << "\n";
 
-     cout << "Test move to (0, -1)\n";
+     cout << "\nTest Move to (0, -1)\n";
      doPlayerMove(map, maxRow, maxCol, player, 0, -1);
-     cout << "\n";
 
-     cout << "Test move to (0, 0)\n";
+     cout << "\nTest Move to (0, 0)\n";
      doPlayerMove(map, maxRow, maxCol, player, 0, 0);
-     cout << "\n";
 
-     cout << "Test move to (0, 1)\n";
+     cout << "\nTest Move to (0, 1)\n";
      doPlayerMove(map, maxRow, maxCol, player, 0, 1);
-     cout << "\n";
 
-     cout << "Test move to (0, 2)\n";
+     cout << "\nTest Move to (0, 2)\n";
      doPlayerMove(map, maxRow, maxCol, player, 0, 2);
-     cout << "\n";
 
-     cout << "Test move to (0, 3)\n";
+     cout << "\nTest Move to (0, 3)\n";
      doPlayerMove(map, maxRow, maxCol, player, 0, 3);
-     cout << "\n";
 
-     cout << "Test move to (2, 2)\n";
+     cout << "\nTest Move to (2, 2)\n";
      doPlayerMove(map, maxRow, maxCol, player, 2, 2);
-     cout << "\n";
 
-     cout << "Test move to (4, 0)\n";
+     cout << "\nTest Move to (4, 0)\n";
      doPlayerMove(map, maxRow, maxCol, player, 4, 0);
-     cout << "\n";
 
-     cout << "Test move to (4, 2)\n";
+     cout << "\nTest Move to (4, 2)\n";
      doPlayerMove(map, maxRow, maxCol, player, 4, 2);
-     cout << "\n";
 
-     cout << "Test move to (5, 0)\n";
+     cout << "\nTest Move to (5, 0)\n";
      doPlayerMove(map, maxRow, maxCol, player, 5, 0);
-     cout << "\n";
 
      deallocMap(map, maxRow);
 
      map = static_to_dynamic<5, 3>(_map);
      player.treasure = 0;
-     cout << "Test move to (2, 2)\n";
+     cout << "\nTest Move to (2, 2)\n";
      doPlayerMove(map, maxRow, maxCol, player, 2, 2);
 
      player.treasure = 1;
-     cout << "Test move to (2, 2)\n";
+     cout << "\nTest Move to (2, 2)\n";
      doPlayerMove(map, maxRow, maxCol, player, 2, 2);
 
      deallocMap(map, maxRow);
@@ -447,7 +432,7 @@ void test_doMonsterAttack()
      doMonsterAttack(monster_map, maxRow, maxCol, player);
      deallocMap(monster_map, 5);
 
-     cout << "Test moving the blind monster\n";
+     cout << "\nTest moving the blind monster\n";
      monster_map = static_to_dynamic<5, 5>(_map3);
      doMonsterAttack(monster_map, maxRow, maxCol, player);
      deallocMap(monster_map, 5);
