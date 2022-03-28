@@ -1,21 +1,18 @@
 #ifndef LOGIC_H
 #define LOGIC_H
 
-#define INFO(X) std::cout << "[INFO] ("<<__FUNCTION__<<":"<<__LINE__<<") " << #X << " = " << X << "\n";
-#define INFO_STRUCT(X) std::cout << "[INFO] ("<<__FUNCTION__<<":"<<__LINE__<<") " << #X << " = {" << X.row << "," << X.col << "," << X.treasure << "}" << "\n";
-#define FLUSH std::cout << std::flush;
-
-// TODO(student): nothing in here.
-//                do not change this file
-//                do not submit this file
-
+#define INFO(X) cout << "[INFO] ("<<__FUNCTION__<<":"<<__LINE__<<") " << #X << " = " << X << endl;
+#include <iostream>
+#include <fstream>
 #include <string>
+
+using std::cin, std::cout, std::endl, std::string, std::ifstream;
 
 // Player object container
 struct Player {
-	int row;
-	int col;
-	int treasure;
+	int row = 0;
+	int col = 0;
+	int treasure = 0;
 };
 
 // constants for tile status
@@ -55,7 +52,7 @@ const char MOVE_RIGHT     = 'd';    // right movement
  * @param   maxRow      Number of rows in the dungeon table (aka height).
  * @param   maxCol      Number of columns in the dungeon table (aka width).
  * @param   player      Player object by reference to set starting position.
- * @return  pointer to dynamically-allocated 2D array representation of dungeon map with player's location.
+ * @return  pointer to 2D dynamic array representation of dungeon map with player's location., or nullptr if loading fails for any reason
  * @update  maxRow, maxCol, player
  */
 char** loadLevel(const std::string& fileName, int& maxRow, int& maxCol, Player& player);
@@ -68,9 +65,19 @@ char** loadLevel(const std::string& fileName, int& maxRow, int& maxCol, Player& 
  * @param   nextRow     Player's next row on the dungeon map (up/down).
  * @param   nextCol     Player's next column on dungeon map (left/right).
  * @return None
- * @updates nextRow, nextCol
+ * @update nextRow, nextCol
  */
 void getDirection(char input, int& nextRow, int& nextCol);
+
+/**
+ * TODO: [suggested] Student implement this function
+ * Allocate the 2D map array.
+ * Initialize each cell to TILE_OPEN.
+ * @param   maxRow      Number of rows in the dungeon table (aka height).
+ * @param   maxCol      Number of columns in the dungeon table (aka width).
+ * @return  2D map array for the dungeon level, holds char type.
+ */
+char** createMap(int maxRow, int maxCol);
 
 /**
  * TODO(student): write tests for this function
@@ -129,6 +136,6 @@ int doPlayerMove(char** map, int maxRow, int maxCol, Player& player, int nextRow
  * @return  Boolean value indicating player status: true if monster reaches the player, false if not.
  * @update map contents
  */
-bool doMonsterAttack(char** map, int maxRow, int maxCol, Player player);
+bool doMonsterAttack(char** map, int maxRow, int maxCol, const Player& player);
 
 #endif
