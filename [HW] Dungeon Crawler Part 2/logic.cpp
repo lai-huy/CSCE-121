@@ -22,87 +22,87 @@ char **loadLevel(const string &fileName, int &maxRow, int &maxCol, Player &playe
 
      if (!fin.is_open())
      {
-          cout << fileName << " cannot be opened.\n";
+          // cout << fileName << " cannot be opened.\n";
           return nullptr;
      }
-     cout << fileName << " is opened.\n";
+     // cout << fileName << " is opened.\n";
 
      fin >> maxRow;
      if (fin.fail())
      {
-          cout << "maxRow is non-numeric.\n";
+          // cout << "maxRow is non-numeric.\n";
           return nullptr;
      }
-     cout << "maxRow is numeric\n";
+     // cout << "maxRow is numeric\n";
 
      if (maxRow < 1)
      {
-          cout << "maxRow < 1\n";
+          // cout << "maxRow < 1\n";
           return nullptr;
      }
-     cout << "maxRow is >= 1\n";
+     // cout << "maxRow is >= 1\n";
 
      fin >> maxCol;
      if (fin.fail())
      {
-          cout << "maxCol is non-numeric.\n";
+          // cout << "maxCol is non-numeric.\n";
           return nullptr;
      }
 
      if (maxCol < 1)
      {
-          cout << "maxCol < 1\n";
+          // cout << "maxCol < 1\n";
           return nullptr;
      }
-     cout << "maxCol is >= 1\n";
+     // cout << "maxCol is >= 1\n";
 
      if (maxRow > INT32_MAX / maxCol)
      {
-          cout << "number of tiles is > 2147483647.\n";
+          // cout << "number of tiles is > 2147483647.\n";
           return nullptr;
      }
-     cout << "number of tiles is <= 2147483647.\n";
+     // cout << "number of tiles is <= 2147483647.\n";
 
      fin >> player.row;
      if (fin.fail())
      {
-          cout << "player row is non-numeric.\n";
+          // cout << "player row is non-numeric.\n";
           return nullptr;
      }
 
      if (player.row < 0)
      {
-          cout << "player row is < 0\n";
+          // cout << "player row is < 0\n";
           return nullptr;
      }
-     cout << "player row is >= 0\n";
+     // cout << "player row is >= 0\n";
 
      if (player.row >= maxRow)
      {
-          cout << "player row is >= maxRow\n";
+          // cout << "player row is >= maxRow\n";
           return nullptr;
      }
-     cout << "player row < maxRow\n";
+     // cout << "player row < maxRow\n";
 
      fin >> player.col;
      if (fin.fail())
      {
-          cout << "player col is non-numeric\n";
+          // cout << "player col is non-numeric\n";
           return nullptr;
      }
 
      if (player.col < 0)
      {
-          cout << "player col is < 0\n";
+          // cout << "player col is < 0\n";
           return nullptr;
      }
 
      if (player.col >= maxCol)
      {
-          cout << "player col >= maxCol\n";
+          // cout << "player col >= maxCol\n";
           return nullptr;
      }
-     cout << "player col < maxCol\n";
+     // cout << "player col < maxCol\n";
 
      char tile;
      bool exit_exists = false;
@@ -117,8 +117,8 @@ char **loadLevel(const string &fileName, int &maxRow, int &maxCol, Player &playe
 
           if (++count > total)
           {
-               cout << "too may tiles in map.\n";
-               cout << "bailing out\n";
+               // cout << "too may tiles in map.\n";
+               // cout << "bailing out\n";
                return nullptr;
           }
 
@@ -135,30 +135,24 @@ char **loadLevel(const string &fileName, int &maxRow, int &maxCol, Player &playe
           case TILE_PILLAR:
                break;
           default:
-               cout << "invalid symbol in map.\n";
-               cout << "bailing out\n";
+               // cout << "invalid symbol in map.\n";
+               // cout << "bailing out\n";
                return nullptr;
           }
      }
 
      if (count < total)
      {
-          cout << "not enough tiles in map.\n";
-          cout << "bailing out\n";
+          // cout << "not enough tiles in map.\n";
+          // cout << "bailing out\n";
           return nullptr;
      }
 
      fin.close();
      fin.clear();
      fin.open(fileName);
-     fin.get();
-     fin.get();
-     fin.get();
-     fin.get();
-     fin.get();
-     fin.get();
-     fin.get();
-     fin.get();
+     fin.ignore(std::numeric_limits<int>::max(), '\n');
+     fin.ignore(std::numeric_limits<int>::max(), '\n');
 
      char **map = new char *[maxRow];
 
@@ -168,14 +162,14 @@ char **loadLevel(const string &fileName, int &maxRow, int &maxCol, Player &playe
           for (int j = 0; j < maxCol; ++j)
           {
                fin >> map[i][j];
-               cout << "put " << map[i][j] << "\n";
+               // cout << "put " << map[i][j] << "\n";
           }
      }
 
      if (!exit_exists)
      {
-          cout << "no way out\n";
-          cout << "bailing out\n";
+          // cout << "no way out\n";
+          // cout << "bailing out\n";
           deleteMap(map, maxRow);
           return nullptr;
      }
@@ -196,6 +190,7 @@ char **loadLevel(const string &fileName, int &maxRow, int &maxCol, Player &playe
  */
 void getDirection(char input, int &nextRow, int &nextCol)
 {
+     //printf("%c\n", input);
      switch (tolower(input))
      {
      case MOVE_UP:
@@ -225,6 +220,12 @@ void getDirection(char input, int &nextRow, int &nextCol)
  */
 char **createMap(int maxRow, int maxCol)
 {
+     if (maxRow < 0)
+          return nullptr;
+     
+     if (maxCol < 0)
+          return nullptr;
+
      char **map = new char *[maxRow];
      for (int i = 0; i < maxRow; ++i)
      {
@@ -246,14 +247,12 @@ char **createMap(int maxRow, int maxCol)
  */
 void deleteMap(char **&map, int &maxRow)
 {
-     if (!map)
-          return;
-
-     cout << "Deleting map " << map << "\n";
-     for (int i = 0; i < maxRow; ++i)
-          if (map[i])
+     // cout << "Deleting map " << map << "\n";
+     if (map) {
+          for (int i = 0; i < maxRow; ++i)
                delete[] map[i];
-     delete[] map;
+          delete[] map;
+     }
 
      map = nullptr;
      maxRow = 0;
@@ -275,31 +274,31 @@ char **resizeMap(char **map, int &maxRow, int &maxCol)
 {
      if (map == nullptr)
      {
-          cout << "map is nullptr\n";
+          // cout << "map is nullptr\n";
           return nullptr;
      }
 
      if (maxRow < 1)
      {
-          cout << "maxRow < 1\n";
+          // cout << "maxRow < 1\n";
           return nullptr;
      }
 
      if (maxRow > INT32_MAX / 2)
      {
-          cout << "2 * maxRow > 2147483647\n";
+          // cout << "2 * maxRow > 2147483647\n";
           return nullptr;
      }
 
      if (maxCol < 1)
      {
-          cout << "maxCol < 1\n";
+          // cout << "maxCol < 1\n";
           return nullptr;
      }
 
      if (maxCol > INT32_MAX / 2)
      {
-          cout << "2 * maxCol > 2147483647\n";
+          // cout << "2 * maxCol > 2147483647\n";
           return nullptr;
      }
 
@@ -346,79 +345,90 @@ int doPlayerMove(char **map, int maxRow, int maxCol, Player &player, int nextRow
 {
      if (nextRow < 0)
      {
-          cout << "nextRow < 0\n";
-          cout << "next tile out of bounds\n";
-          cout << "don't move\n";
+          // cout << "nextRow < 0\n";
+          // cout << "next tile out of bounds\n";
+          // cout << "don't move\n";
           return STATUS_STAY;
      }
-     cout << "nextRow >= 0\n";
+     // cout << "nextRow >= 0\n";
 
      if (nextRow >= maxRow)
      {
-          cout << "nextRow >= maxRow\n";
-          cout << "next tile out of bounds\n";
-          cout << "don't move\n";
+          // cout << "nextRow >= maxRow\n";
+          // cout << "next tile out of bounds\n";
+          // cout << "don't move\n";
           return STATUS_STAY;
      }
-     cout << "nextRow < maxRow\n";
+     // cout << "nextRow < maxRow\n";
 
      if (nextCol < 0)
      {
-          cout << "nextCol < 0\n";
-          cout << "next tile out of bounds\n";
-          cout << "don't move\n";
+          // cout << "nextCol < 0\n";
+          // cout << "next tile out of bounds\n";
+          // cout << "don't move\n";
           return STATUS_STAY;
      }
 
      if (nextCol >= maxCol)
      {
-          cout << "nextCol >= maxCol\n";
-          cout << "next tile out of bounds\n";
-          cout << "don't move\n";
+          // cout << "nextCol >= maxCol\n";
+          // cout << "next tile out of bounds\n";
+          // cout << "don't move\n";
           return STATUS_STAY;
      }
-     cout << "nextCol < maxCol\n";
+     // cout << "nextCol < maxCol\n";
 
+     // Check what tile the player is moving to
      switch (map[nextRow][nextCol])
      {
      case TILE_MONSTER:
-          cout << "map[nextRow][nextCol] == TILE_MONSTER\n";
-          cout << "don't move\n";
+          // cout << "map[nextRow][nextCol] == TILE_MONSTER\n";
+          // cout << "don't move\n";
           return STATUS_STAY;
      case TILE_PILLAR:
-          cout << "map[nextRow][nextCol] == TILE_PILLAR\n";
-          cout << "don't move\n";
+          // cout << "map[nextRow][nextCol] == TILE_PILLAR\n";
+          // cout << "don't move\n";
           return STATUS_STAY;
      case TILE_AMULET:
-          cout << "found amulet\n";
+          // cout << "found amulet\n";
+          map[player.row][player.col] = TILE_OPEN;
           player.row = nextRow;
           player.col = nextCol;
-          cout << "updated player location\n";
+          map[player.row][player.col] = TILE_PLAYER;
+          // cout << "updated player location\n";
           return STATUS_AMULET;
      case TILE_TREASURE:
-          cout << "found treasure\n";
+          // cout << "found treasure\n";
           map[player.row][player.col] = TILE_OPEN;
           player.row = nextRow;
           player.col = nextCol;
           map[player.row][player.col] = TILE_PLAYER;
           ++player.treasure;
-          cout << "updated player location\n";
+          // cout << "updated player location\n";
           return STATUS_TREASURE;
      case TILE_DOOR:
-          cout << "found door\n";
-          cout << "updated player location\n";
+          // cout << "found door\n";
+          // cout << "updated player location\n";
+          map[player.row][player.col] = TILE_OPEN;
+          player.row = nextRow;
+          player.col = nextCol;
+          map[player.row][player.col] = TILE_PLAYER;
           return STATUS_LEAVE;
      case TILE_EXIT:
           if (player.treasure)
           {
-               cout << "found exit with treasure\n";
-               cout << "updated player location\n";
+               // cout << "found exit with treasure\n";
+               // cout << "updated player location\n";
+               map[player.row][player.col] = TILE_OPEN;
+               player.row = nextRow;
+               player.col = nextCol;
+               map[player.row][player.col] = TILE_PLAYER;
                return STATUS_ESCAPE;
           }
           else
           {
-               cout << "found exit without treasure\n";
-               cout << "don't move\n";
+               // cout << "found exit without treasure\n";
+               // cout << "don't move\n";
                return STATUS_STAY;
           }
      case TILE_OPEN:
@@ -426,11 +436,11 @@ int doPlayerMove(char **map, int maxRow, int maxCol, Player &player, int nextRow
           player.row = nextRow;
           player.col = nextCol;
           map[player.row][player.col] = TILE_PLAYER;
-          cout << "updated player location\n";
+          // cout << "updated player location\n";
           return STATUS_MOVE;
      default:
-          cout << "invalid character\n";
-          cout << "don't move\n";
+          // cout << "invalid character\n";
+          // cout << "don't move\n";
           return STATUS_STAY;
      }
 }
@@ -453,74 +463,74 @@ int doPlayerMove(char **map, int maxRow, int maxCol, Player &player, int nextRow
 bool doMonsterAttack(char **map, int maxRow, int maxCol, const Player &player)
 {
      char tile;
-
+     bool eaten = false;
      // Check up
-     for (int i = player.row; i > -1; --i) {
+     for (int i = player.row - 1; i > -1; --i) {
           tile = map[i][player.col];
           if (tile == TILE_PILLAR) {
-               cout << "found pillar up\n";
+               // cout << "found pillar up\n";
                break;
           } else if (tile == TILE_MONSTER) {
-               cout << "found monster up\n";
+               // cout << "found monster up\n";
                map[i][player.col] = TILE_OPEN;
                map[i + 1][player.col] = TILE_MONSTER;
                if (i + 1 == player.row) {
-                    cout << "eaten by monster\n";
-                    return true;
+                    // cout << "eaten by monster\n";
+                    eaten = true;
                }
           }
      }
 
      // Check down
-     for (int i = player.row; i < maxRow; ++i) {
+     for (int i = player.row + 1; i < maxRow; ++i) {
           tile = map[i][player.col];
           if (tile == TILE_PILLAR) {
-               cout << "found pillar down\n";
+               // cout << "found pillar down\n";
                break;
           } else if (tile == TILE_MONSTER) {
-               cout << "found monster down\n";
+               // cout << "found monster down\n";
                map[i][player.col] = TILE_OPEN;
                map[i - 1][player.col] = TILE_MONSTER;
                if (i - 1 == player.row) {
-                    cout << "eaten by monster\n";
-                    return true;
+                    // cout << "eaten by monster\n";
+                    eaten = true;
                }
           }
      }
 
      // Check left
-     for (int j = player.col; j > -1; --j) {
+     for (int j = player.col - 1; j > -1; --j) {
           tile = map[player.row][j];
           if (tile == TILE_PILLAR) {
-               cout << "found pillar left\n";
+               // cout << "found pillar left\n";
                break;
           } else if (tile == TILE_MONSTER) {
-               cout << "found monster left\n";
+               // cout << "found monster left\n";
                map[player.row][j] = TILE_OPEN;
                map[player.row][j + 1] = TILE_MONSTER;
                if (j + 1 == player.col) {
-                    cout << "eaten by monster\n";
-                    return true;
+                    // cout << "eaten by monster\n";
+                    eaten = true;
                }
           }
      }
 
      // Check right
-     for (int j = player.col; j < maxCol; ++j) {
+     for (int j = player.col + 1; j < maxCol; ++j) {
           tile = map[player.row][j];
           if (tile == TILE_PILLAR) {
-               cout << "found pillar left\n";
+               // cout << "found pillar right\n";
                break;
           } else if (tile == TILE_MONSTER) {
-               cout << "found monster right\n";
+               // cout << "found monster right\n";
                map[player.row][j] = TILE_OPEN;
-               map[player.row][j + 1] = TILE_MONSTER;
+               map[player.row][j - 1] = TILE_MONSTER;
                if (j - 1 == player.col) {
-                    cout << "eaten by monster\n";
-                    return true;
+                    // cout << "eaten by monster\n";
+                    eaten = true;
                }
           }
      }
 
-     return false;
+     return eaten;
 }
