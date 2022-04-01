@@ -86,25 +86,6 @@ char **static_to_dynamic(char arr[r][c])
      return t;
 }
 
-/**
- * Print the map to console
- * This method has been deprecated
- *
- * @param map       a reference to the map being printed
- * @param maxRow    the number of rows in the map
- */
-[[deprecated("Do not use this function, it breaks gradescope")]] void printMap(char **&map, int maxRow)
-{
-     if (map == nullptr)
-     {
-          cout << "map is nullptr\n";
-          return;
-     }
-
-     for (int i = 0; i < maxRow; ++i)
-          cout << map[i] << "\n";
-}
-
 void test_loadLevel()
 {
      cout << "\n\n---------------------------------------------\n";
@@ -202,7 +183,7 @@ void test_getDirection()
 
      int nextRow = 0, nextCol = 0;
 
-     char inputs[]{MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, 'W', '\u0020', 'L'};
+     char inputs[]{MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, 'W', '\u0030', 'L'};
 
      for (int i = 0; i < 7; ++i)
      {
@@ -444,11 +425,11 @@ void test_doMonsterAttack()
 int main()
 {
      test_loadLevel();
-     test_getDirection();
-     test_resizeMap();
-     test_doPlayerMove();
-     test_doMonsterAttack();
-     test_deleteMap();
+     // test_getDirection();
+     // test_resizeMap();
+     // test_doPlayerMove();
+     // test_doMonsterAttack();
+     // test_deleteMap();
 
      return 0;
 }
