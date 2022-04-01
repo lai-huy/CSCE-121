@@ -27,7 +27,7 @@ int main()
      for (int current_room = 1; current_room <= total_rooms; current_room++)
      {
           cout << "Level " << current_room << endl;
-          string fileName = "./levels/" + dungeon + std::to_string(current_room) + ".txt";
+          string fileName = dungeon + std::to_string(current_room) + ".txt";
 
           // declare variables
           int maxRow = 0;

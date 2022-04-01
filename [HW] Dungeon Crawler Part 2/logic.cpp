@@ -104,66 +104,71 @@ char **loadLevel(const string &fileName, int &maxRow, int &maxCol, Player &playe
      }
      // cout << "player col < maxCol\n";
 
-     char tile;
+     char **map = createMap(maxRow, maxCol);
+     char tile = '\0';
      bool exit_exists = false;
      int count = 0, total = maxRow * maxCol;
-     while (true)
-     {
-          fin >> tile;
-
-          if (fin.eof()) {
-               break;
-          }
-
-          if (++count > total)
-          {
-               // cout << "too may tiles in map.\n";
-               // cout << "bailing out\n";
-               return nullptr;
-          }
-
-          switch (tile)
-          {
-          case TILE_DOOR:
-          case TILE_EXIT:
-               exit_exists = true;
-          case TILE_OPEN:
-          case TILE_PLAYER:
-          case TILE_TREASURE:
-          case TILE_AMULET:
-          case TILE_MONSTER:
-          case TILE_PILLAR:
-               break;
-          default:
-               // cout << "invalid symbol in map.\n";
-               // cout << "bailing out\n";
-               return nullptr;
-          }
-     }
-
-     if (count < total)
-     {
-          // cout << "not enough tiles in map.\n";
-          // cout << "bailing out\n";
-          return nullptr;
-     }
-
-     fin.close();
-     fin.clear();
-     fin.open(fileName);
-     fin.ignore(std::numeric_limits<int>::max(), '\n');
-     fin.ignore(std::numeric_limits<int>::max(), '\n');
-
-     char **map = new char *[maxRow];
-
      for (int i = 0; i < maxRow; ++i)
      {
-          map[i] = new char[maxCol];
           for (int j = 0; j < maxCol; ++j)
           {
-               fin >> map[i][j];
-               // cout << "put " << map[i][j] << "\n";
+               fin >> tile;
+               // printf("%c", tile);
+
+               if (fin.eof())
+               {
+                    if (count < total)
+                    {
+                         // cout << "not enough tiles in map.\n";
+                         // cout << "bailing out\n";
+                         deleteMap(map, maxRow);
+                         return nullptr;
+                    }
+               }
+               ++count;
+
+               switch (tile)
+               {
+               case TILE_DOOR:
+                    map[i][j] = tile;
+                    exit_exists = true;
+                    break;
+               case TILE_EXIT:
+                    map[i][j] = tile;
+                    exit_exists = true;
+                    break;
+               case TILE_OPEN:
+                    map[i][j] = tile;
+                    break;
+               case TILE_PLAYER:
+                    map[i][j] = tile;
+                    break;
+               case TILE_TREASURE:
+                    map[i][j] = tile;
+                    break;
+               case TILE_AMULET:
+                    map[i][j] = tile;
+                    break;
+               case TILE_MONSTER:
+                    map[i][j] = tile;
+                    break;
+               case TILE_PILLAR:
+                    map[i][j] = tile;
+                    break;
+               default:
+                    // cout << "invalid symbol in map.\n";
+                    // cout << "bailing out\n";
+                    deleteMap(map, maxRow);
+                    return nullptr;
+               }
           }
+          // cout << "\n";
+     }
+
+     if (fin.peek() != EOF) {
+          // cout << "too many tiles in map\n";
+          deleteMap(map, maxRow);
+          return nullptr;
      }
 
      if (!exit_exists)
@@ -190,7 +195,7 @@ char **loadLevel(const string &fileName, int &maxRow, int &maxCol, Player &playe
  */
 void getDirection(char input, int &nextRow, int &nextCol)
 {
-     //printf("%c\n", input);
+     // printf("%c\n", input);
      switch (tolower(input))
      {
      case MOVE_UP:
@@ -222,7 +227,7 @@ char **createMap(int maxRow, int maxCol)
 {
      if (maxRow < 0)
           return nullptr;
-     
+
      if (maxCol < 0)
           return nullptr;
 
@@ -248,7 +253,8 @@ char **createMap(int maxRow, int maxCol)
 void deleteMap(char **&map, int &maxRow)
 {
      // cout << "Deleting map " << map << "\n";
-     if (map) {
+     if (map)
+     {
           for (int i = 0; i < maxRow; ++i)
                delete[] map[i];
           delete[] map;
@@ -465,16 +471,21 @@ bool doMonsterAttack(char **map, int maxRow, int maxCol, const Player &player)
      char tile;
      bool eaten = false;
      // Check up
-     for (int i = player.row - 1; i > -1; --i) {
+     for (int i = player.row - 1; i > -1; --i)
+     {
           tile = map[i][player.col];
-          if (tile == TILE_PILLAR) {
+          if (tile == TILE_PILLAR)
+          {
                // cout << "found pillar up\n";
                break;
-          } else if (tile == TILE_MONSTER) {
+          }
+          else if (tile == TILE_MONSTER)
+          {
                // cout << "found monster up\n";
                map[i][player.col] = TILE_OPEN;
                map[i + 1][player.col] = TILE_MONSTER;
-               if (i + 1 == player.row) {
+               if (i + 1 == player.row)
+               {
                     // cout << "eaten by monster\n";
                     eaten = true;
                }
@@ -482,16 +493,21 @@ bool doMonsterAttack(char **map, int maxRow, int maxCol, const Player &player)
      }
 
      // Check down
-     for (int i = player.row + 1; i < maxRow; ++i) {
+     for (int i = player.row + 1; i < maxRow; ++i)
+     {
           tile = map[i][player.col];
-          if (tile == TILE_PILLAR) {
+          if (tile == TILE_PILLAR)
+          {
                // cout << "found pillar down\n";
                break;
-          } else if (tile == TILE_MONSTER) {
+          }
+          else if (tile == TILE_MONSTER)
+          {
                // cout << "found monster down\n";
                map[i][player.col] = TILE_OPEN;
                map[i - 1][player.col] = TILE_MONSTER;
-               if (i - 1 == player.row) {
+               if (i - 1 == player.row)
+               {
                     // cout << "eaten by monster\n";
                     eaten = true;
                }
@@ -499,16 +515,21 @@ bool doMonsterAttack(char **map, int maxRow, int maxCol, const Player &player)
      }
 
      // Check left
-     for (int j = player.col - 1; j > -1; --j) {
+     for (int j = player.col - 1; j > -1; --j)
+     {
           tile = map[player.row][j];
-          if (tile == TILE_PILLAR) {
+          if (tile == TILE_PILLAR)
+          {
                // cout << "found pillar left\n";
                break;
-          } else if (tile == TILE_MONSTER) {
+          }
+          else if (tile == TILE_MONSTER)
+          {
                // cout << "found monster left\n";
                map[player.row][j] = TILE_OPEN;
                map[player.row][j + 1] = TILE_MONSTER;
-               if (j + 1 == player.col) {
+               if (j + 1 == player.col)
+               {
                     // cout << "eaten by monster\n";
                     eaten = true;
                }
@@ -516,16 +537,21 @@ bool doMonsterAttack(char **map, int maxRow, int maxCol, const Player &player)
      }
 
      // Check right
-     for (int j = player.col + 1; j < maxCol; ++j) {
+     for (int j = player.col + 1; j < maxCol; ++j)
+     {
           tile = map[player.row][j];
-          if (tile == TILE_PILLAR) {
+          if (tile == TILE_PILLAR)
+          {
                // cout << "found pillar right\n";
                break;
-          } else if (tile == TILE_MONSTER) {
+          }
+          else if (tile == TILE_MONSTER)
+          {
                // cout << "found monster right\n";
                map[player.row][j] = TILE_OPEN;
                map[player.row][j - 1] = TILE_MONSTER;
-               if (j - 1 == player.col) {
+               if (j - 1 == player.col)
+               {
                     // cout << "eaten by monster\n";
                     eaten = true;
                }
