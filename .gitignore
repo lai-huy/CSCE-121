@@ -1,9 +1,13 @@
 *.out
 *.debug
+
 .vscode/
 Notes/
-[LW] Hello World/hello_world
+Practice/
 Exam 1/
+Exan 2/
+
+[LW] Hello World/hello_world
 [HW] Seam Carving/seam_fw.ppm
 [HW] Seam Carving/carved*
 Cheese/tests_bruh.cpp
