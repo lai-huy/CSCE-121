@@ -4,8 +4,7 @@
 .vscode/
 Notes/
 Practice/
-Exam 1/
-Exan 2/
+Exam [0-9]*/
 
 [LW] Hello World/hello_world
 [HW] Seam Carving/seam_fw.ppm
