@@ -1,0 +1,5 @@
+User ajitjain
+User michaelm
+Post 42412212 ajitjain When deallocating #dynamic arrays, use delete[].
+Post 58687888 michaelm When an #array is passed to a #function, it decays to a pointer.
+Post 42353253 michaelm You can use pass-by-reference, if you need multiple updated values in the calling #function. It also helps save memory and CPU cycles.

@@ -1,0 +1,4 @@
+User ajitjain
+User michaelm
+Post 42412212 ajitjain When deallocating #dynamic arrays, use delete[].
+Post 42353253 michaelm You can use pass-by-reference, if you need multiple updated values in the calling function. It also helps save memory and CPU cycles.

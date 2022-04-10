@@ -1,0 +1,39 @@
+User spolsley
+User andrewn
+User ajitjain
+Post 1287 spolsley For the lower bound, you're checking <= 0, but keep in mind that for 0-indexed #arrays, a 0 index is within bounds.
+User slupoli
+User ptaele
+User michaelm
+Post 1283 spolsley Make sure you #test locally as well.
+Post 1276 spolsley The data just becomes lost when you overwrite the #pointer to it, and valgrind recognizes it as a memory leak.
+Post 1253 ptaele You will not a segmentation #error from updating the pass-by-reference variables. Your segmentation error is occurring is happening when you are trying to access elements in your 2D #array that is out of bounds.
+Post 1179 ptaele Locate your delete keywords and determine where it was overused.
+Post 1084 michaelm You should start from scratch. Likely you'll write much better #code the second time around and be better prepared for coding on exams.
+Post 1056 ajitjain In general, whenever you call delete or delete[], make sure to assign the corresponding #pointer to nullptr.
+Post 1007 ptaele Use #stream states while looping to check if you have too few values or non-integer values.
+Post 956 michaelm If a read fails, the variable will not be set to anything else, it will have the value it had before you tried to read in a new value.
+Post 955 michaelm I haven't found an easy way to deal with a segmentation fault other than to avoid having one. It turns out that reading outside the array bounds in an #array on the #heap results in a segmentation fault.
+Post 936 spolsley Recall that "if"-"elseif"-"else" will only run one of the conditions at most.
+Post 930 ptaele We are covering dynamic arrays this part of the semester, so #arrays are initialized with the new operator.
+Post 883 spolsley When the #compiler is in strict mode, it suggests have variables of that matching data type for comparisons.
+Post 876 spolsley Remember that if an #error occurs, nothing else in the try block will run, and you will go to the catch block instead.
+Post 848 andrewn There are no surprises hidden in the hidden #test cases, it's basically the same as the visible ones with different numbers.
+Post 829 andrewn You are getting caught on the valid file at the end of each of the hidden #test cases (it's the same one for each).
+Post 808 andrewn I would try all the files, see which one through an #exception, then open it up and find the mistake in the data.
+Post 805 andrewn First, #arrays do not have length or size functions, the program needs to keep track of that information, although you can theoretically use the sizeof operator to get this information if necessary.
+Post 801 slupoli I've added a video to help you understand the #ordering (not sorting) algorithm you will be creating.
+Post 799 slupoli In the prompt, it has suggestions on where to start. read that document carefully.
+Post 793 ajitjain You have an unimplemented #function and the warning is origninating from that.
+Post 662 ptaele ++i is technically faster. That is why I use ++i. The reason is beyond the scope of the class?
+Post 657 slupoli I would still use std::cout. Just know you MIGHT get a minor deduction if not.
+Post 630 andrewn Check to make sure you aren't calling the at() function on the empty #string (of length 0).
+Post 599 ptaele I noticed that quite a large number of students are using a lot of functions from the #string class. When it doubt, it is always safe to use the + operator and the at() function.
+Post 580 andrewn You are likely mixing up the values of the char 0 and the int 0. The null character '\0' has a value of 0, while the character '0' has a value of 48.
+Post 554 ajitjain one simple way to get the char from the one letter #string is str.at(0).
+Post 498 ajitjain Your #string is only of size 1, but you're trying to access (beyond the possible range) at index 18446744073709551615.
+Post 463 ajitjain A single-line comment will #comment out everything after the first //.
+Post 438 michaelm The for #loop is a natural fit since you have two values at the ends of a range.
+Post 331 michaelm You can review the first labwork for information on how to #compile and run in the command line.
+Post 328 ajitjain Put a few cout statements to #debug (understand where is the control reaching, what values variables have at different points of execution, etc.).
+Post 231 michaelm The problem stems from trying to read in an integer and getting a character that is not an integer. Essentially, that breaks the input #stream (i.e. cin).
