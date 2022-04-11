@@ -116,6 +116,10 @@ void Network::loadFromFile(string fileName)
  */
 void Network::addUser(string userName)
 {
+     // cout << "Adding user " << userName << "\n";
+     for (size_t i = 0; i < userName.size(); ++i)
+          userName.at(i) = tolower(userName.at(i));
+
      for (User * user : this->users) {
           if (user->getUserName() == userName)
                throw invalid_argument(userName + " is already in the network.");
@@ -217,37 +221,21 @@ vector<Post *> Network::getPostsWithTag(string tagName)
 
 vector<string> Network::getMostPopularHashtag()
 {
-     vector<int> counts = vector<int>(this->tags.size());
+     // for (Tag * tag : this->tags) {
+     //      cout << tag->getTagName() << "\n";
+     // }
 
-     for (size_t i = 0; i < this->tags.size(); ++i) {
-          int count = 0;
-          for (Tag * tag : this->tags) {
-               if (tag->getTagName() == this->tags.at(i)->getTagName())
-                    ++count;
-          }
-          counts.at(i) = count;
+     size_t max = 0;
+     for (Tag * tag : this->tags) {
+          size_t s = tag->getTagPosts().size();
+          if (s > max)
+               max = s;
      }
 
-     int max;
-     for (int i : counts)
-          if (i > max)
-               max = i;
-
      vector<string> temp = vector<string>();
-     for (size_t i = 0; i < this->tags.size(); ++i) {
-          if (counts.at(i) == max) {
-               bool exists = false;
-               string tag_name = this->tags.at(i)->getTagName();
-               for (string name : temp) {
-                    if (name == tag_name) {
-                         exists = true;
-                         break;
-                    }
-               }
-
-               if (!exists)
-                    temp.push_back(tag_name);
-          }
+     for (Tag * tag : this->tags) {
+          if (tag->getTagPosts().size() == max)
+               temp.push_back(tag->getTagName());
      }
 
      return temp;

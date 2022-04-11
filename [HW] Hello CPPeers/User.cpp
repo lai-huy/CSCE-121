@@ -15,8 +15,6 @@ User::User(string userName) : userName{userName}, userPosts{vector<Post *>()}
 {
      if (this->userName == "")
           throw invalid_argument("user name cannot be empty");
-     
-     // cout << this->userName << "\n";
 
      for (char c : this->userName) {
           if (!isalpha(c))
