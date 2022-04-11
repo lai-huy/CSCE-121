@@ -1,40 +1,71 @@
-/*
- *
- * This code is copyrighted (c) 2021 by
- * Texas A&M Computer Science
- *
- *	There will be RIGOROUS cheat checking on your exams!!
- *	DON'T POST ANYWHERE!! such as CHEGG, public Github, etc
- *  You will be legally responsible.
- */
-
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
 #include <string>
+#include <cctype>
 #include <stdexcept>
+
 #include "Post.h"
 
-using std::string;
-using std::vector;
+using std::cout;
+using std::string, std::vector, std::stringstream, std::invalid_argument;
 
 Post::Post(unsigned int postId, string userName, string postText)
-  : postId(postId), userName(userName), postText(postText) {
-  if (postId == 0 || userName == "" || postText == "") {
-    throw std::invalid_argument("post constructor: invalid parameter values");
-  }
+    : postId(postId), userName(userName), postText(postText)
+{
+     if (postId == 0 || userName == "" || postText == "")
+     {
+          throw invalid_argument("post constructor: invalid parameter values");
+     }
 }
 
-unsigned int Post::getPostId() {
-  return postId;
+unsigned int Post::getPostId()
+{
+     return this->postId;
 }
 
-string Post::getPostUser() {
-  return userName;
+string Post::getPostUser()
+{
+     return this->userName;
 }
 
-string Post::getPostText() {
-  return postText;
+string Post::getPostText()
+{
+     return this->postText;
 }
 
-vector<string> Post::findTags() {
-  // TODO(student): extracts candidate tags based on occurrences of # in the post
+vector<string> Post::findTags()
+{
+     vector<string> temp;
+     stringstream ss(this->postText);
+     string s;
+
+     while (!ss.eof())
+     {
+          ss >> s;
+          if (s.at(0) == '#')
+          {
+               string tag = "";
+               for (char c : s)
+               {
+                    switch (c)
+                    {
+                    case '!':
+                         continue;
+                    case ',':
+                         continue;
+                    case '.':
+                         continue;
+                    case '?':
+                         continue;
+                    default:
+                         tag += tolower(c);
+                    }
+               }
+               temp.push_back(tag);
+          }
+     }
+
+     return temp;
 }

@@ -1,32 +1,60 @@
-/*
- *
- * This code is copyrighted (c) 2021 by
- * Texas A&M Computer Science
- *
- *	There will be RIGOROUS cheat checking on your exams!!
- *	DON'T POST ANYWHERE!! such as CHEGG, public Github, etc
- *  You will be legally responsible.
- */
-
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
 #include <string>
+#include <cctype>
 #include <stdexcept>
+
 #include "Tag.h"
 
-using std::string;
-using std::vector;
+using std::string, std::vector, std::invalid_argument;
 
-Tag::Tag(string tagName) /* TODO(student): initialize */ {
-  // TODO(student): implement constructor checks
+/**
+ * @brief Construct a new Tag:: Tag object
+ * 
+ * @param tagName std::string tag name
+ * @throws std::invalid_argument if tag name is empty or does not start with #
+ * @throws std::invalid_argument if tag name does not contain only lowercase letters.
+ */
+Tag::Tag(string tagName) : tagName{tagName}, tagPosts{vector<Post *>()}
+{
+     if (this->tagName == "" || this->tagName == "#")
+          throw invalid_argument("Tag name cannot be empty.");
+     
+     if (this->tagName.at(0) != '#') {
+          throw invalid_argument("Tag name must start with '#'.");
+     }
+
+     for (size_t i = 1; i < this->tagName.size(); ++i) {
+          char c = this->tagName.at(i);
+          if (!isalpha(c))
+               throw invalid_argument("Tag name must contain only lowercase letters.");
+          if (!islower(c))
+               throw invalid_argument("Tag name must container only lowercase letters.");
+               
+     }
 }
 
-string Tag::getTagName() {
-  // TODO(student): implement getter
+string Tag::getTagName()
+{
+     return this->tagName;
 }
 
-vector<Post*>& Tag::getTagPosts() {
-  // TODO(student): implement getter
+vector<Post *> &Tag::getTagPosts()
+{
+     return this->tagPosts;
 }
 
-void Tag::addTagPost(Post* post) {
-  // TODO(student): add post to tag posts
+/**
+ * @brief add post to tag posts
+ * 
+ * @param post Post to add
+ * @throws std::invalid_argument if post is nullptr
+ */
+void Tag::addTagPost(Post *post)
+{
+     if (post == nullptr)
+          throw invalid_argument("post cannot be nullptr");
+     this->tagPosts.push_back(post);
 }

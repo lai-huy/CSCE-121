@@ -1,32 +1,44 @@
-/*
- *
- * This code is copyrighted (c) 2021 by
- * Texas A&M Computer Science
- *
- *	There will be RIGOROUS cheat checking on your exams!!
- *	DON'T POST ANYWHERE!! such as CHEGG, public Github, etc
- *  You will be legally responsible.
- */
-
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
 #include <string>
+#include <cctype>
 #include <stdexcept>
+
 #include "User.h"
 
-using std::string;
-using std::vector;
+using std::cout;
+using std::string, std::vector, std::invalid_argument;
 
-User::User(string userName) /* TODO(student): initialize */ {
-  // TODO(student): implement constructor checks
+User::User(string userName) : userName{userName}, userPosts{vector<Post *>()}
+{
+     if (this->userName == "")
+          throw invalid_argument("user name cannot be empty");
+     
+     // cout << this->userName << "\n";
+
+     for (char c : this->userName) {
+          if (!isalpha(c))
+               throw invalid_argument("user name must contain only lowercase letters");
+          if (!islower(c))
+               throw invalid_argument("user name must container only lowercase letters.");
+     }
 }
 
-string User::getUserName() {
-  // TODO(student): implement getter
+string User::getUserName()
+{
+     return this->userName;
 }
 
-vector<Post*>& User::getUserPosts() {
-  // TODO(student): implement getter
+vector<Post *> &User::getUserPosts()
+{
+     return this->userPosts;
 }
 
-void User::addUserPost(Post* post) {
-  // TODO(student): add post to user posts
+void User::addUserPost(Post *post)
+{
+     if (post == nullptr)
+          throw invalid_argument("post cannot be nullptr");
+     this->userPosts.push_back(post);
 }
