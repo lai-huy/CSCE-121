@@ -12,27 +12,26 @@ using std::string, std::vector, std::invalid_argument;
 
 /**
  * @brief Construct a new Tag:: Tag object
- * 
+ *
  * @param tagName std::string tag name
  * @throws std::invalid_argument if tag name is empty or does not start with #
  * @throws std::invalid_argument if tag name does not contain only lowercase letters.
  */
 Tag::Tag(string tagName) : tagName{tagName}, tagPosts{vector<Post *>()}
 {
-     if (this->tagName == "" || this->tagName == "#")
-          throw invalid_argument("Tag name cannot be empty.");
-     
-     if (this->tagName.at(0) != '#') {
-          throw invalid_argument("Tag name must start with '#'.");
-     }
+     if (this->tagName.length() < 2)
+          throw invalid_argument("Tag name is too short.");
 
-     for (size_t i = 1; i < this->tagName.size(); ++i) {
+     if (this->tagName.at(0) != '#')
+          throw invalid_argument("Tag name must start with '#'.");
+
+     for (size_t i = 1; i < this->tagName.size(); ++i)
+     {
           char c = this->tagName.at(i);
           if (!isalpha(c))
                throw invalid_argument("Tag name must contain only lowercase letters.");
           if (!islower(c))
                throw invalid_argument("Tag name must container only lowercase letters.");
-               
      }
 }
 
@@ -48,7 +47,7 @@ vector<Post *> &Tag::getTagPosts()
 
 /**
  * @brief add post to tag posts
- * 
+ *
  * @param post Post to add
  * @throws std::invalid_argument if post is nullptr
  */

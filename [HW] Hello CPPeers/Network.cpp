@@ -34,18 +34,12 @@ Network::Network() : users{vector<User *>()}, posts{vector<Post *>()}, tags{vect
 void Network::loadFromFile(string fileName)
 {
      ifstream fin(fileName);
-     ifstream f(fileName);
      if (!fin.is_open())
-          throw std::invalid_argument("File " + fileName + " cannot be opened");
+          throw invalid_argument("File " + fileName + " cannot be opened");
      
      string line;
      vector<string> split;
      stringstream ss;
-
-     // while (!f.eof()) {
-     //      getline(f, line);
-     //      cout << line << "\n";
-     // }
 
      while (!fin.eof()) {
           split.clear();
@@ -62,20 +56,16 @@ void Network::loadFromFile(string fileName)
           while (!ss.eof()) {
                ss >> word;
                split.push_back(word);
-               // cout << word << "\n";
           }
-          // cout << "\n";
 
           string op = split.at(0);
           if (op == "User") {
-               // cout << "Adding user\n";
                try {
                     this->addUser(split.at(1));
                } catch (const exception& err) {
                     throw runtime_error(err.what());
                }
           } else if (op == "Post") {
-               // cout << "Adding post\n";
                size_t sz = split.size();
                if (sz < 4)
                     throw runtime_error("invalid post format");
