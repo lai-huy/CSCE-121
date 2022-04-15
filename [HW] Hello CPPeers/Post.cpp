@@ -11,13 +11,17 @@
 using std::cout;
 using std::string, std::vector, std::stringstream, std::invalid_argument;
 
-Post::Post(unsigned int postId, string userName, string postText)
-    : postId(postId), userName(userName), postText(postText)
+Post::Post(unsigned int postId, string userName, string postText) : postId{postId}, userName{userName}, postText{postText}
 {
-     if (postId == 0 || userName == "" || postText == "")
-     {
-          throw invalid_argument("post constructor: invalid parameter values");
-     }
+
+     if (this->postId == 0)
+          throw invalid_argument("Post cannot have an postId of 0.");
+     
+     if (this->userName.empty())
+          throw invalid_argument("Post cannot have an empty user name.");
+     
+     if (this->postText.empty())
+          throw invalid_argument("Post cannot have an empty postText");
 }
 
 unsigned int Post::getPostId()
@@ -39,15 +43,15 @@ vector<string> Post::findTags()
 {
      vector<string> temp;
      stringstream ss(this->postText);
-     string s;
+     string word;
 
      while (!ss.eof())
      {
-          ss >> s;
-          if (s.at(0) == '#')
+          ss >> word;
+          if (word.at(0) == '#')
           {
                string tag = "";
-               for (char c : s)
+               for (char c : word)
                {
                     switch (c)
                     {

@@ -25,13 +25,12 @@ Tag::Tag(string tagName) : tagName{tagName}, tagPosts{vector<Post *>()}
      if (this->tagName.at(0) != '#')
           throw invalid_argument("Tag name must start with '#'.");
 
-     for (size_t i = 1; i < this->tagName.size(); ++i)
+     for (char c : this->tagName)
      {
-          char c = this->tagName.at(i);
-          if (!isalpha(c))
-               throw invalid_argument("Tag name must contain only lowercase letters.");
+          if (c == '#')
+               continue;
           if (!islower(c))
-               throw invalid_argument("Tag name must container only lowercase letters.");
+               throw invalid_argument("Tag name must contain only lowercase letters.");
      }
 }
 

@@ -25,6 +25,7 @@ private:
      vector<User *> users;
      vector<Post *> posts;
      vector<Tag *> tags;
+     User* userExists(const string& userName);
 
 public:
      Network();

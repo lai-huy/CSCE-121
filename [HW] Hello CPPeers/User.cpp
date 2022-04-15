@@ -13,15 +13,12 @@ using std::string, std::vector, std::invalid_argument;
 
 User::User(string userName) : userName{userName}, userPosts{vector<Post *>()}
 {
-     if (this->userName == "")
+     if (this->userName.empty())
           throw invalid_argument("user name cannot be empty");
 
-     for (char c : this->userName) {
-          if (!isalpha(c))
-               throw invalid_argument("user name must contain only lowercase letters");
+     for (char c : this->userName)
           if (!islower(c))
                throw invalid_argument("user name must container only lowercase letters.");
-     }
 }
 
 string User::getUserName()
