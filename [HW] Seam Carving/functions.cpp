@@ -256,7 +256,6 @@ int getHorizontalSeam(const Pixel *const *image, int start_row, int width, int h
 // TODO Write this function for extra credit
 void removeHorizontalSeam(Pixel **image, int width, int &height, int *horizontalSeam)
 {
-
      cout << "Width:\t" << width << "\n";
      cout << "Height:\t" << height << "\n";
 
