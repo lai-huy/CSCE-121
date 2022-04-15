@@ -9,7 +9,8 @@
 #include "Post.h"
 
 using std::cout;
-using std::string, std::vector, std::stringstream, std::invalid_argument;
+using std::string, std::vector, std::stringstream;
+using std::exception, std::invalid_argument;
 
 Post::Post(unsigned int postId, string userName, string postText) : postId{postId}, userName{userName}, postText{postText}
 {
