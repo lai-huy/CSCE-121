@@ -13,34 +13,34 @@ char _map0[5][3] = {
     {'-', '+', '-'},
     {'-', '+', '!'},
     {'o', '-', '-'},
-    {'@', '-', '$'}};
+    {'@', '-', '$'} };
 
 char _map[5][3] = {
     {'M', '+', '-'},
     {'-', '+', '-'},
     {'-', '+', '?'},
     {'o', '-', '-'},
-    {'@', '-', '$'}};
+    {'@', '-', '$'} };
 
 char _map1[4][4] = {
     {'-', '!', '+', '+'},
     {'$', 'o', 'M', '+'},
     {'+', '@', '-', '-'},
-    {'+', '?', '-', '+'}};
+    {'+', '?', '-', '+'} };
 
 char _map2[5][6] = {
     {'-', '-', 'M', '-', '-', '\0'},
     {'-', '-', '-', '-', '-', '\0'},
     {'M', '-', 'o', '-', 'M', '\0'},
     {'-', '-', '-', '-', '-', '\0'},
-    {'-', '-', 'M', '-', '-', '\0'}};
+    {'-', '-', 'M', '-', '-', '\0'} };
 
 char _map3[5][5] = {
     {'-', '-', 'M', '-', '-'},
     {'-', '-', '+', '-', '-'},
     {'M', '+', 'o', '+', 'M'},
     {'-', '-', '+', '-', '-'},
-    {'-', '-', 'M', '-', '-'}};
+    {'-', '-', 'M', '-', '-'} };
 
 /**
  *   Deallocates an inputed map
@@ -48,13 +48,10 @@ char _map3[5][5] = {
  *   @param map     dynamic 2d array to deallocate
  *   @param maxRow  the number of rows in the array.
  */
-void deallocMap(char **&map, int maxRow)
-{
+void deallocMap(char**& map, int maxRow) {
      cout << "Deallocating map " << map << "\n";
-     if (map)
-     {
-          for (int i = 0; i < maxRow; ++i)
-          {
+     if (map) {
+          for (int i = 0; i < maxRow; ++i) {
                delete[] map[i];
           }
           delete[] map;
@@ -72,29 +69,25 @@ void deallocMap(char **&map, int maxRow)
  * @return pointer to the dynamically allocated array
  */
 template <int r, int c>
-char **static_to_dynamic(char arr[r][c])
-{
-     char **t = new char *[r];
-     for (int i = 0; i < r; ++i)
-     {
+char** static_to_dynamic(char arr[r][c]) {
+     char** t = new char* [r];
+     for (int i = 0; i < r; ++i) {
           t[i] = new char[c];
-          for (int j = 0; j < c; ++j)
-          {
+          for (int j = 0; j < c; ++j) {
                t[i][j] = arr[i][j];
           }
      }
      return t;
 }
 
-void test_loadLevel()
-{
+void test_loadLevel() {
      cout << "\n\n---------------------------------------------\n";
      cout << "Test loadLevel\n";
 
      int maxRow;
      int maxCol;
      Player player;
-     char **level;
+     char** level;
 
      cout << "Test loading valid map\n";
      level = loadLevel("map_valid.txt", maxRow, maxCol, player);
@@ -176,17 +169,15 @@ void test_loadLevel()
      cout << "---------------------------------------------\n\n";
 }
 
-void test_getDirection()
-{
+void test_getDirection() {
      cout << "\n\n---------------------------------------------\n";
      cout << "Test getDirection\n";
 
      int nextRow = 0, nextCol = 0;
 
-     char inputs[]{MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, 'W', '\u0030', 'L'};
+     char inputs[]{ MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, 'W', '\u0030', 'L' };
 
-     for (int i = 0; i < 7; ++i)
-     {
+     for (int i = 0; i < 7; ++i) {
           cout << "Testing input " << inputs[i] << "\n";
           getDirection(inputs[i], nextRow, nextCol);
      }
@@ -195,13 +186,12 @@ void test_getDirection()
      cout << "---------------------------------------------\n\n";
 }
 
-void test_deleteMap()
-{
+void test_deleteMap() {
      cout << "\n\n---------------------------------------------\n";
      cout << "Test deleteMap\n";
      cout << "Delete non-nullptr\n";
      int maxRow = 5;
-     char **map = static_to_dynamic<5, 3>(_map0);
+     char** map = static_to_dynamic<5, 3>(_map0);
 
      deleteMap(map, maxRow);
      deallocMap(map, maxRow);
@@ -214,14 +204,13 @@ void test_deleteMap()
      cout << "---------------------------------------------\n\n";
 }
 
-void test_resizeMap()
-{
+void test_resizeMap() {
      cout << "\n\n---------------------------------------------\n";
      cout << "Test resizeMap\n";
 
      cout << "Test resize when row and col are both positive\n";
      int maxRow = 4, maxCol = 4;
-     char **map1_ptr = static_to_dynamic<4, 4>(_map1);
+     char** map1_ptr = static_to_dynamic<4, 4>(_map1);
 
      cout << "Before\n";
      INFO(map1_ptr);
@@ -245,7 +234,7 @@ void test_resizeMap()
      INFO(maxRow);
      INFO(maxCol);
 
-     char **resized = resizeMap(map1_ptr, maxRow, maxCol);
+     char** resized = resizeMap(map1_ptr, maxRow, maxCol);
 
      cout << "After\n";
      INFO(map1_ptr);
@@ -296,8 +285,7 @@ void test_resizeMap()
      cout << "---------------------------------------------\n\n";
 }
 
-void test_doPlayerMove()
-{
+void test_doPlayerMove() {
      cout << "\n\n---------------------------------------------\n";
      cout << "Test doPlayerMove\n";
 
@@ -307,7 +295,7 @@ void test_doPlayerMove()
      player.treasure = 0;
 
      int maxRow = 5, maxCol = 3;
-     char **map = static_to_dynamic<5, 3>(_map0);
+     char** map = static_to_dynamic<5, 3>(_map0);
 
      cout << "Test momvement with no treasure\n";
      cout << "Test Move to (-1, 0)\n";
@@ -394,8 +382,7 @@ void test_doPlayerMove()
      cout << "---------------------------------------------\n\n";
 }
 
-void test_doMonsterAttack()
-{
+void test_doMonsterAttack() {
      cout << "\n\n---------------------------------------------\n";
      cout << "Test doMonsterAttack\n";
 
@@ -403,7 +390,7 @@ void test_doMonsterAttack()
      int maxRow = 0, maxCol = 0;
 
      cout << "\nTest moving the monster further away from player\n";
-     char **monster_map = static_to_dynamic<5, 6>(_map2);
+     char** monster_map = static_to_dynamic<5, 6>(_map2);
      player.row = 2;
      player.col = 2;
      maxRow = 5;
@@ -422,14 +409,13 @@ void test_doMonsterAttack()
      cout << "---------------------------------------------\n\n";
 }
 
-int main()
-{
+int main() {
      test_loadLevel();
-     // test_getDirection();
-     // test_resizeMap();
-     // test_doPlayerMove();
-     // test_doMonsterAttack();
-     // test_deleteMap();
+     test_getDirection();
+     test_resizeMap();
+     test_doPlayerMove();
+     test_doMonsterAttack();
+     test_deleteMap();
 
      return 0;
 }
