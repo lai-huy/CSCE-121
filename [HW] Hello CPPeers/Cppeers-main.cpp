@@ -11,8 +11,7 @@
 using std::cout, std::cin, std::endl;
 using std::string, std::vector, std::exception;
 
-void printMenu()
-{
+void printMenu() {
      cout << "Welcome to CPPeers" << endl;
      cout << "The options are: " << endl;
      cout << "1. load data file and add information" << endl;
@@ -23,16 +22,14 @@ void printMenu()
      cout << "--------> Enter your option: ";
 }
 
-void processLoad(Network &cppeers)
-{
+void processLoad(Network& cppeers) {
      string fileName = "";
      cout << "Enter filename: ";
      cin >> fileName;
      cppeers.loadFromFile(fileName);
 }
 
-void processPostsByUser(Network &cppeers)
-{
+void processPostsByUser(Network& cppeers) {
      string user = "";
      cout << "Enter username: ";
      cin >> user;
@@ -41,8 +38,7 @@ void processPostsByUser(Network &cppeers)
      }
 }
 
-void processPostsWithHashtags(Network &cppeers)
-{
+void processPostsWithHashtags(Network& cppeers) {
      string tag = "";
      cout << "Enter tagname: ";
      cin >> tag;
@@ -51,31 +47,26 @@ void processPostsWithHashtags(Network &cppeers)
      }
 }
 
-void processMostPopularHashtag(Network &cppeers)
-{
+void processMostPopularHashtag(Network& cppeers) {
      for (string tag : cppeers.getMostPopularHashtag())
           cout << tag << "\n";
 }
 
-int main()
-{
+int main() {
 
-     try
-     {
+     try {
           Network cppeers;
 
           int choice = 0;
 
           // present menu
-          do
-          {
+          do {
                printMenu();
                cin >> choice;
                if (cin.fail())
                     choice = 9;
 
-               switch (choice)
-               {
+               switch (choice) {
                case 1:
                {
                     processLoad(cppeers);
@@ -98,9 +89,7 @@ int main()
                }
                }
           } while (choice != 9);
-     }
-     catch (exception &exc)
-     {
+     } catch (exception& exc) {
           cout << exc.what() << endl;
      }
 

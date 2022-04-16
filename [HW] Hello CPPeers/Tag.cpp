@@ -17,16 +17,14 @@ using std::string, std::vector, std::invalid_argument;
  * @throws std::invalid_argument if tag name is empty or does not start with #
  * @throws std::invalid_argument if tag name does not contain only lowercase letters.
  */
-Tag::Tag(string tagName) : tagName{tagName}, tagPosts{vector<Post *>()}
-{
+Tag::Tag(string tagName) : tagName{ tagName }, tagPosts{ vector<Post*>() } {
      if (this->tagName.length() < 2)
           throw invalid_argument("Tag name is too short.");
 
      if (this->tagName.at(0) != '#')
           throw invalid_argument("Tag name must start with '#'.");
 
-     for (char c : this->tagName)
-     {
+     for (char c : this->tagName) {
           if (c == '#')
                continue;
           if (!islower(c))
@@ -34,13 +32,11 @@ Tag::Tag(string tagName) : tagName{tagName}, tagPosts{vector<Post *>()}
      }
 }
 
-string Tag::getTagName()
-{
+string Tag::getTagName() {
      return this->tagName;
 }
 
-vector<Post *> &Tag::getTagPosts()
-{
+vector<Post*>& Tag::getTagPosts() {
      return this->tagPosts;
 }
 
@@ -50,8 +46,7 @@ vector<Post *> &Tag::getTagPosts()
  * @param post Post to add
  * @throws std::invalid_argument if post is nullptr
  */
-void Tag::addTagPost(Post *post)
-{
+void Tag::addTagPost(Post* post) {
      if (post == nullptr)
           throw invalid_argument("post cannot be nullptr");
      this->tagPosts.push_back(post);

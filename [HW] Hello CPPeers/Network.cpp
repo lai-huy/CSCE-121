@@ -19,7 +19,7 @@ using std::string, std::vector;
  * Empty containers of vectors already created
  * no implementation is needed here
  */
-Network::Network() : users{vector<User *>()}, posts{vector<Post *>()}, tags{vector<Tag *>()} {}
+Network::Network() : users{ vector<User*>() }, posts{ vector<Post*>() }, tags{ vector<Tag*>() } {}
 
 /**
  * @brief loads Network from a file
@@ -28,8 +28,7 @@ Network::Network() : users{vector<User *>()}, posts{vector<Post *>()}, tags{vect
  * @throws std::invalid_argument if file cannot be opened
  * @throws std::runtime_error if User or Post does not follow the specified format.
  */
-void Network::loadFromFile(string fileName)
-{
+void Network::loadFromFile(string fileName) {
      ifstream fin(fileName);
      if (!fin.is_open())
           throw invalid_argument("File " + fileName + " cannot be opened");
@@ -38,8 +37,7 @@ void Network::loadFromFile(string fileName)
      vector<string> split;
      stringstream ss;
 
-     while (!fin.eof())
-     {
+     while (!fin.eof()) {
           split.clear();
           ss.clear();
 
@@ -51,38 +49,28 @@ void Network::loadFromFile(string fileName)
           ss << line;
           string word = "";
 
-          while (!ss.eof())
-          {
+          while (!ss.eof()) {
                ss >> word;
                split.push_back(word);
           }
 
           string operation = split.at(0);
-          if (operation == "User")
-          {
-               try
-               {
+          if (operation == "User") {
+               try {
                     this->addUser(split.at(1));
-               }
-               catch (const exception &err)
-               {
+               } catch (const exception& err) {
                     throw runtime_error(err.what());
                }
-          }
-          else if (operation == "Post")
-          {
+          } else if (operation == "Post") {
                size_t sz = split.size();
                if (sz < 4)
                     throw runtime_error("invalid post format");
 
                unsigned int id = 0;
 
-               try
-               {
+               try {
                     id = (unsigned int)stoi(split.at(1));
-               }
-               catch (const exception &err)
-               {
+               } catch (const exception& err) {
                     throw runtime_error(err.what());
                }
 
@@ -93,16 +81,12 @@ void Network::loadFromFile(string fileName)
                for (size_t i = 3; i < sz; ++i)
                     post += split.at(i) + (i != sz - 1 ? " " : "");
 
-               try
-               {
+               try {
                     this->addPost(id, name, post);
-               }
-               catch (const exception &err)
-               {
+               } catch (const exception& err) {
                     throw runtime_error(err.what());
                }
-          }
-          else
+          } else
                throw runtime_error("Unknown entry:\t" + line);
      }
 }
@@ -113,14 +97,12 @@ void Network::loadFromFile(string fileName)
  * @param userName std::string holding the username
  * @throws std::invalid_argument if the user is already in the Network
  */
-void Network::addUser(string userName)
-{
+void Network::addUser(string userName) {
      // cout << "Adding user " << userName << "\n";
      for (size_t i = 0; i < userName.size(); ++i)
           userName.at(i) = tolower(userName.at(i));
 
-     for (User *user : this->users)
-     {
+     for (User* user : this->users) {
           if (user->getUserName() == userName)
                throw invalid_argument(userName + " is already in the network.");
      }
@@ -136,33 +118,28 @@ void Network::addUser(string userName)
  * @param userName  std::string holding the username
  * @param postText  std::string holding the text of the post
  */
-void Network::addPost(unsigned int postId, string userName, string postText)
-{
+void Network::addPost(unsigned int postId, string userName, string postText) {
      // cout << "Checking if posts already exists\n";
-     for (Post *post : this->posts)
-     {
+     for (Post* post : this->posts) {
           if (post->getPostId() == postId)
                throw invalid_argument("Post with id " + std::to_string(postId) + " is already in the network.");
      }
 
      // cout << "Checking if user does not exist\n";
-     User *user = this->userExists(userName);
+     User* user = this->userExists(userName);
      if (user == nullptr)
           throw invalid_argument("User " + userName + " is not in the network.");
 
      // cout << "Creating post\n";
-     Post *post = new Post(postId, userName, postText);
+     Post* post = new Post(postId, userName, postText);
 
      // Find the tags for the post created
      // There is probably a better way to do this but I'm too lazy to optimize
      bool exists = false;
-     for (string tag_name : post->findTags())
-     {
+     for (string tag_name : post->findTags()) {
           exists = false;
-          for (Tag *tag : this->tags)
-          {
-               if (tag->getTagName() == tag_name)
-               {
+          for (Tag* tag : this->tags) {
+               if (tag->getTagName() == tag_name) {
                     tag->addTagPost(post);
                     exists = true;
                     break;
@@ -170,16 +147,12 @@ void Network::addPost(unsigned int postId, string userName, string postText)
           }
 
           // If tag found is currently not in the Network
-          if (!exists)
-          {
-               try
-               {
-                    Tag *new_tag = new Tag(tag_name);
+          if (!exists) {
+               try {
+                    Tag* new_tag = new Tag(tag_name);
                     new_tag->addTagPost(post);
                     this->tags.push_back(new_tag);
-               }
-               catch (const exception &err)
-               {
+               } catch (const exception& err) {
                     continue;
                }
           }
@@ -193,13 +166,12 @@ void Network::addPost(unsigned int postId, string userName, string postText)
 
 /**
  * @brief Determins is a User is already in the Network
- * 
+ *
  * @param userName const std::string& user to find
  * @return User*   a pointer to the user found. If user is not found, nullptr is returned
  */
-User *Network::userExists(const string &userName)
-{
-     for (User *user : this->users)
+User* Network::userExists(const string& userName) {
+     for (User* user : this->users)
           if (user->getUserName() == userName)
                return user;
 
@@ -212,48 +184,50 @@ User *Network::userExists(const string &userName)
  * @param userName            std::string user to find
  * @return vector<Post *>     a vector of pointers to Posts made by a user
  */
-vector<Post *> Network::getPostsByUser(string userName)
-{
-     for (User *user : this->users)
+vector<Post*> Network::getPostsByUser(string userName) {
+     if (userName.empty())
+          throw invalid_argument("User name cannot be empty");
+
+     for (User* user : this->users)
           if (user->getUserName() == userName)
                return user->getUserPosts();
-     
-     return vector<Post *>();
+
+     throw invalid_argument("User " + userName + " does not exist in the network.");
 }
 
 /**
  * @brief get all the posts with a given Tag
- * 
+ *
  * @param tagName             std::string tag to find.
  * @return vector<Post *>     a vector of pointers to Posts with the given tag.
  */
-vector<Post *> Network::getPostsWithTag(string tagName)
-{
-     for (Tag *tag : this->tags)
+vector<Post*> Network::getPostsWithTag(string tagName) {
+     if (tagName.empty())
+          throw invalid_argument("Tag name cannot be empty");
+
+     for (Tag* tag : this->tags)
           if (tag->getTagName() == tagName)
                return tag->getTagPosts();
-     
-     return vector<Post *>();
+
+     throw invalid_argument("Tag " + tagName + " does not exist in the network");
 }
 
 /**
  * @brief finds the Tag(s) that occur in the most number of posts.
- * 
+ *
  * @return vector<string> a vector of the tag names that occur in the most posts.
  */
-vector<string> Network::getMostPopularHashtag()
-{
+vector<string> Network::getMostPopularHashtag() {
 
      size_t max = 0;
-     for (Tag *tag : this->tags)
-     {
+     for (Tag* tag : this->tags) {
           size_t s = tag->getTagPosts().size();
           if (s > max)
                max = s;
      }
 
      vector<string> temp = vector<string>();
-     for (Tag *tag : this->tags)
+     for (Tag* tag : this->tags)
           if (tag->getTagPosts().size() == max)
                temp.push_back(tag->getTagName());
 
@@ -261,21 +235,17 @@ vector<string> Network::getMostPopularHashtag()
 }
 
 /**
- * @brief Destructor 
+ * @brief Destructor
  * Do not change; already implemented.
  */
-Network::~Network()
-{
-     for (unsigned int i = 0; i < users.size(); ++i)
-     {
+Network::~Network() {
+     for (unsigned int i = 0; i < users.size(); ++i) {
           delete users.at(i);
      }
-     for (unsigned int i = 0; i < tags.size(); ++i)
-     {
+     for (unsigned int i = 0; i < tags.size(); ++i) {
           delete tags.at(i);
      }
-     for (unsigned int i = 0; i < posts.size(); ++i)
-     {
+     for (unsigned int i = 0; i < posts.size(); ++i) {
           delete posts.at(i);
      }
 }

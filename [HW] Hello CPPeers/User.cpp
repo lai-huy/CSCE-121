@@ -11,7 +11,7 @@
 using std::cout;
 using std::string, std::vector, std::invalid_argument;
 
-User::User(string userName) : userName{userName}, userPosts{vector<Post *>()}
+User::User(string userName) : userName{ userName }, userPosts{ vector<Post*>() }
 {
      if (this->userName.empty())
           throw invalid_argument("user name cannot be empty");
@@ -21,18 +21,15 @@ User::User(string userName) : userName{userName}, userPosts{vector<Post *>()}
                throw invalid_argument("user name must container only lowercase letters.");
 }
 
-string User::getUserName()
-{
+string User::getUserName() {
      return this->userName;
 }
 
-vector<Post *> &User::getUserPosts()
-{
+vector<Post*>& User::getUserPosts() {
      return this->userPosts;
 }
 
-void User::addUserPost(Post *post)
-{
+void User::addUserPost(Post* post) {
      if (post == nullptr)
           throw invalid_argument("post cannot be nullptr");
      this->userPosts.push_back(post);
