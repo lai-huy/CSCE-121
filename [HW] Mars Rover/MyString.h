@@ -1,3 +1,6 @@
+#ifndef _MYSTRING_H
+#define _MYSTRING_H
+
 #include <iostream>
 
 using std::ostream;
@@ -30,3 +33,5 @@ public:
      friend bool operator==(const MyString& lhs, const MyString& rhs) noexcept;
      friend MyString operator+(const MyString& lhs, const MyString& rhs);
 };
+
+#endif

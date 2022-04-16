@@ -8,9 +8,10 @@ using std::cin, std::cout, std::endl, std::ifstream, std::istream;
 // helper function "stoi" to converts MyString to int, works a lot like number slicing in reverse
 int stoi(const MyString& str, size_t* pos = nullptr, int base = 10) { // just doing base 10 here
      int result = 0;
-     for (unsigned int i = 0; i < str.size(); i++) { // MyString: size()
+     size_t start = pos == nullptr ? 0 : *pos;
+     for (size_t i = start; i < str.size(); i++) { // MyString: size()
           if (str.at(i) >= '0' && str.at(i) <= '9') { // MyString: at()
-               result *= 10; // increase digit (reverse of number slicing)
+               result *= base; // increase digit (reverse of number slicing)
                result += str.at(i) - 48; // using ascii for conversion
           }
      }
