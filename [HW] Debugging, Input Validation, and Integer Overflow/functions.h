@@ -1,10 +1,24 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-// return the largest of the arguments
+/**
+ * @brief return the largest of the arguments
+ * 
+ * @param a int 0
+ * @param b int 1
+ * @param c int 2
+ * @return int largest of th earguments
+ */
 int Largest(int a, int b, int c);
 
-// return true if the sum of the arguments is even
+/**
+ * @brief determine if the sum of the two arguments is even
+ * 
+ * @param a int 0
+ * @param b int 1
+ * @return true     if the sum of a and b is even
+ * @return false    if the sum of a and b is not even
+ */
 bool SumIsEven(int a, int b);
 
 /// return the number of boxes needed to store the given number of apples
