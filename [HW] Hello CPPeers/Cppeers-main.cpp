@@ -33,18 +33,16 @@ void processPostsByUser(Network& cppeers) {
      string user = "";
      cout << "Enter username: ";
      cin >> user;
-     for (Post* post : cppeers.getPostsByUser(user)) {
+     for (Post* post : cppeers.getPostsByUser(user))
           cout << post->getPostText() << "\n";
-     }
 }
 
 void processPostsWithHashtags(Network& cppeers) {
      string tag = "";
      cout << "Enter tagname: ";
      cin >> tag;
-     for (Post* post : cppeers.getPostsWithTag(tag)) {
+     for (Post* post : cppeers.getPostsWithTag(tag))
           cout << post->getPostText() << "\n";
-     }
 }
 
 void processMostPopularHashtag(Network& cppeers) {
@@ -53,7 +51,6 @@ void processMostPopularHashtag(Network& cppeers) {
 }
 
 int main() {
-
      try {
           Network cppeers;
 
@@ -89,7 +86,7 @@ int main() {
                }
                }
           } while (choice != 9);
-     } catch (exception& exc) {
+     } catch (const exception& exc) {
           cout << exc.what() << endl;
      }
 
