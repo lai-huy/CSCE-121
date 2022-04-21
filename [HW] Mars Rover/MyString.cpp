@@ -5,27 +5,27 @@
 using std::ostream;
 using std::out_of_range;
 
-MyString::MyString() : _size{ 0 }, _capacity{ 1 }, _str{ new char[1] } {}
+MyString::MyString() : _size{0}, _capacity{15}, _str{new char[15]} {
+     for (size_t i = 0; i < this->_capacity; ++i)
+          this->_str[i] = static_cast<char>(0);
+}
 
-MyString::MyString(const MyString& str) : _size{ 0 }, _capacity{ 0 }, _str{ nullptr } {
+MyString::MyString(const MyString& str) : _size{str._size}, _capacity{str._capacity}, _str{nullptr} {
      this->_size = str.size();
      this->_capacity = str.capacity();
      this->_str = new char[this->_capacity];
 
-     for (size_t i = 0; i < this->_size; ++i)
-          this->_str[i] = str.at(i);
+     for (size_t i = 0; i < this->_capacity; ++i)
+          this->_str[i] = i < this->_size ? str.at(i) : static_cast<char>(0);
 }
 
-MyString::MyString(const char* str) : _size{ 0 }, _capacity{ 1 }, _str{ nullptr } {
-     char c = static_cast<char>(0);
-     size_t i = 0;
-     while (true) {
-          c = str[i];
-          if (c == 0)
-               break;
+MyString::MyString(const char* str) : _size{0}, _capacity{15}, _str{nullptr} {
+     if (str == nullptr)
+          throw std::invalid_argument("c-string cannot be nullptr");
 
-          ++i;
-     }
+     size_t i = npos;
+     while (str[++i]) {}
+
      this->_size = i;
      while (this->_size > this->_capacity)
           this->_capacity *= 2;
@@ -82,7 +82,7 @@ void MyString::clear() noexcept {
           this->_str[i] = static_cast<char>(0);
 
      this->_size = 0;
-     this->_capacity = 1;
+     this->_capacity = 15;
      return;
 }
 
@@ -100,31 +100,32 @@ MyString& MyString::operator=(const MyString& str) {
      delete[] this->_str;
      this->_str = new char[this->_capacity];
 
-     char* temp = str.data();
      for (size_t i = 0; i < this->_capacity; ++i)
-          this->_str[i] = temp[i];
+          this->_str[i] = i < this->_size ? str.at(i) : static_cast<char>(0);
 
      return *this;
 }
 
 MyString& MyString::operator+=(const MyString& str) {
-     size_t l_size = this->_size, r_size = str.size(), cap = this->_capacity + str.capacity();
+     size_t l_size = this->_size, r_size = str.size(), cap = this->_capacity;
+     while (l_size + r_size > cap)
+          cap *= 2;
+
      char* temp = new char[cap];
-     const char* r_data = str.data();
 
      for (size_t i = 0; i < cap; ++i) {
           if (i < l_size)
                temp[i] = this->_str[i];
           else if (i < l_size + r_size)
-               temp[i] = r_data[i - l_size];
+               temp[i] = str.at(i - l_size);
           else
                temp[i] = static_cast<char>(0);
      }
-     
+
      this->_size += str.size();
      while (this->_size > this->_capacity)
           this->_capacity *= 2;
-          
+
      delete[] this->_str;
      this->_str = temp;
 
@@ -132,16 +133,11 @@ MyString& MyString::operator+=(const MyString& str) {
 }
 
 size_t MyString::find(const MyString& str, size_t pos) const noexcept {
-     size_t sz = str.size(), index = static_cast<size_t>(-1);
-     char* str_data = str.data();
-     char* word = new char[sz];
+     size_t sz = str.size(), index = MyString::npos;
      for (size_t i = pos; i < this->_size - sz + 1; ++i) {
-          for (size_t j = 0; j < sz; ++j)
-               word[j] = this->_str[i + j];
-
           bool eq = true;
           for (size_t j = 0; j < sz; ++j) {
-               if (word[j] != str_data[j]) {
+               if (this->_str[i + j] != str.at(j)) {
                     eq = false;
                     break;
                }
@@ -150,8 +146,7 @@ size_t MyString::find(const MyString& str, size_t pos) const noexcept {
           if (eq)
                index = i;
      }
-     
-     delete[] word;
+
      return index;
 }
 
@@ -169,12 +164,13 @@ bool operator==(const MyString& lhs, const MyString& rhs) noexcept {
 MyString operator+(const MyString& lhs, const MyString& rhs) {
      size_t cap = lhs.capacity() + rhs.capacity(), l_size = lhs.size();
      char* temp = new char[cap];
-     for (size_t i = 0; i < cap; ++i)
+     for (size_t i = 0; i < cap; ++i) {
           try {
                temp[i] = i < l_size ? lhs.at(i) : rhs.at(i - l_size);
           } catch (const std::exception& err) {
                temp[i] = static_cast<char>(0);
           }
+     }
 
      return MyString(temp);
 }

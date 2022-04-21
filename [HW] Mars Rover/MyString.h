@@ -5,6 +5,10 @@
 
 using std::ostream;
 
+/**
+ * @brief implementation of a String class.
+ * @version 2022-04-16
+ */
 class MyString {
 private:
      size_t _size;
@@ -12,6 +16,7 @@ private:
      char* _str;
 
 public:
+     static const size_t npos = 18446744073709551615UL;
      MyString();
      MyString(const MyString& str);
      MyString(const char* str);
