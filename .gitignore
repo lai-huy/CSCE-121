@@ -1,5 +1,9 @@
 *.out
 *.debug
+*.gcno
+*.gcda
+*.gcov
+*.s
 
 .vscode/
 Notes/
