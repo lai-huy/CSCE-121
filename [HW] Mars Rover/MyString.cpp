@@ -82,7 +82,7 @@ void MyString::clear() noexcept {
           this->_str[i] = static_cast<char>(0);
 
      this->_size = 0;
-     this->_capacity = 15;
+     this->_capacity = 1;
      return;
 }
 
@@ -100,19 +100,20 @@ MyString& MyString::operator=(const MyString& str) {
      delete[] this->_str;
      this->_str = new char[this->_capacity];
 
+     char* temp = str.data();
      for (size_t i = 0; i < this->_capacity; ++i)
-          this->_str[i] = i < this->_size ? str.at(i) : static_cast<char>(0);
+          this->_str[i] = temp[i];
 
      return *this;
 }
 
 MyString& MyString::operator+=(const MyString& str) {
-     size_t l_size = this->_size, r_size = str.size(), cap = this->_capacity;
+     size_t l_size = this->_size, r_size = str.size(), cap = 15;
+
      while (l_size + r_size > cap)
           cap *= 2;
 
      char* temp = new char[cap];
-
      for (size_t i = 0; i < cap; ++i) {
           if (i < l_size)
                temp[i] = this->_str[i];
@@ -123,9 +124,7 @@ MyString& MyString::operator+=(const MyString& str) {
      }
 
      this->_size += str.size();
-     while (this->_size > this->_capacity)
-          this->_capacity *= 2;
-
+     this->_capacity = cap;
      delete[] this->_str;
      this->_str = temp;
 
@@ -164,12 +163,11 @@ bool operator==(const MyString& lhs, const MyString& rhs) noexcept {
 MyString operator+(const MyString& lhs, const MyString& rhs) {
      size_t cap = lhs.capacity() + rhs.capacity(), l_size = lhs.size();
      char* temp = new char[cap];
-     for (size_t i = 0; i < cap; ++i) {
+     for (size_t i = 0; i < cap; ++i)
           try {
-               temp[i] = i < l_size ? lhs.at(i) : rhs.at(i - l_size);
-          } catch (const std::exception& err) {
-               temp[i] = static_cast<char>(0);
-          }
+          temp[i] = i < l_size ? lhs.at(i) : rhs.at(i - l_size);
+     } catch (const std::exception& err) {
+          temp[i] = static_cast<char>(0);
      }
 
      return MyString(temp);
