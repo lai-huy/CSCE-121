@@ -30,12 +30,13 @@ void MyList::clear() {
           delete this->_head;
           return;
      default:
-          MyNode* node = this->_head, * temp = this->_head;
-          while (node != nullptr) {
+          MyNode* node = this->_head;
+          while (node->next != nullptr) {
                node = node->next;
-               delete temp;
-               temp = node;
+               delete node->prev;
           }
+          delete node;
+
           this->_head = nullptr;
           this->_tail = nullptr;
           this->_size = 0;
