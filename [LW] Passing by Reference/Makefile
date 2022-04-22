@@ -1,14 +1,14 @@
-files = Cppeers-main.cpp Network.cpp Post.cpp Tag.cpp User.cpp
+files = fn.cpp main.cpp
 
 run: clean build
-	./main.out < ./tests/inputs.txt
+	./main.out
 
 build:
 	g++ -std=c++17 -g -Wall -Wextra -Weffc++ -pedantic-errors -fsanitize=address,undefined -o main.out $(files)
 
 coverage: clean $(files)
 	g++ -std=c++17 -g --coverage -o coverage.out $(files)
-	./coverage.out < ./tests/inputs.txt
+	./coverage.out
 	gcov -mr $(files)
 
 unsanitized: clean $(files)
