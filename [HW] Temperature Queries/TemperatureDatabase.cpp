@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -9,10 +8,16 @@
 #include <ctime>
 #include "TemperatureDatabase.h"
 
-using std::string, std::to_string, std::cout;
-using std::ifstream, std::ofstream;
+using std::string;
+using std::to_string;
+using std::cout;
+using std::ifstream;
+using std::ofstream;
 using std::stringstream;
-using std::tm, std::localtime, std::time, std::time_t;
+using std::tm;
+using std::localtime;
+using std::time;
+using std::time_t;
 using std::vector;
 
 // Default constructor/destructor. Modify them if you need to.
@@ -32,20 +37,20 @@ void TemperatureDatabase::loadData(const string& filename) {
           exit(1);
      }
 
-     string line = "";
+     string line = string();
      stringstream ss;
 
-     string id = ""; int year = 0; int month = 0; double temperature = 0;
+     string id = string(); int year = 0; int month = 0; double temperature = 0;
 
      while (true) {
+          line = string();
           getline(fin, line);
 
-          if (fin.eof())
+          if (fin.eof() && line.empty())
                break;
 
           ss.clear();
-          ss.str(string());
-          ss << line;
+          ss.str(line);
 
           ss >> id;
           if (ss.fail()) {
@@ -90,7 +95,6 @@ void TemperatureDatabase::loadData(const string& filename) {
      }
 }
 
-// Do not modify
 void TemperatureDatabase::outputData(const string& filename) {
      ofstream dataout("sorted." + filename);
 
@@ -108,90 +112,97 @@ void TemperatureDatabase::performQuery(const string& filename) {
           exit(1);
      }
 
-     ofstream fout("results.dat");
+     ofstream fout("result.dat");
 
      if (!fout.is_open()) {
-          cout << "Error: Unable to open results.dat\n";
+          cout << "Error: Unable to open result.dat\n";
           exit(1);
      }
 
      string line = string();
      stringstream ss = stringstream();
-     string id = string(), op = string();
+     vector<string> split = vector<string>();
      int start = 0, end = 0;
      while (true) {
+          split.clear();
+          line = string();
           getline(fin, line);
 
-          if (fin.eof())
+          if (fin.eof() && line.empty())
                return;
 
           ss.clear();
           ss.str(line);
+          while (!ss.eof()) {
+               string word = string();
+               ss >> word;
+               split.push_back(word);
+          }
 
-          ss >> id;
-          if (ss.fail()) {
+          if (split.size() != 4) {
+               cout << "Error: Other invalid query\n";
+               continue;
+          }
+
+          if (split.at(1) != "AVG" && split.at(1) != "MODE") {
+               cout << "Error: Unsupported query " << split.at(1) << "\n";
+               continue;
+          }
+
+          try {
+               start = stoi(split.at(2));
+          } catch (const std::exception& err) {
                cout << "Error: Other invalid input\n";
                continue;
           }
 
-          ss >> op;
-          if (ss.fail()) {
+          try {
+               end = stoi(split.at(3));
+          } catch (const std::exception& err) {
                cout << "Error: Other invalid input\n";
-               continue;
-          }
-
-          if (op != "AVG" && op != "MODE") {
-               cout << "Error: Invalid query " << op << "\n";
-               continue;
-          }
-
-          ss >> start;
-          if (ss.fail()) {
-               cout << "Error: Other invalid input\n";
-               continue;
-          }
-
-          ss >> end;
-          if (ss.fail()) {
-               cout << "Error: Other invalid input\n";
-               continue;
-          }
-
-          if (start < 1800 || start > this->curr_year) {
-               cout << "Error: Invalid range " << to_string(start) << "-" << to_string(end) << "\n";
                continue;
           }
 
           if (end < start) {
-               cout << "Error: Invalid range " << to_string(start) << "-" << to_string(end) << "\n";
+               cout << "Error: Invalid range " << split.at(2) << "-" << split.at(3) << "\n";
                continue;
           }
 
-          if (op == "AVG") {
-               fout << this->average(id, start, end);
+          if (start < 1800 || start > curr_year) {
+               cout << "Error: Invalid range " << split.at(2) << "-" << split.at(3) << "\n";
+               continue;
           }
 
-          if (op == "MODE") {
-               fout << this->mode(id, start, end);
+          if (end < 1800 || end > curr_year) {
+               cout << "Error: Invalid range " << split.at(2) << "-" << split.at(3) << "\n";
+               continue;
+          }
+
+          if (split.at(1) == "AVG") {
+               fout << average(split.at(0), start, end);
+          }
+
+          if (split.at(1) == "MODE") {
+               fout << mode(split.at(0), start, end);
           }
      }
 }
 
 string TemperatureDatabase::average(string id, int start, int end) {
-     cout << "AVERAGE\n";
-     cout << "ID:\t" << id << "\n";
-     cout << "Start:\t" << to_string(start) << "\n";
-     cout << "End:\t" << to_string(end) << "\n\n\n";
+     // cout << "\n\nAVERAGE\n";
+     // cout << "ID:\t" << id << "\n";
+     // cout << "Start:\t" << to_string(start) << "\n";
+     // cout << "End:\t" << to_string(end) << "\n";
 
      Node* node = this->records.getHead();
      double sum = 0; int count = 0;
 
-     while (node->next != nullptr) {
+     while (node != nullptr) {
           TemperatureData data = node->data;
 
           if (data.id == id) {
                if (start <= data.year && data.year <= end) {
-                    cout << data << "\n";
+                    // cout << data << "\n";
                     sum += data.temperature;
                     ++count;
                }
@@ -200,32 +211,36 @@ string TemperatureDatabase::average(string id, int start, int end) {
           node = node->next;
      }
 
-     string avg = count == 0 ? "unknown" : to_string(sum / count);
-     avg.erase(avg.find_last_not_of('0') + 1, string::npos);
-     if (avg.back() == '.')
-          avg = avg.substr(0, avg.size() - 1);
+     string avg = count ? to_string(this->round((sum / count) * 10000.0) / 10000.0) : "unknown";
 
-     cout << "Average:\t" << avg << "\n";
+
+     if (avg != "unknown") {
+          avg.erase(avg.find_last_not_of('0') + 1, string::npos);
+          if (avg.back() == '.')
+               avg = avg.substr(0, avg.size() - 1);
+     }
+
+     // cout << "Average:\t" << avg << "\n";
 
      return id + " " + to_string(start) + " " + to_string(end) + " AVG " + avg + "\n";
 }
 
 string TemperatureDatabase::mode(string id, int start, int end) {
-     cout << "MODE\n";
-     cout << "ID:\t" << id << "\n";
-     cout << "Start:\t" << to_string(start) << "\n";
-     cout << "End:\t" << to_string(end) << "\n\n\n";
+     // cout << "\n\nMODE\n";
+     // cout << "ID:\t" << id << "\n";
+     // cout << "Start:\t" << to_string(start) << "\n";
+     // cout << "End:\t" << to_string(end) << "\n";
 
      Node* node = this->records.getHead();
-     vector<int> counts = vector(101, 0);
+     vector<int> counts = vector<int>(101, 0);
 
-     while (node->next != nullptr) {
+     while (node != nullptr) {
           TemperatureData data = node->data;
 
           if (data.id == id) {
                if (start <= data.year && data.year <= end) {
-                    cout << data << "\n";
-                    cout << "Temp:\t" << to_string(round(data.temperature)) << "\n";
+                    // cout << data << "\n";
+                    // cout << "Temp:\t" << to_string(round(data.temperature)) << "\n";
                     ++counts.at(round(data.temperature) + 50);
                }
           }
@@ -242,13 +257,11 @@ string TemperatureDatabase::mode(string id, int start, int end) {
      }
 
      string mode = max == 0 ? "unknown" : to_string(index);
-     cout << "Mode:\t" << mode << "\n";
+     // cout << "Mode:\t" << mode << "\n";
 
      return id + " " + to_string(start) + " " + to_string(end) + " MODE " + mode + "\n";
 }
 
 int TemperatureDatabase::round(double num) {
-     if (num < 0)
-          return (num - (int)num) > -0.5 ? static_cast<int>(num) : static_cast<int>(num) - 1;
-     return (num - (int)num) < 0.5 ? static_cast<int>(num) : static_cast<int>(num) + 1;
+     return num < 0 ? static_cast<int>(num - 0.5) : static_cast<int>(num + 0.5);
 }

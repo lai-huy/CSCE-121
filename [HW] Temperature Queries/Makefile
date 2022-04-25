@@ -18,4 +18,4 @@ check: clean unsanitized
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose -s ./unsanitized.out "temps.dat" "queries.dat"
 
 clean:
-	rm -f *.out *.debug *.gcno *.gcda *.gcov *.s sorted.* results.dat
+	rm -f *.out *.debug *.gcno *.gcda *.gcov *.s sorted.* result.dat

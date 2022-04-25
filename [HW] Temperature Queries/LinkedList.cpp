@@ -10,7 +10,8 @@
 #include "LinkedList.h"
 #include "Node.h"
 
-using std::string, std::to_string;
+using std::string;
+using std::to_string;
 using std::ostream;
 
 LinkedList::LinkedList() : head{nullptr}, tail{nullptr} {}
@@ -21,8 +22,12 @@ LinkedList::~LinkedList() {
 
 LinkedList::LinkedList(const LinkedList& source) : head{nullptr}, tail{nullptr} {
      Node* h = source.getHead();
+
+     if (!h)
+          return;
+
      TemperatureData data = h->data;
-     this->head = new Node(h->data.id, h->data.year, h->data.month, h->data.temperature);
+     this->head = new Node(data.id, data.year, data.month, data.temperature);
      this->head->next = nullptr;
 
      Node* curr = this->head, * node = h->next;
@@ -39,7 +44,7 @@ LinkedList& LinkedList::operator=(const LinkedList& source) {
 
      Node* h = source.getHead();
      TemperatureData data = h->data;
-     this->head = new Node(h->data.id, h->data.year, h->data.month, h->data.temperature);
+     this->head = new Node(data.id, data.year, data.month, data.temperature);
      this->head->next = nullptr;
 
      Node* curr = this->head, * node = h->next;
@@ -94,10 +99,10 @@ void LinkedList::insert(string location, int year, int month, double temperature
 }
 
 void LinkedList::clear() {
-     if (this->head == nullptr)
+     if (!this->head)
           return;
 
-     Node* curr = head, * next;
+     Node* curr = this->head, * next;
      while (curr) {
           next = curr->next;
           delete curr;

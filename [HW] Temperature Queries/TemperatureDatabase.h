@@ -4,6 +4,8 @@
 #include <string>
 #include "LinkedList.h"
 
+using std::string;
+
 class TemperatureDatabase {
 public:
 	TemperatureDatabase();
@@ -13,14 +15,14 @@ public:
 
 	// Read the temperature records from the data file and populate the linked list
 	// Implement for Part 1
-	void loadData(const std::string& data_file);
+	void loadData(const string& data_file);
 		
 	// Output the data as ordered in the linked list (useful for debugging part 1)
-	void outputData(const std::string& out_file);
+	void outputData(const string& out_file);
 
 	// Read the queries from the query file and perform a series of queries
 	// Implement for Part 2
-	void performQuery(const std::string& query_filename);
+	void performQuery(const string& query_filename);
 
 private:
 	// Linked list to store the temperature records. You need to properly populate
@@ -33,6 +35,7 @@ private:
      string average(string id, int start, int end);
      string mode(string id, int start, int end);
      int round(double num);
+     int ceil(double num);
 };
 
 #endif  // TEMP_DB

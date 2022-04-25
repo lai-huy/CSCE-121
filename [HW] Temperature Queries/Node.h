@@ -5,7 +5,8 @@
 #include <iostream>
 #include "TemperatureData.h"
 
-using std::string, std::ostream;
+using std::string;
+using std::ostream;
 
 struct Node {
      Node* next;

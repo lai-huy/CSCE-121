@@ -8,7 +8,8 @@
 #include <ctime>
 #include "TemperatureDatabase.h"
 
-using std::cout, std::endl;
+using std::cout;
+using std::endl;
 
 int main(int argc, char** argv) {
      if (argc < 3) {

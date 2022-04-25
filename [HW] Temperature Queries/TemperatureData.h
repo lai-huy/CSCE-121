@@ -7,7 +7,8 @@
 #include <vector>
 #include <ctime>
 
-using std::string, std::ostream;
+using std::string;
+using std::ostream;
 
 #ifndef TEMPERATUREDATA
 #define TEMPERATUREDATA

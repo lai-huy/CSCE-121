@@ -1,0 +1,70 @@
+Error: Invalid year 1799
+Error: Invalid year 1500
+Error: Invalid year 2025
+Error: Invalid month 13
+Error: Invalid month 0
+Error: Invalid month 22
+Error: Invalid month -15
+Error: Invalid temperature 50.100000
+Error: Invalid temperature -50.100000
+Error: Invalid temperature 75.010000
+Error: Invalid temperature -64.850000
+Error: Other invalid input
+Error: Other invalid input
+
+
+AVERAGE
+ID:	411048
+Start:	1970
+End:	1979
+Average:	unknown
+
+
+AVERAGE
+ID:	411048
+Start:	2000
+End:	2016
+Average:	unknown
+
+
+AVERAGE
+ID:	411048
+Start:	1970
+End:	1970
+Average:	unknown
+
+
+MODE
+ID:	411048
+Start:	2000
+End:	2010
+
+
+Mode:	unknown
+
+
+MODE
+ID:	411048
+Start:	2000
+End:	2016
+
+
+Mode:	unknown
+
+
+MODE
+ID:	411772
+Start:	2000
+End:	2016
+
+
+Mode:	unknown
+
+
+MODE
+ID:	999999
+Start:	1810
+End:	2010
+
+
+Mode:	unknown

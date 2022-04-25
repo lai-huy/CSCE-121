@@ -1,7 +1,10 @@
 #include <string>
+#include <iostream>
+
 #include "Node.h"
 
 using std::string;
+using std::ostream;
 
 // Default constructor
 Node::Node() : next{nullptr}, data{TemperatureData()} {}
