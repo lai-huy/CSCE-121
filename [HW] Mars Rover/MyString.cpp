@@ -11,8 +11,6 @@ MyString::MyString() : _size{0}, _capacity{15}, _str{new char[15]} {
 }
 
 MyString::MyString(const MyString& str) : _size{str._size}, _capacity{str._capacity}, _str{nullptr} {
-     this->_size = str.size();
-     this->_capacity = str.capacity();
      this->_str = new char[this->_capacity];
 
      for (size_t i = 0; i < this->_capacity; ++i)
@@ -100,9 +98,8 @@ MyString& MyString::operator=(const MyString& str) {
      delete[] this->_str;
      this->_str = new char[this->_capacity];
 
-     char* temp = str.data();
      for (size_t i = 0; i < this->_capacity; ++i)
-          this->_str[i] = temp[i];
+          this->_str[i] = i < this->_size ? str.at(i) : static_cast<char>(0);
 
      return *this;
 }
@@ -161,14 +158,5 @@ bool operator==(const MyString& lhs, const MyString& rhs) noexcept {
 }
 
 MyString operator+(const MyString& lhs, const MyString& rhs) {
-     size_t cap = lhs.capacity() + rhs.capacity(), l_size = lhs.size();
-     char* temp = new char[cap];
-     for (size_t i = 0; i < cap; ++i)
-          try {
-          temp[i] = i < l_size ? lhs.at(i) : rhs.at(i - l_size);
-     } catch (const std::exception& err) {
-          temp[i] = static_cast<char>(0);
-     }
-
-     return MyString(temp);
+     return MyString(lhs) += MyString(rhs);
 }
