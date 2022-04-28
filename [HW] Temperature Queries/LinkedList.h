@@ -20,6 +20,8 @@ private:
       */
      Node* tail;
 
+     void copy(const LinkedList& list);
+
 public:
      /**
       * @brief Default constructor

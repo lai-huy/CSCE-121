@@ -21,28 +21,18 @@ LinkedList::~LinkedList() {
 }
 
 LinkedList::LinkedList(const LinkedList& source) : head{nullptr}, tail{nullptr} {
-     Node* h = source.getHead();
-
-     if (!h)
-          return;
-
-     TemperatureData data = h->data;
-     this->head = new Node(data.id, data.year, data.month, data.temperature);
-     this->head->next = nullptr;
-
-     Node* curr = this->head, * node = h->next;
-     while (node != nullptr) {
-          curr->next = new Node(node->data.id, node->data.year, node->data.month, node->data.temperature);
-          curr = curr->next;
-          node = node->next;
-     }
-     this->tail = curr;
+     this->copy(source);
 }
 
 LinkedList& LinkedList::operator=(const LinkedList& source) {
      this->clear();
+     this->copy(source);
 
-     Node* h = source.getHead();
+     return *this;
+}
+
+void LinkedList::copy(const LinkedList& list) {
+     Node* h = list.getHead();
      TemperatureData data = h->data;
      this->head = new Node(data.id, data.year, data.month, data.temperature);
      this->head->next = nullptr;
@@ -54,8 +44,6 @@ LinkedList& LinkedList::operator=(const LinkedList& source) {
           node = node->next;
      }
      this->tail = curr;
-
-     return *this;
 }
 
 void LinkedList::insert(string location, int year, int month, double temperature) {
@@ -63,8 +51,7 @@ void LinkedList::insert(string location, int year, int month, double temperature
           return;
 
      Node* new_node = new Node(location, year, month, temperature);
-     // std::cout << "Intersting:\t" << *new_node;
-
+     
      // Inserting into empty list
      if (!this->head) {
           this->head = new_node;
@@ -117,7 +104,7 @@ Node* LinkedList::getHead() const {
 }
 
 string LinkedList::print() const {
-     string outputString = "";
+     string outputString = string();
 
      if (this->head == nullptr)
           return outputString;
