@@ -2,15 +2,14 @@
 #include <string>
 #include "./string_calculator.h"
 
-using std::endl;
 using std::cout;
+using std::endl;
 using std::invalid_argument;
 using std::min;
 using std::string;
 using std::to_string;
 
-unsigned int digit_to_decimal(char digit)
-{
+unsigned int digit_to_decimal(char digit) {
      // Epic Debugging Lines
      // cout << flush;
      // cout << "Digit: " << digit << endl;
@@ -22,8 +21,7 @@ unsigned int digit_to_decimal(char digit)
      throw invalid_argument("Illegal char:\t" + digit);
 }
 
-char decimal_to_digit(unsigned int decimal)
-{
+char decimal_to_digit(unsigned int decimal) {
      // Epic Debugging Lines
      // cout << flush;
      // cout << "Decimal: " << decimal << endl;
@@ -33,28 +31,23 @@ char decimal_to_digit(unsigned int decimal)
      return '0' + decimal;
 }
 
-string trim_leading_zeros(string num)
-{
+string trim_leading_zeros(string num) {
      // Epic Debugging Lines
      // cout << flush;
      // cout << "Number: " << num << endl;
 
      bool is_neg = false;
-     if (num.at(0) == '-')
-     {
+     if (num.at(0) == '-') {
           is_neg = true;
           num.erase(0, 1);
           num.erase(0, min(num.find_first_not_of('0'), num.size() - 1));
-     }
-     else
-     {
+     } else {
           num.erase(0, min(num.find_first_not_of('0'), num.size() - 1));
      }
      return is_neg ? (num.at(0) == '0' ? num : "-" + num) : num;
 }
 
-string add(string lhs, string rhs)
-{
+string add(string lhs, string rhs) {
      // Epic Debugging Lines
      // cout << flush;
      // cout << "LHS: " << lhs << endl;
@@ -69,8 +62,7 @@ string add(string lhs, string rhs)
      bool is_l_neg = lhs.at(0) == '-';
      bool is_r_neg = rhs.at(0) == '-';
 
-     if (is_l_neg && is_r_neg)
-     {
+     if (is_l_neg && is_r_neg) {
           lhs.erase(0, 1);
           rhs.erase(0, 1);
      } else if (!is_l_neg && is_r_neg) {
@@ -86,8 +78,7 @@ string add(string lhs, string rhs)
 
      // loop over string and add
      int j = lhs.size() - 1;
-     for (int i = rhs.size() - 1; i >= 0; i--, j--)
-     {
+     for (int i = rhs.size() - 1; i >= 0; i--, j--) {
           lhs[j] += digit_to_decimal(rhs[i]);
           // cout << "Added Digit: " << lhs[j] << endl;
      }
@@ -96,10 +87,8 @@ string add(string lhs, string rhs)
      // cout << endl;
 
      // perform any carries
-     for (int i = lhs.size() - 1; i > 0; i--)
-     {
-          if (lhs[i] > '9')
-          {
+     for (int i = lhs.size() - 1; i > 0; i--) {
+          if (lhs[i] > '9') {
                int d = lhs[i] - '0';
                lhs[i - 1] = (lhs[i - 1] - '0') + d / 10 + '0';
                lhs[i] = decimal_to_digit(d % 10);
@@ -110,8 +99,7 @@ string add(string lhs, string rhs)
      // cout << endl;
 
      // perform carry on left-most digit
-     if (lhs[0] > '9')
-     {
+     if (lhs[0] > '9') {
           string k;
           k += lhs[0];
           lhs[0] = decimal_to_digit((lhs[0] - '0') % 10);
@@ -124,8 +112,7 @@ string add(string lhs, string rhs)
      return (is_l_neg && is_r_neg) ? "-" + lhs : lhs;
 }
 
-string subtract(string lhs, string rhs)
-{
+string subtract(string lhs, string rhs) {
      // Epic Debugging Lines
      // cout << std::flush;
      // cout << "LHS: " << lhs << "\n";
@@ -158,7 +145,7 @@ string subtract(string lhs, string rhs)
      if (n < m) {
           swap(lhs, rhs);
           swapped = true;
-     } else if (n == m) {          
+     } else if (n == m) {
           for (int i = 0; i < n; ++i) {
                if (lhs.at(i) < rhs.at(i)) {
                     swap(lhs, rhs);
@@ -181,8 +168,7 @@ string subtract(string lhs, string rhs)
 
      // Loop over rhs backwards and subtract
      int carry = 0;
-     for (int i = m - 1, j = n - 1; i > -1; --i, --j)
-     {
+     for (int i = m - 1, j = n - 1; i > -1; --i, --j) {
           // compute difference of current digits
           int sub = lhs.at(j) - rhs.at(i) - carry;
           // cout << "Raw Calc:\t" << sub << "\n";
@@ -190,12 +176,10 @@ string subtract(string lhs, string rhs)
           // If subtraction is less then zero
           // we add then we add 10 into sub and
           // take carry as 1 for calculating next step
-          if (sub < 0)
-          {
+          if (sub < 0) {
                sub += 10;
                carry = 1;
-          }
-          else
+          } else
                carry = 0;
 
           // cout << "Sub:\t" << sub << "\n";
@@ -203,20 +187,19 @@ string subtract(string lhs, string rhs)
           result.insert(0, 1, sub + '0');
      }
 
-     //Subtract any remaining digits of the larger number.
+     // Subtract any remaining digits of the larger number.
      for (int i = n - m - 1; i > -1; --i) {
-        int sub = digit_to_decimal(lhs.at(i)) - carry;
- 
-        // if the sub value is -ve, then make it positive
-        if (sub < 0) {
-            sub = sub + 10;
-            carry = 1;
-        }
-        else
-            carry = 0;
- 
-        result.insert(0, 1, decimal_to_digit(sub));
-    }
+          int sub = digit_to_decimal(lhs.at(i)) - carry;
+
+          // if the sub value is -ve, then make it positive
+          if (sub < 0) {
+               sub = sub + 10;
+               carry = 1;
+          } else
+               carry = 0;
+
+          result.insert(0, 1, decimal_to_digit(sub));
+     }
 
      result = trim_leading_zeros(result);
      result = swapped ? "-" + result : result;
@@ -226,8 +209,7 @@ string subtract(string lhs, string rhs)
      return result;
 }
 
-string multiply(string lhs, string rhs)
-{
+string multiply(string lhs, string rhs) {
      // Epic Debugging Lines
      // cout << flush;
      // cout << "LHS: " << lhs << endl;
@@ -239,14 +221,12 @@ string multiply(string lhs, string rhs)
 
      // Determine if both lhs and rhs are negative.
      bool neg = false;
-     if (lhs.at(0) == '-')
-     {
+     if (lhs.at(0) == '-') {
           lhs.erase(0, 1);
           neg = !neg;
      }
 
-     if (rhs.at(0) == '-')
-     {
+     if (rhs.at(0) == '-') {
           rhs.erase(0, 1);
           neg = !neg;
      }
@@ -261,10 +241,8 @@ string multiply(string lhs, string rhs)
      string result(n + m, '0');
 
      // Perform multiplication
-     for (int i = n - 1; i >= 0; i--)
-     {
-          for (int j = m - 1; j >= 0; j--)
-          {
+     for (int i = n - 1; i >= 0; i--) {
+          for (int j = m - 1; j >= 0; j--) {
                int d = (lhs[i] - '0') * (rhs[j] - '0') + (result[i + j + 1] - '0');
                // cout << "Digit: " << d << endl;
                result[i + j + 1] = decimal_to_digit(d % 10);
