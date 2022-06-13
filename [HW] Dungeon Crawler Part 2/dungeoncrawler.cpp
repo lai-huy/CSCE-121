@@ -3,7 +3,7 @@
 #include <string>
 #include "helper.h"
 #include "logic.h"
-using std::cin, std::cout, std::endl, std::string, std::ifstream;
+using std::cin, std::cout, std::string, std::ifstream;
 
 /**
  * @brief Main
@@ -24,7 +24,7 @@ int main() {
 
      int total_moves = 0;
      for (int current_room = 1; current_room <= total_rooms; current_room++) {
-          cout << "Level " << current_room << endl;
+          cout << "Level " << current_room << "\n";
           string fileName = "./levels/" + dungeon + std::to_string(current_room) + ".txt";
 
           // declare variables
@@ -36,7 +36,7 @@ int main() {
           // create map, or quit if map load error
           char** map = loadLevel(fileName, maxRow, maxCol, player);
           if (map == nullptr) {
-               cout << "Returning you back to the real word, adventurer!" << endl;
+               cout << "Returning you back to the real word, adventurer!" << "\n";
                return 1;
           }
 
@@ -53,14 +53,14 @@ int main() {
 
                // quit game if user inputs quit
                if (input == INPUT_QUIT) {
-                    cout << "Thank you for playing!" << endl;
+                    cout << "Thank you for playing!" << "\n";
                     deleteMap(map, maxRow);
                     return 0;
                }
 
                // reprompt if invalid command
                if (input != MOVE_UP && input != MOVE_LEFT && input != MOVE_DOWN && input != MOVE_RIGHT && input != INPUT_STAY) {
-                    cout << "I did not understand your command, adventurer!" << endl;
+                    cout << "I did not understand your command, adventurer!" << "\n";
                     continue;
                }
 
@@ -97,7 +97,7 @@ int main() {
                // move monsters, end if player is caught
                if (doMonsterAttack(map, maxRow, maxCol, player)) {
                     outputMap(map, maxRow, maxCol);
-                    cout << "You died, adventurer! Better luck next time!" << endl;
+                    cout << "You died, adventurer! Better luck next time!" << "\n";
                     deleteMap(map, maxRow);
                     return 0;
                }

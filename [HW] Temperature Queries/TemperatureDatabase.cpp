@@ -8,16 +8,11 @@
 #include <ctime>
 #include "TemperatureDatabase.h"
 
-using std::string;
-using std::to_string;
+using std::string, std::to_string;
 using std::cout;
-using std::ifstream;
-using std::ofstream;
+using std::ifstream, std::ofstream;
 using std::stringstream;
-using std::tm;
-using std::localtime;
-using std::time;
-using std::time_t;
+using std::tm, std::localtime, std::time, std::time_t;
 using std::vector;
 
 // Default constructor/destructor. Modify them if you need to.

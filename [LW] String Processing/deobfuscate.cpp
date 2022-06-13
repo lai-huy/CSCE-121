@@ -1,10 +1,9 @@
 #include <iostream>
 #include <string>
-using std::cin, std::cout, std::endl, std::string;
+using std::cin, std::cout, std::string;
 using std::flush;
 
-int main()
-{
+int main() {
      string input = "";
      string deop = "";
 
@@ -21,6 +20,6 @@ int main()
           index += (int)(c - '0');
      }
 
-     cout << "Deobfuscated sentence: " << result << endl;
+     cout << "Deobfuscated sentence: " << result << "\n";
      return 0;
 }

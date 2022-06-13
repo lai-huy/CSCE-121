@@ -9,11 +9,10 @@
 #include "TemperatureDatabase.h"
 
 using std::cout;
-using std::endl;
 
 int main(int argc, char** argv) {
      if (argc < 3) {
-          cout << "Usage: " << argv[0] << " data_file query_file" << endl;
+          cout << "Usage: " << argv[0] << " data_file query_file" << "\n";
           return 1;
      } else {
           TemperatureDatabase database;

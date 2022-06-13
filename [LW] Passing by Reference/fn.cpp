@@ -3,17 +3,15 @@
  * CS 121
  */
 #include <iostream>
-using namespace std;
 
-/*
- * Pass by Reference takes the address of an argument's memory and modifies the content. Use an & to denote pass by reference (example: function(int & x))
- * Pass by Value creates a copy of an argument, and only modifies that memory.
- *
- * Implement function_one and its prototype in fn.h so that it takes two integer arguments i and j, adds 2 to i, adds 1 to j, but after execution of the function, only j is changed.
- */
+ /*
+  * Pass by Reference takes the address of an argument's memory and modifies the content. Use an & to denote pass by reference (example: function(int & x))
+  * Pass by Value creates a copy of an argument, and only modifies that memory.
+  *
+  * Implement function_one and its prototype in fn.h so that it takes two integer arguments i and j, adds 2 to i, adds 1 to j, but after execution of the function, only j is changed.
+  */
 #include "fn.h"
-void function_one(int i, int &j)
-{
+void function_one(int i, int& j) {
      i += 2;
      ++j;
 }
@@ -25,8 +23,7 @@ void function_one(int i, int &j)
  * Implement function_two and its prototype in fn.h so that it takes an argument of type example, and increments its' integer by 1. This change should persist after the function.
  */
 
-void function_two(example &ex)
-{
+void function_two(example& ex) {
      ++ex.value;
 }
 
@@ -39,8 +36,7 @@ void function_two(example &ex)
  *Note, k is a pointer to a single integer, and is not intended to be an array.
  */
 
-void function_three(int *k, int &l)
-{
+void function_three(int* k, int& l) {
      ++(*k);
      ++l;
 }
@@ -54,12 +50,10 @@ void function_three(int *k, int &l)
  * Do not worry about overflow/underflow conditions
  */
 
-void function_four(int *arr, int size, int &lowest, int &highest)
-{
+void function_four(int* arr, int size, int& lowest, int& highest) {
      lowest = INT32_MAX;
      highest = INT32_MIN;
-     for (int i = 0; i < size; ++i)
-     {
+     for (int i = 0; i < size; ++i) {
           arr[i] += 2;
           if (arr[i] < lowest)
                lowest = arr[i];

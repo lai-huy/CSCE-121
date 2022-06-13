@@ -5,46 +5,12 @@
 #include <stdexcept>
 #include <cmath>
 
-/*
-#include <iostream>
-#include "test_helpers.h"
-#include "functions.h"  // <== your header file(s) here
-
-using std::cout, std::endl;
-
-bool test_() {
-  bool pass = true;
-
-  {
-    // TEST
-  }
-
-  RESULT(pass);
-  return pass;
-}
-
-int main() {
-  unsigned pass_cnt = 0, fail_cnt = 0, skip_cnt = 0;
-
-  //TEST(test_);
-  //SKIP(test_);
-
-  cout << "passing " << pass_cnt << "/" << (pass_cnt + fail_cnt) << " tests" << endl;
-  if (skip_cnt > 0) {
-    cout << "skipped " << skip_cnt << " tests" << endl;
-  } else if (fail_cnt == 0) {
-    cout << "ALL TESTS PASSING" << endl;
-  }
-}
-*/
-
-typedef struct cout_redirect
-{
+typedef struct cout_redirect {
 private:
-     std::streambuf *old;
+     std::streambuf* old;
 
 public:
-     cout_redirect(std::streambuf *new_buffer) : old(std::cout.rdbuf(new_buffer)) {}
+     cout_redirect(std::streambuf* new_buffer) : old(std::cout.rdbuf(new_buffer)) {}
 
      ~cout_redirect() { std::cout.rdbuf(old); }
 } cout_redirect;
@@ -215,8 +181,7 @@ public:
      std::cout << "Skipping test_" << #X << "..." << std::endl; \
      skip_cnt++;
 
-std::ostream &operator<<(std::ostream &os, std::nullptr_t)
-{
+std::ostream& operator<<(std::ostream& os, std::nullptr_t) {
      os << "nullptr";
      return os;
 }
@@ -224,12 +189,11 @@ std::ostream &operator<<(std::ostream &os, std::nullptr_t)
 template <typename T1, typename T2>
 void explain_eq(
     const char n1[],
-    const T1 &o1,
+    const T1& o1,
     const char n2[],
-    const T2 &o2,
+    const T2& o2,
     const char func[],
-    const size_t line)
-{
+    const size_t line) {
      std::cout << func << ":" << line << ": Failure" << std::endl;
      std::cout << "Expected equality of these values:" << std::endl;
      std::cout << " " << n1 << std::endl;
@@ -241,12 +205,11 @@ void explain_eq(
 template <typename T1, typename T2>
 void explain_ne(
     const char n1[],
-    const T1 &o1,
+    const T1& o1,
     const char n2[],
-    const T2 &o2,
+    const T2& o2,
     const char func[],
-    const size_t line)
-{
+    const size_t line) {
      std::cout << func << ":" << line << ": Failure" << std::endl;
      std::cout << "Expected inequality of these values:" << std::endl;
      std::cout << " " << n1 << std::endl;
@@ -260,8 +223,7 @@ void explain_tf(
     bool actual,
     bool expected,
     const char func[],
-    const size_t line)
-{
+    const size_t line) {
      std::cout << func << ":" << line << ": Failure" << std::endl;
      std::cout << "Value of " << name << std::endl;
      std::cout << "  Actual: " << (actual ? "true" : "false") << std::endl;
@@ -271,12 +233,11 @@ void explain_tf(
 template <typename T1, typename T2>
 void explain_lt(
     const char n1[],
-    const T1 &o1,
+    const T1& o1,
     const char n2[],
-    const T2 &o2,
+    const T2& o2,
     const char func[],
-    const size_t line)
-{
+    const size_t line) {
      std::cout << func << ":" << line << ": Failure" << std::endl;
      std::cout << "Expected" << std::endl;
      std::cout << " " << n1 << std::endl;
@@ -289,12 +250,11 @@ void explain_lt(
 template <typename T1, typename T2>
 void explain_le(
     const char n1[],
-    const T1 &o1,
+    const T1& o1,
     const char n2[],
-    const T2 &o2,
+    const T2& o2,
     const char func[],
-    const size_t line)
-{
+    const size_t line) {
      std::cout << func << ":" << line << ": Failure" << std::endl;
      std::cout << "Expected" << std::endl;
      std::cout << " " << n1 << std::endl;
@@ -307,12 +267,11 @@ void explain_le(
 template <typename T1, typename T2>
 void explain_gt(
     const char n1[],
-    const T1 &o1,
+    const T1& o1,
     const char n2[],
-    const T2 &o2,
+    const T2& o2,
     const char func[],
-    const size_t line)
-{
+    const size_t line) {
      std::cout << func << ":" << line << ": Failure" << std::endl;
      std::cout << "Expected" << std::endl;
      std::cout << " " << n1 << std::endl;
@@ -325,12 +284,11 @@ void explain_gt(
 template <typename T1, typename T2>
 void explain_ge(
     const char n1[],
-    const T1 &o1,
+    const T1& o1,
     const char n2[],
-    const T2 &o2,
+    const T2& o2,
     const char func[],
-    const size_t line)
-{
+    const size_t line) {
      std::cout << func << ":" << line << ": Failure" << std::endl;
      std::cout << "Expected" << std::endl;
      std::cout << " " << n1 << std::endl;
@@ -343,12 +301,11 @@ void explain_ge(
 template <typename T1, typename T2>
 void explain_near(
     const char n1[],
-    const T1 &o1,
+    const T1& o1,
     const char n2[],
-    const T2 &o2,
+    const T2& o2,
     const char func[],
-    const size_t line)
-{
+    const size_t line) {
      std::cout << func << ":" << line << ": Failure" << std::endl;
      std::cout << "Expected" << std::endl;
      std::cout << " " << n1 << std::endl;

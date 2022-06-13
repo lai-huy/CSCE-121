@@ -2,7 +2,7 @@
 #include <string>
 #include "logic.h"
 
-using std::cout, std::endl;
+using std::cout;
 using std::to_string;
 
 // TODO(student): Write unit tests for the functions in logic.h
@@ -13,34 +13,34 @@ char _map0[5][3] = {
     {'-', '+', '-'},
     {'-', '+', '!'},
     {'o', '-', '-'},
-    {'@', '-', '$'} };
+    {'@', '-', '$'}};
 
 char _map[5][3] = {
     {'M', '+', '-'},
     {'-', '+', '-'},
     {'-', '+', '?'},
     {'o', '-', '-'},
-    {'@', '-', '$'} };
+    {'@', '-', '$'}};
 
 char _map1[4][4] = {
     {'-', '!', '+', '+'},
     {'$', 'o', 'M', '+'},
     {'+', '@', '-', '-'},
-    {'+', '?', '-', '+'} };
+    {'+', '?', '-', '+'}};
 
 char _map2[5][6] = {
     {'-', '-', 'M', '-', '-', '\0'},
     {'-', '-', '-', '-', '-', '\0'},
     {'M', '-', 'o', '-', 'M', '\0'},
     {'-', '-', '-', '-', '-', '\0'},
-    {'-', '-', 'M', '-', '-', '\0'} };
+    {'-', '-', 'M', '-', '-', '\0'}};
 
 char _map3[5][5] = {
     {'-', '-', 'M', '-', '-'},
     {'-', '-', '+', '-', '-'},
     {'M', '+', 'o', '+', 'M'},
     {'-', '-', '+', '-', '-'},
-    {'-', '-', 'M', '-', '-'} };
+    {'-', '-', 'M', '-', '-'}};
 
 /**
  *   Deallocates an inputed map
@@ -175,7 +175,7 @@ void test_getDirection() {
 
      int nextRow = 0, nextCol = 0;
 
-     char inputs[]{ MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, 'W', '\u0030', 'L' };
+     char inputs[]{MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, 'W', '\u0030', 'L'};
 
      for (int i = 0; i < 7; ++i) {
           cout << "Testing input " << inputs[i] << "\n";

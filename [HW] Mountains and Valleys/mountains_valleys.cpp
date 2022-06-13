@@ -3,7 +3,6 @@
 
 using std::cin;
 using std::cout;
-using std::endl;
 
 
 int main() {
@@ -18,14 +17,14 @@ int main() {
 
 	// TODO(student): validate input (and reprompt on invalid input)
 	while (cin.fail()) {
-		cout << "Invalid Input" << endl;
+		cout << "Invalid Input" << "\n";
 		cout << "Enter numbers 10 <= a <= b < 10000: ";
 		cin >> a;
 		cin >> b;
 	}
 
-	while (!is_valid_range(a,b)) {
-		cout << "Invalid Input" << endl;
+	while (!is_valid_range(a, b)) {
+		cout << "Invalid Input" << "\n";
 		cout << "Enter numbers 10 <= a <= b < 10000: ";
 		cin >> a;
 		cin >> b;

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-using std::cin, std::cout, std::endl, std::string;
+using std::cin, std::cout, std::string;
 using std::flush;
 
 int main() {
@@ -17,7 +17,7 @@ int main() {
           if (s == 1)
                count++;
           else {
-               for(int i = 0; i < s/2; ++i) {
+               for (int i = 0; i < s / 2; ++i) {
                     if (word.at(i) != word.at(s - 1 - i))
                          break;
                     is_palindrome = true;
@@ -27,5 +27,5 @@ int main() {
      }
 
      cout << "You have typed " << count << " palindromes.\n";
-    return 0;
+     return 0;
 }

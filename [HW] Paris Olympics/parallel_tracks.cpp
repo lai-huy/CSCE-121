@@ -7,25 +7,18 @@
 #include <cctype>
 #include "parallel_tracks.h"
 
-using std::string;
-using std::ifstream;
-using std::cout;
-using std::endl;
-using std::invalid_argument;
-using std::domain_error;
-using std::stringstream;
-using std::tolower;
-using std::begin;
-using std::end;
+using std::string, std::tolower;
+using std::cout, std::ifstream, std::stringstream;
+using std::invalid_argument, std::domain_error;
+using std::begin, std::end;
 
 //-------------------------------------------------------
 // Name: get_runner_data
 // PreCondition:  the prepped parallel arrays , and a legit filename is pass
 // PostCondition: all arrays contain data from the text file given
 //---------------------------------------------------------
-void get_runner_data(const std::string &file, double timeArray[], std::string countryArray[],
-                     unsigned int numberArray[], std::string lastnameArray[])
-{
+void get_runner_data(const std::string& file, double timeArray[], std::string countryArray[],
+                     unsigned int numberArray[], std::string lastnameArray[]) {
      if (file.empty())
           throw domain_error("File name cannot be empty");
 
@@ -51,7 +44,7 @@ void get_runner_data(const std::string &file, double timeArray[], std::string co
      stringstream ss;
 
      int lines = 0;
-     
+
      while (getline(fin, line)) {
           ss << line;
 
@@ -73,7 +66,7 @@ void get_runner_data(const std::string &file, double timeArray[], std::string co
                throw domain_error("File contains invalid data (time)");
 
           timeArray[index] = t;
-          // cout << "Read Time:\t" << t << endl;
+          // cout << "Read Time:\t" << t << "\n";
 
           // Process Country
           ss >> country;
@@ -98,7 +91,7 @@ void get_runner_data(const std::string &file, double timeArray[], std::string co
 
           if (ss.fail())
                throw domain_error("File missing data");
-          
+
           unsigned int un;
           try {
                un = stoi(uin);
@@ -108,7 +101,7 @@ void get_runner_data(const std::string &file, double timeArray[], std::string co
 
           if (un > 99)
                throw domain_error("File contains invalid data (number)");
-          
+
           numberArray[index] = un;
           // cout << "Read Number:\t" << un << "\n";
 
@@ -135,7 +128,7 @@ void get_runner_data(const std::string &file, double timeArray[], std::string co
 
           ++index;
           ss.clear();
-          
+
           ++lines;
           if (lines == SIZE)
                break;
@@ -195,13 +188,12 @@ void prep_string_array(std::string ary[])
 // PostCondition: after a very inefficient nested loop to determine the placements
 // and places the ranks in a new array. That new array is returned
 //---------------------------------------------------------
-void get_ranking(const double timeArray[], unsigned int rankArray[])
-{
+void get_ranking(const double timeArray[], unsigned int rankArray[]) {
      for (unsigned int i = 0; i < SIZE; ++i)
           rankArray[i] = 0;
 
      int count;
-     
+
      for (unsigned int i = 0; i < SIZE; ++i) {
           count = 0;
           for (unsigned int j = 0; j < SIZE; ++j)
@@ -220,20 +212,17 @@ void get_ranking(const double timeArray[], unsigned int rankArray[])
 // it then displays then along with a delta in time from the start
 //---------------------------------------------------------
 void print_results(const double timeArray[], const std::string countryArray[],
-                   const std::string lastnameArray[], const unsigned int rankArray[])
-{
+                   const std::string lastnameArray[], const unsigned int rankArray[]) {
 
      std::cout << "Final results!!";
-     std::cout << std::setprecision(2) << std::showpoint << std::fixed << std::endl;
+     std::cout << std::setprecision(2) << std::showpoint << std::fixed << "\n";
      double best_time = 0.0;
 
      // print the results, based on rank, but measure the time difference_type
-     for (unsigned int j = 1; j <= SIZE; j++)
-     {
+     for (unsigned int j = 1; j <= SIZE; j++) {
 
           // go thru each array, find who places in "i" spot
-          for (unsigned int i = 0; i < SIZE; i++)
-          {
+          for (unsigned int i = 0; i < SIZE; i++) {
                if (rankArray[i] == 1) // has to be a better way, but need the starting time
                {
                     best_time = timeArray[i];
@@ -243,24 +232,21 @@ void print_results(const double timeArray[], const std::string countryArray[],
                {
                     // this needs precision display
                     std::cout << "[" << j << "]  " << timeArray[i] << " " << std::setw(15) << std::left << lastnameArray[i] << "\t"
-                              << "(" << countryArray[i] << ")  +" << (timeArray[i] - best_time) << std::endl;
+                         << "(" << countryArray[i] << ")  +" << (timeArray[i] - best_time) << "\n";
                }
           }
      }
 }
 
-std::string trim(std::string ret)
-{
+std::string trim(std::string ret) {
      // remove whitespace from the beginning
-     while (!ret.empty() && isspace(ret.at(0)))
-     {
+     while (!ret.empty() && isspace(ret.at(0))) {
           ret.erase(0, 1);
      }
 
      // remove whitespace from the end
      //  Note: last index is (.size() - 1) due to 0 based indexing
-     while (!ret.empty() && isspace(ret.at(ret.size() - 1)))
-     {
+     while (!ret.empty() && isspace(ret.at(ret.size() - 1))) {
           ret.erase(ret.size() - 1, 1);
      }
 

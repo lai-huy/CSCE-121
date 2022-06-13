@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-using std::cin, std::cout, std::endl, std::string;
+using std::cin, std::cout, std::string;
 using std::flush;
 
 int main() {
@@ -17,9 +17,9 @@ int main() {
      cout << "Please enter your text input: " << flush;
      cin >> password;
      cout << "input: " << password;
-     cout << endl;
+     cout << "\n";
 
-     for (char c: password) {
+     for (char c : password) {
           switch (c) {
           case 'a':
                result += '@';
@@ -45,7 +45,7 @@ int main() {
      for (int i = result.size() - 1; i > -1; --i)
           result += result.at(i);
 
-     cout << "output: " << result << endl;
+     cout << "output: " << result << "\n";
 
-    return 0;
+     return 0;
 }

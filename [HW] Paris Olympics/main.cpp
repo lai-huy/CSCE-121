@@ -33,17 +33,12 @@ content: The text file will contain data in the constant form of:
 #include <cctype>
 #include "parallel_tracks.h"
 
-using std::cin;
-using std::cout;
-using std::domain_error;
-using std::endl;
-using std::getline;
-using std::ifstream;
-using std::invalid_argument;
+using std::cin, std::cout;
+using std::invalid_argument, std::domain_error;
+using std::getline, std::ifstream;
 using std::string;
 
-int main()
-{
+int main() {
      // TODO: create arrays needed
      double times[SIZE];
      string countries[SIZE];
@@ -66,7 +61,7 @@ int main()
 
           if (cin.fail() || cin.eof())
                return 0;
-          
+
           if (file_name == "exit" || file_name == "quit")
                return 0;
 
@@ -81,14 +76,6 @@ int main()
                valid = false;
           }
      }
-
-     /**
-     for (unsigned int i = 0; i < SIZE; ++i) {
-          cout << times[i] << "\n";
-          cout << countries[i] << "\n";
-          cout << uniform_nums[i] << "\n";
-          cout << names[i] << "\n";
-     }*/
 
      // TODO: determine ranking, notice the rank array receives the results
      unsigned int ranks[SIZE];

@@ -2,7 +2,7 @@
 #include <fstream>
 #include "Rover.h"
 #include "MyString.h"
-using std::cin, std::cout, std::endl, std::ifstream, std::istream;
+using std::cin, std::cout, std::ifstream, std::istream;
 
 
 // helper function "stoi" to converts MyString to int, works a lot like number slicing in reverse
@@ -25,7 +25,7 @@ istream& operator>>(istream& is, MyString& str) {
           char c;
           is >> std::noskipws >> c; // use the noskipws manipulator
           if (isspace(c) || is.fail()) break; // if whitespace, can stop adding to string
-          const char* newstr = new char[2]{ c, '\0' };
+          const char* newstr = new char[2] { c, '\0' };
           MyString newc = MyString(newstr); // MyString: copy constructor
           delete[] newstr;
           str += newc; // MyString: operator+=()
@@ -44,7 +44,7 @@ int main() {
      ifstream commands(filename.data()); // MyString: data() return const char* type (otherwise, have to implement ifstream constructor for MyString type)
 
      if (!commands.is_open()) {
-          cout << "Unable to open file" << endl;
+          cout << "Unable to open file" << "\n";
           return 1;
      }
 
@@ -80,14 +80,14 @@ int main() {
                testRover.join(data);
                break;
           case 'T':
-               cout << testRover.test(data) << endl;
+               cout << testRover.test(data) << "\n";
                break;
           case 'F':
                cout << data << " "; // MyString: operator<<()
                if (testRover.find(data)) {
-                    cout << "was found" << endl;
+                    cout << "was found" << "\n";
                } else {
-                    cout << "was not found" << endl;
+                    cout << "was not found" << "\n";
                }
                break;
           default:

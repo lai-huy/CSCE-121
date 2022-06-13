@@ -1,8 +1,8 @@
 #include "functions.h"
-using std::cin, std::cout, std::endl, std::ostream, std::string;
+using std::cin, std::cout, std::ostream, std::string;
 
-#define INFO(X) cout << "[INFO] (" << __FUNCTION__ << ":" << __LINE__ << ") " << #X << " = " << X << endl;
-#define INFO_STRUCT(X) cout << "[INFO] (" << __FUNCTION__ << ":" << __LINE__ << ") " << #X << " count = " << X.count << endl;
+#define INFO(X) cout << "[INFO] (" << __FUNCTION__ << ":" << __LINE__ << ") " << #X << " = " << X << "\n";
+#define INFO_STRUCT(X) cout << "[INFO] (" << __FUNCTION__ << ":" << __LINE__ << ") " << #X << " count = " << X.count << "\n";
 
 /**
  * ----- REQUIRED -----
@@ -10,11 +10,8 @@ using std::cin, std::cout, std::endl, std::ostream, std::string;
  * @param   stack   Target stack.
  * @param   number  Number to push to stack.
  */
-void push(Stack &stack, int number)
-{
+void push(Stack& stack, int number) {
      // TODO: implement push function for stack
-     // INFO_STRUCT(stack);
-     // INFO(number);
 
      if (++stack.count > stack.capacity) {
           stack.capacity *= 2;
@@ -25,7 +22,7 @@ void push(Stack &stack, int number)
           stack.numbers = temp;
      }
 
-     stack.numbers[stack.count-1] = number;
+     stack.numbers[stack.count - 1] = number;
 }
 
 /**
@@ -34,18 +31,14 @@ void push(Stack &stack, int number)
  * @param   stack   Target stack.
  * @return          Value of popped number.
  */
-int pop(Stack &stack)
-{
+int pop(Stack& stack) {
      // TODO: implement pop function for stack
-     // INFO_STRUCT(stack);
 
      if (stack.count == 0)
           return INT32_MAX;
 
      int* temp = new int[stack.capacity];
      int value = stack.numbers[--stack.count];
-
-     // INFO(value);
 
      std::copy(stack.numbers, stack.numbers + stack.count, temp);
 
@@ -61,9 +54,7 @@ int pop(Stack &stack)
  * @param   stack   Target statck.
  * @return          Number at top of stack.
  */
-int peek(const Stack &stack)
-{
+int peek(const Stack& stack) {
      // TODO (optional): implement peek function for stack
-     // INFO_STRUCT(stack);
      return stack.count == 0 ? INT32_MAX : stack.numbers[stack.count - 1];
 }

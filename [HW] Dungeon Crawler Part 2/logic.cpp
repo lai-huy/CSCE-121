@@ -3,7 +3,7 @@
 #include <string>
 #include "logic.h"
 
-using std::cout, std::endl, std::ifstream, std::string;
+using std::cout, std::ifstream, std::string;
 
 /**
  * TODO: Student implement this function

@@ -8,11 +8,8 @@
 
 // These using declarations let us refer to things more simply
 // e.g. instead of "std::cin" we can just write "cin"
-using std::cin;
-using std::cout;
-using std::endl;
-using std::string;
-using std::getline;
+using std::cin, std::cout;
+using std::string, std::getline;
 
 // These methods are defined below the main function
 
@@ -80,7 +77,7 @@ int main() {
                total_eg += score;
                num_eg++;
           } else {
-               cout << "ignored invalid input" << endl;
+               cout << "ignored invalid input" << "\n";
           }
 
           // get the next line from standard input
@@ -156,10 +153,10 @@ int main() {
 // You should not need to modify them
 
 void print_instructions() {
-     cout << "enter grades as <category> <score>" << endl;
-     cout << "  <category> := exam | final-exam | hw | lw | reading | engagement" << endl;
-     cout << "     <score> := numeric value" << endl;
-     cout << "enter an empty line to end input" << endl;
+     cout << "enter grades as <category> <score>" << "\n";
+     cout << "  <category> := exam | final-exam | hw | lw | reading | engagement" << "\n";
+     cout << "     <score> := numeric value" << "\n";
+     cout << "enter an empty line to end input" << "\n";
 }
 
 void get_category_and_score(
@@ -192,15 +189,15 @@ void print_results(
     double engagement,
     double weighted_total,
     char final_letter_grade) {
-     cout << "summary:" << endl;
-     cout << "      exam average: " << exam_average << endl;
-     cout << "        hw average: " << hw_average << endl;
-     cout << "        lw average: " << lw_average << endl;
-     cout << "           reading: " << reading << endl;
-     cout << "        engagement: " << engagement << endl;
-     cout << "    ---------------" << endl;
+     cout << "summary:" << "\n";
+     cout << "      exam average: " << exam_average << "\n";
+     cout << "        hw average: " << hw_average << "\n";
+     cout << "        lw average: " << lw_average << "\n";
+     cout << "           reading: " << reading << "\n";
+     cout << "        engagement: " << engagement << "\n";
+     cout << "    ---------------" << "\n";
 
-     cout << "    weighted total: " << weighted_total << endl;
+     cout << "    weighted total: " << weighted_total << "\n";
 
-     cout << "final letter grade: " << final_letter_grade << endl;
+     cout << "final letter grade: " << final_letter_grade << "\n";
 }

@@ -1,30 +1,30 @@
 #include <iostream>
 #include "helper.h"
-using std::cout, std::endl;
+using std::cout;
 
 /**
  * @brief Print instructions to the console. DO NOT CHANGE
  *
  */
 void printInstructions() {
-     cout << endl;
-     cout << "---------------------------------------------------------" << endl;
-     cout << "Good day, adventurer!" << endl;
-     cout << "Your goal is to get the treasure and escape the dungeon!" << endl;
-     cout << " --- SYMBOLS ---" << endl;
-     cout << " o          : That is you, the adventurer!" << endl;
-     cout << " $          : These are treasures. Lots of money!" << endl;
-     cout << " @          : These magical amulets resize the level." << endl;
-     cout << " M          : These are monsters; avoid them!" << endl;
-     cout << " +, -, |    : These are unpassable obstacles." << endl;
-     cout << " ?          : A door to another level." << endl;
-     cout << " !          : A door to escape the dungeon." << endl;
-     cout << " --- CONTROLS ---" << endl;
-     cout << " w, a, s, d : Keys for moving up, left, down, and right." << endl;
-     cout << " e          : Key for staying still for a turn." << endl;
-     cout << " q          : Key for abandoning your quest." << endl;
-     cout << "---------------------------------------------------------" << endl;
-     cout << endl;
+     cout << "\n";
+     cout << "---------------------------------------------------------" << "\n";
+     cout << "Good day, adventurer!" << "\n";
+     cout << "Your goal is to get the treasure and escape the dungeon!" << "\n";
+     cout << " --- SYMBOLS ---" << "\n";
+     cout << " o          : That is you, the adventurer!" << "\n";
+     cout << " $          : These are treasures. Lots of money!" << "\n";
+     cout << " @          : These magical amulets resize the level." << "\n";
+     cout << " M          : These are monsters; avoid them!" << "\n";
+     cout << " +, -, |    : These are unpassable obstacles." << "\n";
+     cout << " ?          : A door to another level." << "\n";
+     cout << " !          : A door to escape the dungeon." << "\n";
+     cout << " --- CONTROLS ---" << "\n";
+     cout << " w, a, s, d : Keys for moving up, left, down, and right." << "\n";
+     cout << " e          : Key for staying still for a turn." << "\n";
+     cout << " q          : Key for abandoning your quest." << "\n";
+     cout << "---------------------------------------------------------" << "\n";
+     cout << "\n";
 }
 
 /**
@@ -41,7 +41,7 @@ void outputMap(char** map, const int maxRow, const int maxCol) {
           cout << "-";
      }
      cout << "+";
-     cout << endl;
+     cout << "\n";
 
      for (int i = 0; i < maxRow; ++i) {
           // output left border
@@ -61,7 +61,7 @@ void outputMap(char** map, const int maxRow, const int maxCol) {
 
           // output right border
           cout << "|";
-          cout << endl;
+          cout << "\n";
      }
 
      // output bottom border
@@ -70,7 +70,7 @@ void outputMap(char** map, const int maxRow, const int maxCol) {
           cout << "-";
      }
      cout << "+";
-     cout << endl;
+     cout << "\n";
 }
 
 /**
@@ -82,31 +82,31 @@ void outputMap(char** map, const int maxRow, const int maxCol) {
  */
 void outputStatus(const int status, const Player& player, int moves) {
      if (status != STATUS_STAY) {
-          cout << "You have moved to row " << player.row << " and column " << player.col << endl;
+          cout << "You have moved to row " << player.row << " and column " << player.col << "\n";
      }
      switch (status) {
      case STATUS_STAY:
-          cout << "You stayed at row " << player.row << " and column " << player.col << endl;
-          cout << "You didn't move. Are you lost?" << endl;
+          cout << "You stayed at row " << player.row << " and column " << player.col << "\n";
+          cout << "You didn't move. Are you lost?" << "\n";
           break;
      case STATUS_MOVE:
           break;
      case STATUS_TREASURE:
-          cout << "Well done, adventurer! You found some treasure." << endl;
-          cout << "You now have " << player.treasure << (player.treasure > 1 ? " treasures." : " treasure.") << endl;
+          cout << "Well done, adventurer! You found some treasure." << "\n";
+          cout << "You now have " << player.treasure << (player.treasure > 1 ? " treasures." : " treasure.") << "\n";
           break;
      case STATUS_AMULET:
-          cout << "The magic amulet sparkles and crumbles into dust." << endl;
-          cout << "The ground begins to rumble. Are the walls moving?" << endl;
+          cout << "The magic amulet sparkles and crumbles into dust." << "\n";
+          cout << "The ground begins to rumble. Are the walls moving?" << "\n";
           break;
      case STATUS_LEAVE:
-          cout << "You go through the doorway into the unknown beyond..." << endl;
+          cout << "You go through the doorway into the unknown beyond..." << "\n";
           break;
      case STATUS_ESCAPE:
-          cout << "Congratulations, adventurer! You have escaped the dungeon!" << endl;
+          cout << "Congratulations, adventurer! You have escaped the dungeon!" << "\n";
           cout << "You escaped with " << player.treasure << (player.treasure > 1 ? " treasures " : " treasure ");
-          cout << "and in " << moves << " total moves." << endl;
+          cout << "and in " << moves << " total moves." << "\n";
           break;
      }
-     cout << endl;
+     cout << "\n";
 }

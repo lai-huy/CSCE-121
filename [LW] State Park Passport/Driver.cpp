@@ -4,24 +4,21 @@
 #include <sstream>
 #include "Database.h"
 
-using std::cout, std::cin, std::endl, std::string, std::ifstream, std::istringstream, std::vector;
+using std::cout, std::cin, std::string, std::ifstream, std::istringstream, std::vector;
 
-int main()
-{
+int main() {
 
      // Uncomment after completing Task 1
      Database db;
 
      ifstream ifs_parks("park_data.txt");
 
-     if (!ifs_parks.is_open())
-     {
-          cout << "Error: could not open park data file" << endl;
+     if (!ifs_parks.is_open()) {
+          cout << "Error: could not open park data file" << "\n";
           return 1;
      }
 
-     while (!ifs_parks.eof())
-     {
+     while (!ifs_parks.eof()) {
           string park_name = "";
           string s_park_fee = "";
           string s_trail_length = "";
@@ -33,14 +30,12 @@ int main()
 
      ifstream ifs_campers("camper_data.txt");
 
-     if (!ifs_campers.is_open())
-     {
-          cout << "Error: could not open camper data file" << endl;
+     if (!ifs_campers.is_open()) {
+          cout << "Error: could not open camper data file" << "\n";
           return 1;
      }
 
-     while (!ifs_campers.eof())
-     {
+     while (!ifs_campers.eof()) {
           string line = "";
           getline(ifs_campers, line, '\n');
           if (line == "")
@@ -52,8 +47,7 @@ int main()
           getline(iss_line, s_junior, ',');
           bool junior = static_cast<bool>(stoi(s_junior));
           db.addPassport(camper_name, junior);
-          while (!iss_line.eof())
-          {
+          while (!iss_line.eof()) {
                string park = "";
                getline(iss_line, park, ',');
                park.erase(0, 1);
@@ -61,41 +55,37 @@ int main()
           }
      }
 
-     cout << "Welcome to the State Park Passport Database!" << endl;
-     cout << "Please select from the following options:" << endl;
-     cout << "1: Get all parks with revenue in range." << endl;
-     cout << "2: Get all hikers at or above a certain level." << endl;
-     cout << "Your Selection: " << endl;
+     cout << "Welcome to the State Park Passport Database!" << "\n";
+     cout << "Please select from the following options:" << "\n";
+     cout << "1: Get all parks with revenue in range." << "\n";
+     cout << "2: Get all hikers at or above a certain level." << "\n";
+     cout << "Your Selection: " << "\n";
      int selection = 0;
      cin >> selection;
 
      // Uncomment after completing Task 2
-     if (selection == 1)
-     {
+     if (selection == 1) {
           double lower_bound = 0, upper_bound = 0;
           cout << "Enter Lower Bound then Upper bound: ";
           cin >> lower_bound >> upper_bound;
           vector<string> park_result = db.getParksInRevenueRange(lower_bound, upper_bound);
 
-          cout << "These are all the parks with revenue in the range given" << endl;
-          for (unsigned int i = 0; i < park_result.size(); ++i)
-          {
-               cout << park_result.at(i) << endl;
+          cout << "These are all the parks with revenue in the range given" << "\n";
+          for (unsigned int i = 0; i < park_result.size(); ++i) {
+               cout << park_result.at(i) << "\n";
           }
      }
 
      // Uncomment after completing Task 3
-     if (selection == 2)
-     {
+     if (selection == 2) {
           int hiking_level = 0;
           cout << "Enter Hiking Level: ";
           cin >> hiking_level;
           vector<string> hiker_results = db.getHikersAtLeastLevel(hiking_level);
 
-          cout << "These are all the campers with hiking level at least " << hiking_level << endl;
-          for (unsigned int i = 0; i < hiker_results.size(); ++i)
-          {
-               cout << hiker_results.at(i) << endl;
+          cout << "These are all the campers with hiking level at least " << hiking_level << "\n";
+          for (unsigned int i = 0; i < hiker_results.size(); ++i) {
+               cout << hiker_results.at(i) << "\n";
           }
      }
 

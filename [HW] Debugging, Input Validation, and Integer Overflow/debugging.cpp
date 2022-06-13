@@ -7,9 +7,7 @@ You may modify this file, e.g. to use unit tests.
 #include <iostream>
 #include "functions.h"
 
-using std::cout;
-using std::cin;
-using std::endl;
+using std::cout, std::cin;
 
 enum Function : int {
      largest = 1,
@@ -43,41 +41,41 @@ void display_results(int function_id, const int* args, const char* function_name
      try {
           switch (function_id) {
           case largest:
-               cout << Largest(args[0], args[1], args[2]) << endl;
+               cout << Largest(args[0], args[1], args[2]) << "\n";
                break;
           case sum_is_even:
-               cout << std::boolalpha << SumIsEven(args[0], args[1]) << endl;
+               cout << std::boolalpha << SumIsEven(args[0], args[1]) << "\n";
                break;
           case boxes_needed:
-               cout << BoxesNeeded(args[0]) << endl;
+               cout << BoxesNeeded(args[0]) << "\n";
                break;
           case smarter_section:
-               cout << std::boolalpha << SmarterSection(args[0], args[1], args[2], args[3]) << endl;
+               cout << std::boolalpha << SmarterSection(args[0], args[1], args[2], args[3]) << "\n";
                break;
           case good_dinner:
-               cout << std::boolalpha << GoodDinner(args[0], static_cast<bool>(args[1])) << endl;
+               cout << std::boolalpha << GoodDinner(args[0], static_cast<bool>(args[1])) << "\n";
                break;
           case sum_between:
-               cout << SumBetween(args[0], args[1]) << endl;
+               cout << SumBetween(args[0], args[1]) << "\n";
                break;
           case product:
-               cout << Product(args[0], args[1]) << endl;
+               cout << Product(args[0], args[1]) << "\n";
                break;
           }
      } catch (const std::invalid_argument& err) {
-          cout << "\b\b\b\b\b\b\b\b\bthrew an invalid_argument exception" << endl;
+          cout << "\b\b\b\b\b\b\b\b\bthrew an invalid_argument exception" << "\n";
      } catch (const std::overflow_error& err) {
-          cout << "\b\b\b\b\b\b\b\b\bthrew an overflow_error exception" << endl;
+          cout << "\b\b\b\b\b\b\b\b\bthrew an overflow_error exception" << "\n";
      } catch (...) {
-          cout << "\b\b\b\b\b\b\b\b\bthrew an unknown thing" << endl;
+          cout << "\b\b\b\b\b\b\b\b\bthrew an unknown thing" << "\n";
      }
 }
 
 void print_menu(const char* function_names[], int num_functions) {
-     cout << endl
-          << "=== Menu ===" << endl;
+     cout << "\n"
+          << "=== Menu ===" << "\n";
      for (int id = 1; id < num_functions; id++) {
-          cout << id << ") " << function_names[id] << endl;
+          cout << id << ") " << function_names[id] << "\n";
      }
      cout << ">> ";
 }
@@ -86,7 +84,7 @@ int get_choice() {
      int choice;
      cin >> choice;
      if (cin.fail()) {
-          std::cerr << "Input failed" << endl;
+          std::cerr << "Input failed" << "\n";
           // exit
           choice = exit_the_program;
      }
@@ -112,14 +110,14 @@ int main() {
          "GoodDinner",
          "SumBetween",
          "Product",
-         "Exit the program" };
-     int num_args[] = { -1, 3, 2, 1, 4, 2, 2, 2, -1 };
+         "Exit the program"};
+     int num_args[] = {-1, 3, 2, 1, 4, 2, 2, 2, -1};
      int num_functions = sizeof(function_names) / sizeof(char*);
-     int args[4]{ 0 };
+     int args[4]{0};
      int function_id;
 
-     cout << "Welcome to the Debugging Homework for CS 12x!" << endl;
-     cout << "Please enter a number to run the function with the corresponding number: " << endl;
+     cout << "Welcome to the Debugging Homework for CS 12x!" << "\n";
+     cout << "Please enter a number to run the function with the corresponding number: " << "\n";
      do {
           print_menu(function_names, num_functions);
 
@@ -131,7 +129,7 @@ int main() {
 
           bool is_valid = get_args(num_args[function_id], args);
           if (!is_valid) {
-               cout << "Invalid input detected" << endl;
+               cout << "Invalid input detected" << "\n";
                // exit
                break;
           }
@@ -139,7 +137,7 @@ int main() {
           display_results(function_id, args, function_names, num_args);
      } while (function_id != 8 && !cin.fail());
 
-     cout << "Exiting program." << endl;
+     cout << "Exiting program." << "\n";
 
      return 0;
 }

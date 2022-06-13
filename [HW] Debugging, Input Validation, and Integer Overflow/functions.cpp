@@ -1,8 +1,7 @@
 #include <stdexcept>
 #include <iostream>
 
-using std::invalid_argument;
-using std::overflow_error;
+using std::invalid_argument, std::overflow_error;
 
 int Largest(int a, int b, int c) {
      int d = INT32_MIN;

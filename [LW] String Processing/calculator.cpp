@@ -1,11 +1,10 @@
 #include <iostream>
 #include <string>
 
-using std::cin, std::cout, std::endl, std::string;
-using std::to_string;
+using std::cin, std::cout;
+using std::string, std::to_string;
 
-int from_string(string number)
-{
+int from_string(string number) {
      if (number == "one")
           return 1;
      if (number == "two")
@@ -29,21 +28,20 @@ int from_string(string number)
      return -1;
 }
 
-int main()
-{
+int main() {
      string word = "", line = "", op = "0";
 
-     cout << "Please enter word equation (type 'equals' at the end): " << endl;
+     cout << "Please enter word equation (type 'equals' at the end): " << "\n";
 
      int number = 0;
 
      string numbers = "";
      string opers = "";
-     
+
      // Process user input
      while (word != "equals") {
           cin >> word;
-          // cout << "Word:\t" << word << endl;
+          // cout << "Word:\t" << word << "\n";
 
           number = from_string(word);
           if (number == -1) {
@@ -77,7 +75,7 @@ int main()
      int result = numbers.at(0) - '0';
      numbers.erase(0, 1);
      opers.erase(opers.size() - 1);
-     
+
      // cout << "Numbers: " << numbers << "\n";
      // cout << "Oppers: " << opers << "\n";
 
@@ -105,6 +103,6 @@ int main()
           }
      }
 
-     cout << line << result << endl;
+     cout << line << result << "\n";
      return 0;
 }

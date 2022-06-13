@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-using std::cout, std::endl, std::string, std::ostream;
+using std::cout, std::string, std::ostream;
 
 void MyList::add(const std::string& name, int score) {
      MyNode* new_tail = new MyNode(name, score);
@@ -156,7 +156,7 @@ MyNode* MyList::tail() const {
 ostream& operator<<(ostream& os, const MyList& myList) {
      MyNode* _current = myList.head();
      if (_current == nullptr) {
-          os << "<empty>" << endl;
+          os << "<empty>" << "\n";
           return os;
      }
 

@@ -5,13 +5,11 @@
 #include <cmath>
 #include "functions.h"
 
-using std::cout, std::endl, std::string, std::ostringstream;
+using std::cout, std::string, std::ostringstream;
 
-int main(int argc, char *argv[])
-{
-     if (argc != 4)
-     { // check if there are enough arguments
-          cout << "Usage: " << argv[0] << " <name> <target-width> <target-height>" << endl;
+int main(int argc, char* argv[]) {
+     if (argc != 4) { // check if there are enough arguments
+          cout << "Usage: " << argv[0] << " <name> <target-width> <target-height>" << "\n";
           return 1;
      }
 
@@ -23,104 +21,79 @@ int main(int argc, char *argv[])
      int height = 0;
      int targetWidth = 0;
      int targetHeight = 0;
-     try
-     {
+     try {
           targetWidth = stoi(targetWidthStr);
-          if (targetWidth <= 0)
-          {
+          if (targetWidth <= 0) {
                throw std::out_of_range("Target width must be greater than 0. You entered " + targetWidthStr);
           }
-     }
-     catch (std::invalid_argument &e)
-     {
-          cout << e.what() << endl;
-     }
-     catch (std::out_of_range &e)
-     {
-          cout << e.what() << endl;
+     } catch (std::invalid_argument& e) {
+          cout << e.what() << "\n";
+     } catch (std::out_of_range& e) {
+          cout << e.what() << "\n";
      }
 
-     try
-     {
+     try {
           targetHeight = stoi(targetHeightStr);
-          if (targetHeight <= 0)
-          {
+          if (targetHeight <= 0) {
                throw std::out_of_range("Target height must be greater than 0. You entered " + targetHeightStr);
           }
-     }
-     catch (std::invalid_argument &e)
-     {
-          cout << e.what() << endl;
-     }
-     catch (std::out_of_range &e)
-     {
-          cout << e.what() << endl;
+     } catch (std::invalid_argument& e) {
+          cout << e.what() << "\n";
+     } catch (std::out_of_range& e) {
+          cout << e.what() << "\n";
      }
 
      // Pixel** image = createImage(width, height);
      int originalWidth = 0; // need to delete image array at end of program
-     Pixel **image = nullptr;
+     Pixel** image = nullptr;
      bool hasError = false;
-     try
-     {
+     try {
           image = loadImage(filename, width, height);
           originalWidth = width; // need to delete image array at end of program
-     }
-     catch (std::bad_alloc &e)
-     {
-          cout << e.what() << endl;
+     } catch (std::bad_alloc& e) {
+          cout << e.what() << "\n";
           return 1;
-     }
-     catch (std::invalid_argument &e)
-     {
-          cout << e.what() << endl;
+     } catch (std::invalid_argument& e) {
+          cout << e.what() << "\n";
           return 1;
-     }
-     catch (std::domain_error &e)
-     {
-          cout << e.what() << endl;
+     } catch (std::domain_error& e) {
+          cout << e.what() << "\n";
           return 1;
      }
 
      // with these errors, don't exit immediately
      //  we need to deallocate the image array
-     if (targetWidth > width)
-     {
+     if (targetWidth > width) {
           hasError = true;
-          cout << "Target width (" << targetWidth << ") must be less than or equal to image width (" << width << ")" << endl;
+          cout << "Target width (" << targetWidth << ") must be less than or equal to image width (" << width << ")" << "\n";
      }
-     if (targetHeight > height)
-     {
+     if (targetHeight > height) {
           hasError = true;
-          cout << "Target height (" << targetHeight << ") must be less than or equal to image height (" << height << ")" << endl;
+          cout << "Target height (" << targetHeight << ") must be less than or equal to image height (" << height << ")" << "\n";
      }
 
-     if (!hasError)
-     {
-          int *seam = new int[height]();
+     if (!hasError) {
+          int* seam = new int[height]();
           cout << "Horizontal Seam:\n";
           cout << getHorizontalSeam(image, 0, width, height, seam) << "\n";
           delete[] seam;
 
           // find and remove seams
-          while ((width - targetWidth > 0) || (height - targetHeight > 0))
-          {
-               if (width - targetWidth > 0)
-               {
-                    int *verticalSeam = findMinVerticalSeam(image, width, height);
+          while ((width - targetWidth > 0) || (height - targetHeight > 0)) {
+               if (width - targetWidth > 0) {
+                    int* verticalSeam = findMinVerticalSeam(image, width, height);
                     removeVerticalSeam(image, width, height, verticalSeam);
                     delete[] verticalSeam;
                }
 
-               if (height - targetHeight > 0)
-               {
-                    int *horizontalSeam = findMinHorizontalSeam(image, width, height);
+               if (height - targetHeight > 0) {
+                    int* horizontalSeam = findMinHorizontalSeam(image, width, height);
                     removeHorizontalSeam(image, width, height, horizontalSeam);
                     delete[] horizontalSeam;
                }
           }
 
-          cout << "End carving ..." << endl;
+          cout << "End carving ..." << "\n";
 
           ostringstream ss;
           ss << "carved" << width << "X" << height << "." << filename;

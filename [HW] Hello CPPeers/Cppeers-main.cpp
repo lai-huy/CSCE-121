@@ -8,17 +8,17 @@
 
 #include "Network.h"
 
-using std::cout, std::cin, std::endl;
+using std::cout, std::cin;
 using std::string, std::vector, std::exception;
 
 void printMenu() {
-     cout << "Welcome to CPPeers" << endl;
-     cout << "The options are: " << endl;
-     cout << "1. load data file and add information" << endl;
-     cout << "2. show posts by user" << endl;
-     cout << "3. show posts with hashtag" << endl;
-     cout << "4. show most popular hashtag" << endl;
-     cout << "9. quit" << endl;
+     cout << "Welcome to CPPeers" << "\n";
+     cout << "The options are: " << "\n";
+     cout << "1. load data file and add information" << "\n";
+     cout << "2. show posts by user" << "\n";
+     cout << "3. show posts with hashtag" << "\n";
+     cout << "4. show most popular hashtag" << "\n";
+     cout << "9. quit" << "\n";
      cout << "--------> Enter your option: ";
 }
 
@@ -87,7 +87,7 @@ int main() {
                }
           } while (choice != 9);
      } catch (const exception& exc) {
-          cout << exc.what() << endl;
+          cout << exc.what() << "\n";
      }
 
      return 0;

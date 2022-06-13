@@ -5,29 +5,25 @@
 #include "./string_calculator.h"
 
 using std::boolalpha;
-using std::cout, std::endl, std::cin;
-using std::invalid_argument;
-using std::out_of_range;
-using std::string;
+using std::cout, std::cin;
 using std::stringstream;
-using std::to_string;
+using std::invalid_argument, std::out_of_range;
+using std::string, std::to_string;
 
 const char PLUS = '+';
 const char MINUS = '-';
 const char MULT = '*';
 
 // Convert any char to an int
-int to_digit(char c)
-{
+int to_digit(char c) {
      return (c >= '0' && c <= '9') ? (int)(c - '0') : (int)(c - 'A' + 10);
 }
 
 // Convert from any base between 2 and 36 (inclusive) to decimal
-string to_decimal(string number, int base)
-{
+string to_decimal(string number, int base) {
      if (base < 2 || base > 36)
           throw invalid_argument("Illegal Base: " + base);
-     
+
      if (base == 10)
           return number;
 
@@ -36,13 +32,12 @@ string to_decimal(string number, int base)
      int power = 1;
 
      // Conversion
-     for (int i = number.size() - 1; i > -1; i--)
-     {
+     for (int i = number.size() - 1; i > -1; i--) {
           char c = number.at(0);
           int val = to_digit(c);
           if (val >= base)
                throw invalid_argument("Inavalid Number at index " + c);
-          
+
           result = add(result, to_string(val * power));
           power *= base;
      }
@@ -51,8 +46,7 @@ string to_decimal(string number, int base)
 }
 
 // Convert from decimal to any base between 2 and 36 (inclusive)
-string to_base(string number, int base)
-{
+string to_base(string number, int base) {
      if (base < 2 || base > 36)
           throw invalid_argument("Illegal Base: " + base);
 
@@ -69,27 +63,24 @@ string to_base(string number, int base)
      return result;
 }
 
-int main()
-{
+int main() {
      cout << boolalpha;
 
      string input = "\0";
-     cout << "String Calculator\n\"q\" or \"quit\" or ctrl+d to exit" << endl;
-     while (true)
-     {
+     cout << "String Calculator\n\"q\" or \"quit\" or ctrl+d to exit" << "\n";
+     while (true) {
           cout << ">> ";
-          
+
           getline(cin, input);
           if (cin.eof() || cin.fail()) {
-               cout << "farvel!" << endl;
+               cout << "farvel!" << "\n";
                return 0;
           }
 
-          cout << endl;
+          cout << "\n";
 
-          if (input == "q" || input == "quit")
-          {
-               cout << "farvel!" << endl;
+          if (input == "q" || input == "quit") {
+               cout << "farvel!" << "\n";
                return 0;
           }
 
@@ -98,9 +89,9 @@ int main()
           SS >> LHS >> OP >> RHS;
 
           // Epic Debug Lines :)
-          // cout << "LHS: " << LHS << endl;
-          // cout << "OP: " << OP << endl;
-          // cout << "RHS: " << RHS << endl;
+          // cout << "LHS: " << LHS << "\n";
+          // cout << "OP: " << OP << "\n";
+          // cout << "RHS: " << RHS << "\n";
 
           // Handle base 2-36 :)
           /*
@@ -139,8 +130,7 @@ int main()
           const char op = OP.at(0);
           string ans = "\0";
 
-          switch (op)
-          {
+          switch (op) {
           case PLUS:
                ans = add(LHS, RHS);
                break;
@@ -160,9 +150,9 @@ int main()
                ans += "_" + base;
                */
 
-          cout << "ans =" << endl;
-          cout << "\n    " << ans << endl;
-          cout << endl;
+          cout << "ans =" << "\n";
+          cout << "\n    " << ans << "\n";
+          cout << "\n";
      }
 
      return 0;

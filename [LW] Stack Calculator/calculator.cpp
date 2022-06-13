@@ -2,10 +2,9 @@
 #include <string>
 #include <sstream>
 #include "functions.h"
-using std::cin, std::cout, std::endl, std::string, std::istringstream;
+using std::cin, std::cout, std::string, std::istringstream;
 
-int main()
-{
+int main() {
      // prompt user input
      cout << "Type RPN expression (end with '=').\n";
      cout << "> " << std::flush;
@@ -17,20 +16,15 @@ int main()
 
      istringstream ss(line);
      string val;
-     while (val != "=")
-     {
+     while (val != "=") {
           ss >> val;
           int num;
-          try
-          {
+          try {
                num = stoi(val);
                push(s, num);
-          }
-          catch (const std::invalid_argument &err)
-          {
+          } catch (const std::invalid_argument& err) {
                int right = pop(s), left = pop(s);
-               switch (val.at(0))
-               {
+               switch (val.at(0)) {
                case '+':
                     push(s, left + right);
                     break;

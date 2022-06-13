@@ -1,14 +1,14 @@
 #include <iostream>
 #include "Rover.h"
 #include "MyString.h"
-using std::cout, std::endl;
+using std::cout;
 
 void Rover::print() {
-     cout << savedSMILE << endl; // MyString: operator<<()
+     cout << savedSMILE << "\n"; // MyString: operator<<()
 }
 
 void Rover::read(int n) {
-     cout << savedSMILE.at(n) << endl; // MyString: at()
+     cout << savedSMILE.at(n) << "\n"; // MyString: at()
 }
 
 void Rover::clear() {

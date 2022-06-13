@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#define print(X) std::cout << X << std::endl
+#define print(X) std::cout << X << "\n"
 
 double nth_root(int n, double x) {
     // this code is here to estimate test coverage when running locally
@@ -14,7 +14,7 @@ double nth_root(int n, double x) {
 
     if (n == 0) {
         covered += "A";  // n = 0
-    } else if (n%2 == 0 && x < 0) {
+    } else if (n % 2 == 0 && x < 0) {
         covered += "B";  // even root of a negative number
     } else if (n < 0 && x == 0) {
         covered += "C";  // negative root of 0
@@ -46,7 +46,7 @@ double nth_root(int n, double x) {
         if (x == 1) {
             covered += "L";  // nth root of 1
         }
-        if (n%2 == 1 && x < 0 && x != -1) {
+        if (n % 2 == 1 && x < 0 && x != -1) {
             covered += "M";  // odd root of a negative number other than -1
         }
         if (x > 2) {

@@ -2,7 +2,6 @@
 #include "functions.h"
 
 using std::cout;
-using std::endl;
 
 bool is_valid_range(int a, int b) {
 	if (a < 10 || a >= 10000) {
@@ -61,5 +60,5 @@ void count_valid_mv_numbers(int a, int b) {
 		}
 	}
 
-	cout << "There are " << mr << " mountain ranges and " << vr << " valley ranges between " << a << " and " << b << "." << endl;
+	cout << "There are " << mr << " mountain ranges and " << vr << " valley ranges between " << a << " and " << b << "." << "\n";
 }
